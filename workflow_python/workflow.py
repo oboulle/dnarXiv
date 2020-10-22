@@ -63,7 +63,7 @@ except OSError:
 #________________initialisation des séquences de base________________#
 
 input("___Initialisation des séquences de base___")
-base_seq_path = process_name+"/base_seq_file.fasta"
+base_seq_path = process_name+"/1_base_seq_file.fasta"
 random_seq_input = input(" générer des séquences aléatoires ? (y/n) : ")
 
 if random_seq_input == "y" or random_seq_input == "yes":
@@ -78,7 +78,7 @@ else:
 #________________ajout des tags________________#
 
 input("___Ajout de tags en début et fin de séquences___")
-tagged_seq_path = process_name+"/tagged_seq_file.fasta"
+tagged_seq_path = process_name+"/2_tagged_seq_file.fasta"
 result = addTag(base_seq_path, tagged_seq_path)
 if(result != 0):
     sys.exit(1)
@@ -88,7 +88,7 @@ else:
 #________________synthèse________________#
 
 input("___Synthèse des séquences___")
-synthesis_path = process_name+"/synthesis_file.fasta"
+synthesis_path = process_name+"/3_synthesis_file.fasta"
 result = synthetise(tagged_seq_path, synthesis_path)
 if(result != 0):
     sys.exit(1)
@@ -98,7 +98,7 @@ else:
 #________________séquençage________________#
 
 input("___Séquençage___")
-sequencing_path = process_name+"/sequencing"
+sequencing_path = process_name+"/4_sequencing"
 result = sequencing(synthesis_path, sequencing_path)
 if(result != 0):
     sys.exit(1)
