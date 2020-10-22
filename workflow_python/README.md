@@ -6,6 +6,6 @@ fonctionne sans interface, l'utilisateur doit juste donner les paramètres deman
 
 le cycle fait : séquences -> tagging -> synthèse -> séquençage
 
-necessite d'avoir le simulateur DeepSimu et les autres projet en loca, et de donner leur chemin dans le fichier script_paths.txt
+necessite d'avoir le simulateur DeepSimu et les autres projet en local, et de donner leur chemin dans le fichier script_paths.txt
 
 commande : python3 workflow.py

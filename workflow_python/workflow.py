@@ -44,16 +44,16 @@ def synthetise(tagged_seq_path, synthesis_path):
     return os.system("python3 "+paths_dict["synthesis_simulation"]+" -i "+tagged_seq_path+" -o "+synthesis_path+ \
                      " -n "+nbr_synth+" --i_error "+i_error+" --d_error "+d_error+" --s_error "+s_error)
 
-def sequencing(synthesis_path):
+def sequencing(synthesis_path, sequencing_path):
     nbr_seq = input(" > nombre de séquençage : ")
-    return os.system(paths_dict["deep_simulator"]+" -i "+synthesis_path+" -G 1 -B 3 -H "+paths_dict["DeepSimulator"]+" -n "+nbr_seq)
+    return os.system(paths_dict["deep_simulator"]+" -i "+synthesis_path+" -o "+sequencing_path+" -G 1 -B 3 -H "+paths_dict["DeepSimulator"]+" -n "+nbr_seq)
     
 paths_dict = getPaths("/udd/oboulle/Documents/workflow_global/workflow_python/script_paths.txt")
 
 print("___Début du processus___")
 
 process_name = input(" nom du processus : ")
-
+print("\n")
 try:
     os.mkdir(process_name)
 except OSError:
@@ -71,7 +71,7 @@ if random_seq_input == "y" or random_seq_input == "yes":
     if(result != 0):
         sys.exit(1)
     else:
-        print("\n séquences générées !")
+        print("\n séquences générées !\n")
 else:
     getSeqFile(base_seq_path)
     
@@ -83,7 +83,7 @@ result = addTag(base_seq_path, tagged_seq_path)
 if(result != 0):
     sys.exit(1)
 else:
-    print("\n tags ajoutés !")
+    print("\n tags ajoutés !\n")
 
 #________________synthèse________________#
 
@@ -93,13 +93,13 @@ result = synthetise(tagged_seq_path, synthesis_path)
 if(result != 0):
     sys.exit(1)
 else:
-    print("\n synthèse effectuée !")
+    print("\n synthèse effectuée !\n")
 
 #________________séquençage________________#
 
 input("___Séquençage___")
-
-result = sequencing(synthesis_path)
+sequencing_path = process_name+"/sequencing"
+result = sequencing(synthesis_path, sequencing_path)
 if(result != 0):
     sys.exit(1)
 else:
