@@ -43,7 +43,7 @@ def get_seq_file(base_seq_path):
 def add_primer(base_seq_path, primer_seq_path):
     sequence_primer_dir = paths_dict["sequence_primer_dir"]
     return os.system("python3 "+sequence_primer_dir+"sequence_primer.py "+base_seq_path+" "+ \
-                     primer_seq_path+" "+sequence_primer_dir+"begin_primer.txt "+sequence_primer_dir+"end_primer.txt")
+                     primer_seq_path+" "+sequence_primer_dir+"test_primer.fasta")
 
 """
     get input parameters from the user to simulate the synthesis of the sequences
@@ -69,7 +69,6 @@ print("___Début du processus___")
 
 paths_dict = get_paths("/udd/oboulle/Documents/workflow_global/workflow_python/script_paths.txt")
 process_name = input(" nom du processus : ")
-print("\n")
 try:
     os.mkdir(process_name)
 except OSError:

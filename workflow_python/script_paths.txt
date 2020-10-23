@@ -1,5 +1,5 @@
 sequence_generator=/udd/oboulle/Documents/synthesis_simulation/sequence_generator/sequence_generator.py
-sequence_tag_dir=/udd/oboulle/Documents/synthesis_simulation/sequence_tagging/
+sequence_primer_dir=/udd/oboulle/Documents/synthesis_simulation/sequence_primer/
 synthesis_simulation=/udd/oboulle/Documents/synthesis_simulation/synthesis_simulator.py
 deep_simulator=/udd/oboulle/Documents/sequencing_simulation/deep_simulator/deep_simulator.sh
 DeepSimulator=/udd/oboulle/Documents/DeepSimulator
