@@ -60,8 +60,8 @@ def synthetise(primer_seq_path, synthesis_path):
     sequence the data from the synthesis
 """
 def sequencing(synthesis_path, sequencing_path):
-    nbr_seq = input(" > nombre de séquençage : ")
-    return os.system(paths_dict["deep_simulator"]+" -i "+synthesis_path+" -o "+sequencing_path+" -G 1 -H "+paths_dict["DeepSimulator"]+" -n "+nbr_seq)
+    nbr_read = input(" > nombre de lecture : ")
+    return os.system(paths_dict["deep_simulator"]+" -i "+synthesis_path+" -o "+sequencing_path+" -G 1 -H "+paths_dict["DeepSimulator"]+" -n "+nbr_read)
 
 """
     apply the guppy basecalling
@@ -70,7 +70,7 @@ def basecalling(sequencing_path, basecalling_path):
     os.mkdir(basecalling_path)
 
     return os.system(paths_dict["guppy_basecaller"]+" -r --input_path "+sequencing_path \
-                     +" --save_path "+basecalling_path+"/fastq -c dna_r9.4.1_450bps_hac.cfg "\
+                     +" --save_path "+basecalling_path+" -c dna_r9.4.1_450bps_hac.cfg "\
                      +"--cpu_threads_per_caller 8 --num_callers 1")
   
 #________________Début du processus________________#
