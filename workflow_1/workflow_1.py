@@ -62,8 +62,18 @@ def synthetise(primer_seq_path, synthesis_path):
 def sequencing(synthesis_path, sequencing_path):
     nbr_seq = input(" > nombre de séquençage : ")
     return os.system(paths_dict["deep_simulator"]+" -i "+synthesis_path+" -o "+sequencing_path+" -G 1 -H "+paths_dict["DeepSimulator"]+" -n "+nbr_seq)
+
+"""
+    apply the guppy basecalling
+"""
+def basecalling(sequencing_path, basecalling_path):
+    os.mkdir(basecalling_path)
+
+    return os.system(paths_dict["guppy_basecaller"]+" -r --input_path "+sequencing_path \
+                     +" --save_path "+basecalling_path+"/fastq -c dna_r9.4.1_450bps_hac.cfg "\
+                     +"--cpu_threads_per_caller 8 --num_callers 1")
   
-#________________début du processus________________#
+#________________Début du processus________________#
 
 print("___Début du processus___")
 
@@ -75,7 +85,7 @@ except OSError:
     shutil.rmtree(process_name)
     os.mkdir(process_name)
     
-#________________initialisation des séquences de base________________#
+#________________Initialisation des séquences de base________________#
 
 input("___Initialisation des séquences de base___")
 base_seq_path = process_name+"/1_base_seq_file.fasta"
@@ -90,7 +100,7 @@ if random_seq_input == "y" or random_seq_input == "yes":
 else:
     get_seq_file(base_seq_path)
     
-#________________ajout des primers________________#
+#________________Ajout des primers________________#
 
 input("___Ajout de primers en début et fin de séquences___")
 primer_seq_path = process_name+"/2_primer_seq_file.fasta"
@@ -100,7 +110,7 @@ if(result != 0):
 else:
     print("\n primers ajoutés !\n")
 
-#________________synthèse________________#
+#________________Synthèse________________#
 
 input("___Synthèse des séquences___")
 synthesis_path = process_name+"/3_synthesis_file.fasta"
@@ -110,7 +120,7 @@ if(result != 0):
 else:
     print("\n synthèse effectuée !\n")
 
-#________________séquençage________________#
+#________________Séquençage________________#
 
 input("___Séquençage___")
 sequencing_path = process_name+"/4_sequencing"
@@ -118,7 +128,17 @@ result = sequencing(synthesis_path, sequencing_path)
 if(result != 0):
     sys.exit(1)
 else:
-    print("\n séquençage effectuée !\n")
+    print("\n séquençage effectué !\n")
+    
+#________________Base Calling________________#
+
+input("___Base Calling___")
+basecalling_path = process_name+"/5_basecalling"
+result = basecalling(sequencing_path, basecalling_path)
+if(result != 0):
+    sys.exit(1)
+else:
+    print("\n base calling effectué !\n")
 
 
 print("___Fin du processus !___")
