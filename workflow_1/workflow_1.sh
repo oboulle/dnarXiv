@@ -95,7 +95,7 @@ fi
 echo "___Séquençage___"
 
 sequencing_path="$process_name/4_sequencing"
-$deep_simulator_script -i $synthesis_path -o $sequencing_path -G 1 -H $deep_simu_home -n $nbr_read
+$deep_simulator_script -i $synthesis_path -o $sequencing_path -H $deep_simu_home -n $nbr_read
 if [ ! $? = 0 ]
 then
 	exit 1
