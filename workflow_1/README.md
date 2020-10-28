@@ -1,11 +1,21 @@
 # Workflow_1
 
-workflow fonctionnant sous python
+workflow utilisant les différents simulateurs
 
-fonctionne sans interface, l'utilisateur doit juste donner les paramètres demandés
+fonctionne sans interface graphique, l'utilisateur doit juste donner les paramètres demandés
 
 le cycle fait : séquences -> ajout des primers -> synthèse -> séquençage -> basecalling
 
-necessite d'avoir le simulateur DeepSimu et les autres projet en local, et de donner leur chemin dans le fichier script_paths.txt
+necessite d'avoir les projets du Github en local
+
+1) Utilisation interactive avec python
+
+mettre les chemins des projets locaux dans le fichier project_paths.txt
 
 commande : python3 workflow_1.py
+
+1) Utilisation automatique avec bash
+
+modifier tous les paramètres necessaires dans le fichier workflow_1.sh
+
+commande : ./workflow_1.sh

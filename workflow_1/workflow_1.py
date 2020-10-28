@@ -4,7 +4,7 @@ import shutil
 from shutil import copyfile
 
 """
-    get the paths of the required scripts and directory from a file
+    get the paths of the required projects from a file
 """
 def get_paths(paths_file):
     ff = open(paths_file)
@@ -24,7 +24,7 @@ def generate_sequences(base_seq_path):
     nbr_sequence = input(" > nombre de séquences : ")
     size_sequence = input(" > taille des séquences : ")
     h_max = input(" > taille maximale des homopolymères : ")
-    return os.system("python3 "+paths_dict["sequence_generator"]+" "+base_seq_path+" "+nbr_sequence+" "+size_sequence+" "+h_max)
+    return os.system("python3 "+paths_dict["sequence_generator"]+"/sequence_generator.py "+base_seq_path+" "+nbr_sequence+" "+size_sequence+" "+h_max)
     
 """
     get the name of the base sequence file from the user, repeat until valid name is given
@@ -41,9 +41,9 @@ def get_seq_file(base_seq_path):
     add a primer at the beginning and the end of the sequences
 """
 def add_primer(base_seq_path, primer_seq_path):
-    sequence_primer_dir = paths_dict["sequence_primer_dir"]
-    return os.system("python3 "+sequence_primer_dir+"sequence_primer.py "+base_seq_path+" "+ \
-                     primer_seq_path+" "+sequence_primer_dir+"test_primer.fasta")
+    sequence_primer = paths_dict["sequence_primer"]
+    return os.system("python3 "+sequence_primer+"/sequence_primer.py "+base_seq_path+" "+ \
+                     primer_seq_path+" "+sequence_primer+"/test_primer.fasta")
 
 """
     get input parameters from the user to simulate the synthesis of the sequences
@@ -53,7 +53,7 @@ def synthetise(primer_seq_path, synthesis_path):
     i_error = input(" > taux d'erreur d'insertion : ")
     d_error = input(" > taux d'erreur de deletion : ")
     s_error = input(" > taux d'erreur de substitution : ")
-    return os.system("python3 "+paths_dict["synthesis_simulation"]+" -i "+primer_seq_path+" -o "+synthesis_path+ \
+    return os.system("python3 "+paths_dict["synthesis_simulation"]+"/synthesis_simulator.py -i "+primer_seq_path+" -o "+synthesis_path+ \
                      " -n "+nbr_synth+" --i_error "+i_error+" --d_error "+d_error+" --s_error "+s_error)
 
 """
@@ -77,7 +77,7 @@ def basecalling(sequencing_path, basecalling_path):
 
 print("___Début du processus___")
 
-paths_dict = get_paths("/udd/oboulle/Documents/workflow_global/workflow_1/script_paths.txt")
+paths_dict = get_paths("project_paths.txt")
 process_name = input(" nom du processus : ")
 try:
     os.mkdir(process_name)
