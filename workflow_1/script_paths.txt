@@ -1,6 +1,5 @@
 sequence_generator=/udd/oboulle/Documents/synthesis_simulation/sequence_generator/sequence_generator.py
 sequence_primer_dir=/udd/oboulle/Documents/synthesis_simulation/sequence_primer/
 synthesis_simulation=/udd/oboulle/Documents/synthesis_simulation/synthesis_simulator.py
-deep_simulator=/udd/oboulle/Documents/sequencing_simulation/deep_simulator/deep_simulator.sh
-DeepSimulator=/udd/oboulle/Documents/DeepSimulator
+deep_simulator=/udd/oboulle/Documents/sequencing_simulation/deep_simulator
 guppy_basecaller=/udd/oboulle/Documents/sequencing_simulation/basecalling/guppy-cpu_4.2.2/bin/guppy_basecaller

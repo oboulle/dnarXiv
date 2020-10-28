@@ -4,15 +4,15 @@
 ######### ===== Set the parameters here ====== #########
 #------------------------------------------------------#
 
-process_name="process" #name of the directory to save the generated files
+process_name="exemple" #name of the directory to save the generated files
 
 #----- parameters for sequence generation -----#
-random_seq=false #generate random sequences (true) or use an existing fasta file (false)
+random_seq=true #generate random sequences (true) or use an existing fasta file (false)
 seq_path="test/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated
 seq_gen_script="/udd/oboulle/Documents/synthesis_simulation/sequence_generator/sequence_generator.py" #script for the sequence generation
 nbr_seq="3" #number of sequences
-size_seq="200" #size of the sequences
+size_seq="100" #size of the sequences
 h_max="3" #maximum size for the homopolymeres
 
 #----- parameters for primer addition -----#
@@ -27,7 +27,7 @@ d_error=0.01 #deletion error rate
 s_error=0.01 #substitution error rate
 
 #----- parameters for sequencing -----#
-deep_simu_home="/udd/oboulle/Documents/DeepSimulator" #home of DeepSimulator
+deep_simu_home="/udd/oboulle/Documents/sequencing_simulation/deep_simulator" #home of DeepSimulator
 deep_simulator_script="/udd/oboulle/Documents/sequencing_simulation/deep_simulator/deep_simulator.sh" #script for the sequencing
 nbr_read=100 #number of read
 

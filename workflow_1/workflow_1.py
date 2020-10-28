@@ -61,7 +61,7 @@ def synthetise(primer_seq_path, synthesis_path):
 """
 def sequencing(synthesis_path, sequencing_path):
     nbr_read = input(" > nombre de lecture : ")
-    return os.system(paths_dict["deep_simulator"]+" -i "+synthesis_path+" -o "+sequencing_path+" -G 1 -H "+paths_dict["DeepSimulator"]+" -n "+nbr_read)
+    return os.system(paths_dict["deep_simulator"]+"/deep_simulator.sh -i "+synthesis_path+" -o "+sequencing_path+" -G 1 -H "+paths_dict["deep_simulator"]+" -n "+nbr_read)
 
 """
     apply the guppy basecalling
