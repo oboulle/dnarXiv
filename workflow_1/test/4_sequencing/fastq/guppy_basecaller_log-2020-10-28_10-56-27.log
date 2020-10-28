@@ -1,0 +1,320 @@
+2020-10-28 10:56:27.735331 [guppy/message] ONT Guppy basecalling software version 4.2.2+effbaf8
+config file:        /udd/oboulle/ont-guppy-cpu/data/dna_r9.4.1_450bps_hac.cfg
+model file:         /udd/oboulle/ont-guppy-cpu/data/template_r9.4.1_450bps_hac.jsn
+input path:         /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5
+save path:          /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fastq
+chunk size:         2000
+chunks per runner:  512
+records per file:   4000
+num basecallers:    1
+cpu mode:           ON
+threads per caller: 8
+
+2020-10-28 10:56:27.737475 [guppy/info] crashpad_handler not supported on this platform.
+2020-10-28 10:56:31.596099 [guppy/message] Found 100 fast5 files to process.
+2020-10-28 10:56:31.596169 [guppy/message] Init time: 3856 ms
+2020-10-28 10:56:31.725108 [guppy/info] Read '71489570-6d28-4ff7-8b73-08091cfcd3a1' from file "signal_molecule_617_(sequence_0)_71489570-6d28-4ff7-8b73-08091cfcd3a1.fast5" has been loaded.
+2020-10-28 10:56:31.725176 [guppy/info] Read '358cb222-10f4-45ad-b2a4-6b4fa3cdc4eb' from file "signal_molecule_337_(sequence_0)_358cb222-10f4-45ad-b2a4-6b4fa3cdc4eb.fast5" has been loaded.
+2020-10-28 10:56:31.725199 [guppy/info] Read '167248f6-5ad7-4271-8000-be522c12a30b' from file "signal_molecule_2200_(sequence_2)_167248f6-5ad7-4271-8000-be522c12a30b.fast5" has been loaded.
+2020-10-28 10:56:31.725226 [guppy/info] Read 'a5d8fe59-ca71-48cb-8d34-483552538c75' from file "signal_molecule_191_(sequence_0)_a5d8fe59-ca71-48cb-8d34-483552538c75.fast5" has been loaded.
+2020-10-28 10:56:31.725243 [guppy/info] Read '656c3e1f-3e6e-42f4-95f4-ab7df577cfd3' from file "signal_molecule_3234_(sequence_3)_656c3e1f-3e6e-42f4-95f4-ab7df577cfd3.fast5" has been loaded.
+2020-10-28 10:56:31.725261 [guppy/info] Read '058c19a4-923f-419c-b870-37440a81b8af' from file "signal_molecule_322_(sequence_0)_058c19a4-923f-419c-b870-37440a81b8af.fast5" has been loaded.
+2020-10-28 10:56:31.725278 [guppy/info] Read '2272f64d-a3a1-4d27-b9b2-363b4d596fb6' from file "signal_molecule_290_(sequence_0)_2272f64d-a3a1-4d27-b9b2-363b4d596fb6.fast5" has been loaded.
+2020-10-28 10:56:31.725294 [guppy/info] Read 'b114a6be-9f8d-42d1-8ce3-cd80f8cb4aa1' from file "signal_molecule_3611_(sequence_3)_b114a6be-9f8d-42d1-8ce3-cd80f8cb4aa1.fast5" has been loaded.
+2020-10-28 10:56:31.725312 [guppy/info] Read 'ec3a6b0b-9ce0-4589-8d7c-c476bd0d437b' from file "signal_molecule_1426_(sequence_1)_ec3a6b0b-9ce0-4589-8d7c-c476bd0d437b.fast5" has been loaded.
+2020-10-28 10:56:31.725328 [guppy/info] Read '0191bc92-0f41-441b-8ba8-8d4dec86660c' from file "signal_molecule_175_(sequence_0)_0191bc92-0f41-441b-8ba8-8d4dec86660c.fast5" has been loaded.
+2020-10-28 10:56:31.725345 [guppy/info] Read '789284ed-b15d-4420-b155-fa3e1f3536b2' from file "signal_molecule_971_(sequence_0)_789284ed-b15d-4420-b155-fa3e1f3536b2.fast5" has been loaded.
+2020-10-28 10:56:31.725361 [guppy/info] Read 'a1cf61b2-b1cd-4596-bb4b-6f3c4c1dee91' from file "signal_molecule_690_(sequence_0)_a1cf61b2-b1cd-4596-bb4b-6f3c4c1dee91.fast5" has been loaded.
+2020-10-28 10:56:31.725378 [guppy/info] Read 'beba85e6-5d58-4547-9b61-c132d543a04b' from file "signal_molecule_1838_(sequence_1)_beba85e6-5d58-4547-9b61-c132d543a04b.fast5" has been loaded.
+2020-10-28 10:56:31.725395 [guppy/info] Read 'c16f7623-5ca5-4440-a4e8-13da67c84ad3' from file "signal_molecule_3069_(sequence_3)_c16f7623-5ca5-4440-a4e8-13da67c84ad3.fast5" has been loaded.
+2020-10-28 10:56:31.725411 [guppy/info] Read '88e5d370-2afa-4d21-a3a1-b135431493df' from file "signal_molecule_3034_(sequence_3)_88e5d370-2afa-4d21-a3a1-b135431493df.fast5" has been loaded.
+2020-10-28 10:56:31.725428 [guppy/info] Read '6e7f283e-92a9-4134-a6d0-ea1bdcd563b0' from file "signal_molecule_804_(sequence_0)_6e7f283e-92a9-4134-a6d0-ea1bdcd563b0.fast5" has been loaded.
+2020-10-28 10:56:31.725445 [guppy/info] Read '8d3c4786-91a1-4aa6-921f-2a795459545c' from file "signal_molecule_3007_(sequence_3)_8d3c4786-91a1-4aa6-921f-2a795459545c.fast5" has been loaded.
+2020-10-28 10:56:31.725461 [guppy/info] Read '37889669-feb4-4a03-a9cf-3c94ed07ee25' from file "signal_molecule_3057_(sequence_3)_37889669-feb4-4a03-a9cf-3c94ed07ee25.fast5" has been loaded.
+2020-10-28 10:56:31.725488 [guppy/info] Read '583d436b-7ed1-414d-b265-13c7cbd6983c' from file "signal_molecule_2915_(sequence_2)_583d436b-7ed1-414d-b265-13c7cbd6983c.fast5" has been loaded.
+2020-10-28 10:56:31.725507 [guppy/info] Read '6fa0980e-7595-4692-a85f-59ebdd802459' from file "signal_molecule_3629_(sequence_3)_6fa0980e-7595-4692-a85f-59ebdd802459.fast5" has been loaded.
+2020-10-28 10:56:31.725569 [guppy/info] Read '0cc99c6b-e3fa-4030-a459-ea4a5dcaf02d' from file "signal_molecule_1647_(sequence_1)_0cc99c6b-e3fa-4030-a459-ea4a5dcaf02d.fast5" has been loaded.
+2020-10-28 10:56:31.725578 [guppy/info] Read '23b9e2f1-79ab-426e-927f-baa5391d02bd' from file "signal_molecule_172_(sequence_0)_23b9e2f1-79ab-426e-927f-baa5391d02bd.fast5" has been loaded.
+2020-10-28 10:56:31.725587 [guppy/info] Read 'c26ed354-d558-4f31-8521-d6b1e2704757' from file "signal_molecule_849_(sequence_0)_c26ed354-d558-4f31-8521-d6b1e2704757.fast5" has been loaded.
+2020-10-28 10:56:31.725595 [guppy/info] Read '7c122ae3-e7a7-40a1-8389-a3b116e74e3d' from file "signal_molecule_1033_(sequence_1)_7c122ae3-e7a7-40a1-8389-a3b116e74e3d.fast5" has been loaded.
+2020-10-28 10:56:31.725603 [guppy/info] Read 'b4ce33a0-d694-4d92-af44-28f478fda675' from file "signal_molecule_2911_(sequence_2)_b4ce33a0-d694-4d92-af44-28f478fda675.fast5" has been loaded.
+2020-10-28 10:56:31.725611 [guppy/info] Read '116be3ce-11c4-4004-938a-93d4b5019401' from file "signal_molecule_3169_(sequence_3)_116be3ce-11c4-4004-938a-93d4b5019401.fast5" has been loaded.
+2020-10-28 10:56:31.725620 [guppy/info] Read '348eeb24-6149-4290-8ca0-1a877cb5f355' from file "signal_molecule_1433_(sequence_1)_348eeb24-6149-4290-8ca0-1a877cb5f355.fast5" has been loaded.
+2020-10-28 10:56:31.725628 [guppy/info] Read '980564b9-3e20-4f79-8760-2bedaf9f826e' from file "signal_molecule_2067_(sequence_2)_980564b9-3e20-4f79-8760-2bedaf9f826e.fast5" has been loaded.
+2020-10-28 10:56:31.725636 [guppy/info] Read '2d8dcb66-0978-4edc-bdde-1e6aae450988' from file "signal_molecule_2022_(sequence_2)_2d8dcb66-0978-4edc-bdde-1e6aae450988.fast5" has been loaded.
+2020-10-28 10:56:31.725644 [guppy/info] Read '0bf03765-d7c0-48cd-ab51-20d6a006a816' from file "signal_molecule_2272_(sequence_2)_0bf03765-d7c0-48cd-ab51-20d6a006a816.fast5" has been loaded.
+2020-10-28 10:56:31.725652 [guppy/info] Read 'ed3063a3-5dc7-492f-970d-633ba735112c' from file "signal_molecule_874_(sequence_0)_ed3063a3-5dc7-492f-970d-633ba735112c.fast5" has been loaded.
+2020-10-28 10:56:31.725660 [guppy/info] Read '4656bc39-f2ee-4fff-ba7c-134ca4ada6ea' from file "signal_molecule_1214_(sequence_1)_4656bc39-f2ee-4fff-ba7c-134ca4ada6ea.fast5" has been loaded.
+2020-10-28 10:56:31.725668 [guppy/info] Read '2cee6ee0-4147-45ba-9b74-e2210e64d1d4' from file "signal_molecule_840_(sequence_0)_2cee6ee0-4147-45ba-9b74-e2210e64d1d4.fast5" has been loaded.
+2020-10-28 10:56:31.725676 [guppy/info] Read '54c6e999-9c9a-45d4-af09-c7ed69898f91' from file "signal_molecule_1164_(sequence_1)_54c6e999-9c9a-45d4-af09-c7ed69898f91.fast5" has been loaded.
+2020-10-28 10:56:31.725684 [guppy/info] Read '3c56fb19-f499-421d-965e-c2e201cacb0c' from file "signal_molecule_3126_(sequence_3)_3c56fb19-f499-421d-965e-c2e201cacb0c.fast5" has been loaded.
+2020-10-28 10:56:31.725692 [guppy/info] Read '1e3a4f06-a3da-411d-a4a9-cc91df17a5c8' from file "signal_molecule_889_(sequence_0)_1e3a4f06-a3da-411d-a4a9-cc91df17a5c8.fast5" has been loaded.
+2020-10-28 10:56:31.725700 [guppy/info] Read 'b76728fa-b9b7-4a02-ba5d-51dd942540db' from file "signal_molecule_944_(sequence_0)_b76728fa-b9b7-4a02-ba5d-51dd942540db.fast5" has been loaded.
+2020-10-28 10:56:31.725708 [guppy/info] Read '7f859fbb-742c-4c1b-95d3-3eb5ab501262' from file "signal_molecule_2095_(sequence_2)_7f859fbb-742c-4c1b-95d3-3eb5ab501262.fast5" has been loaded.
+2020-10-28 10:56:31.725716 [guppy/info] Read 'bb433c8c-484d-4231-8485-af55a4a683b2' from file "signal_molecule_2610_(sequence_2)_bb433c8c-484d-4231-8485-af55a4a683b2.fast5" has been loaded.
+2020-10-28 10:56:31.725731 [guppy/info] Read 'bdac0eca-f49f-4a15-ac33-bbe870596fc0' from file "signal_molecule_2184_(sequence_2)_bdac0eca-f49f-4a15-ac33-bbe870596fc0.fast5" has been loaded.
+2020-10-28 10:56:31.725740 [guppy/info] Read '2d2f2281-dd11-4b61-91ed-8f1d6b4a8112' from file "signal_molecule_1956_(sequence_1)_2d2f2281-dd11-4b61-91ed-8f1d6b4a8112.fast5" has been loaded.
+2020-10-28 10:56:31.725748 [guppy/info] Read 'd2cb91e7-bcf0-4ef0-a3cf-96fed5dea929' from file "signal_molecule_3410_(sequence_3)_d2cb91e7-bcf0-4ef0-a3cf-96fed5dea929.fast5" has been loaded.
+2020-10-28 10:56:31.725756 [guppy/info] Read '827cac8a-f23a-440e-b98b-41fee3e299f0' from file "signal_molecule_636_(sequence_0)_827cac8a-f23a-440e-b98b-41fee3e299f0.fast5" has been loaded.
+2020-10-28 10:56:31.725764 [guppy/info] Read '9c4f2d8c-90b3-4f49-aadd-117e67069359' from file "signal_molecule_2560_(sequence_2)_9c4f2d8c-90b3-4f49-aadd-117e67069359.fast5" has been loaded.
+2020-10-28 10:56:31.725772 [guppy/info] Read '8ae842b4-aed3-418f-944b-5124d194c11c' from file "signal_molecule_698_(sequence_0)_8ae842b4-aed3-418f-944b-5124d194c11c.fast5" has been loaded.
+2020-10-28 10:56:31.725780 [guppy/info] Read '5d12209f-7707-4e2c-99a9-964d0e0ebab3' from file "signal_molecule_1088_(sequence_1)_5d12209f-7707-4e2c-99a9-964d0e0ebab3.fast5" has been loaded.
+2020-10-28 10:56:31.725788 [guppy/info] Read 'b557da1b-fabb-43b5-9500-9eef6dee6ff5' from file "signal_molecule_2405_(sequence_2)_b557da1b-fabb-43b5-9500-9eef6dee6ff5.fast5" has been loaded.
+2020-10-28 10:56:31.725796 [guppy/info] Read '3b3aee09-d63a-4758-9d41-177db5069e88' from file "signal_molecule_1121_(sequence_1)_3b3aee09-d63a-4758-9d41-177db5069e88.fast5" has been loaded.
+2020-10-28 10:56:31.725804 [guppy/info] Read 'a59783b7-846b-4204-b265-48044306b24e' from file "signal_molecule_3654_(sequence_3)_a59783b7-846b-4204-b265-48044306b24e.fast5" has been loaded.
+2020-10-28 10:56:31.725813 [guppy/info] Read 'e03fc0ba-73ec-40c6-921c-3545842c2354' from file "signal_molecule_3546_(sequence_3)_e03fc0ba-73ec-40c6-921c-3545842c2354.fast5" has been loaded.
+2020-10-28 10:56:31.725821 [guppy/info] Read '9e6ad786-e5fd-4d77-a0d2-b6da9acbe337' from file "signal_molecule_1100_(sequence_1)_9e6ad786-e5fd-4d77-a0d2-b6da9acbe337.fast5" has been loaded.
+2020-10-28 10:56:31.725829 [guppy/info] Read 'd0c5f1b2-b3ed-4997-bdab-aeb7e2215b58' from file "signal_molecule_1993_(sequence_1)_d0c5f1b2-b3ed-4997-bdab-aeb7e2215b58.fast5" has been loaded.
+2020-10-28 10:56:31.725837 [guppy/info] Read '52115f5c-5c19-4250-945e-48adbf6099c6' from file "signal_molecule_2540_(sequence_2)_52115f5c-5c19-4250-945e-48adbf6099c6.fast5" has been loaded.
+2020-10-28 10:56:31.725845 [guppy/info] Read '3efc740e-2310-4dbb-85a4-22cc6a9960c1' from file "signal_molecule_3373_(sequence_3)_3efc740e-2310-4dbb-85a4-22cc6a9960c1.fast5" has been loaded.
+2020-10-28 10:56:31.725853 [guppy/info] Read '9cc74fc2-7b7e-4c4e-806f-19aaec5bb138' from file "signal_molecule_2694_(sequence_2)_9cc74fc2-7b7e-4c4e-806f-19aaec5bb138.fast5" has been loaded.
+2020-10-28 10:56:31.725861 [guppy/info] Read 'bdeebd23-3a13-4449-89eb-af5e0a0ee861' from file "signal_molecule_236_(sequence_0)_bdeebd23-3a13-4449-89eb-af5e0a0ee861.fast5" has been loaded.
+2020-10-28 10:56:31.725869 [guppy/info] Read '13e118ea-6033-43d0-87dd-849c2f45e658' from file "signal_molecule_2076_(sequence_2)_13e118ea-6033-43d0-87dd-849c2f45e658.fast5" has been loaded.
+2020-10-28 10:56:31.725878 [guppy/info] Read 'baf8d18b-5356-48fe-9d11-955a7de7ca13' from file "signal_molecule_750_(sequence_0)_baf8d18b-5356-48fe-9d11-955a7de7ca13.fast5" has been loaded.
+2020-10-28 10:56:31.725886 [guppy/info] Read '486f91fd-fe92-4636-a6a5-e894f6c62a0e' from file "signal_molecule_3237_(sequence_3)_486f91fd-fe92-4636-a6a5-e894f6c62a0e.fast5" has been loaded.
+2020-10-28 10:56:31.725894 [guppy/info] Read 'b8c3b149-a5a8-40b3-8c81-93a01400f34e' from file "signal_molecule_1138_(sequence_1)_b8c3b149-a5a8-40b3-8c81-93a01400f34e.fast5" has been loaded.
+2020-10-28 10:56:31.725902 [guppy/info] Read 'b6af121a-1626-48b7-8fb7-e7a6f51b4745' from file "signal_molecule_2455_(sequence_2)_b6af121a-1626-48b7-8fb7-e7a6f51b4745.fast5" has been loaded.
+2020-10-28 10:56:31.725912 [guppy/info] Read '99200c45-d9cf-4c27-adc3-71aa9f16a7c9' from file "signal_molecule_754_(sequence_0)_99200c45-d9cf-4c27-adc3-71aa9f16a7c9.fast5" has been loaded.
+2020-10-28 10:56:31.725921 [guppy/info] Read 'ef0d03d0-c112-4ba4-b05b-a9ee57db1b22' from file "signal_molecule_1385_(sequence_1)_ef0d03d0-c112-4ba4-b05b-a9ee57db1b22.fast5" has been loaded.
+2020-10-28 10:56:31.725929 [guppy/info] Read '14d1c12d-29bb-439e-99ae-055a030deefc' from file "signal_molecule_1085_(sequence_1)_14d1c12d-29bb-439e-99ae-055a030deefc.fast5" has been loaded.
+2020-10-28 10:56:31.725937 [guppy/info] Read '0cdc5c37-5881-46e2-9dfd-5b4d7b1b08b8' from file "signal_molecule_2273_(sequence_2)_0cdc5c37-5881-46e2-9dfd-5b4d7b1b08b8.fast5" has been loaded.
+2020-10-28 10:56:31.725945 [guppy/info] Read '7a14333f-4645-4a36-8384-e2ebbf4e32c1' from file "signal_molecule_897_(sequence_0)_7a14333f-4645-4a36-8384-e2ebbf4e32c1.fast5" has been loaded.
+2020-10-28 10:56:31.725953 [guppy/info] Read 'da466919-8cbc-4869-9e91-1fc54bbec55b' from file "signal_molecule_1503_(sequence_1)_da466919-8cbc-4869-9e91-1fc54bbec55b.fast5" has been loaded.
+2020-10-28 10:56:31.725961 [guppy/info] Read 'f92136d4-3e8e-4d5a-947d-420183d5a5dc' from file "signal_molecule_1520_(sequence_1)_f92136d4-3e8e-4d5a-947d-420183d5a5dc.fast5" has been loaded.
+2020-10-28 10:56:31.725969 [guppy/info] Read '6f018de9-938c-4fcb-911d-585f2f0e441b' from file "signal_molecule_1070_(sequence_1)_6f018de9-938c-4fcb-911d-585f2f0e441b.fast5" has been loaded.
+2020-10-28 10:56:31.725977 [guppy/info] Read '8d331cb2-a205-49ba-b49b-9fc317c7b112' from file "signal_molecule_1590_(sequence_1)_8d331cb2-a205-49ba-b49b-9fc317c7b112.fast5" has been loaded.
+2020-10-28 10:56:31.725985 [guppy/info] Read '81fe9ba9-3c03-430f-b6c1-72c98c5c4fb6' from file "signal_molecule_2224_(sequence_2)_81fe9ba9-3c03-430f-b6c1-72c98c5c4fb6.fast5" has been loaded.
+2020-10-28 10:56:31.725993 [guppy/info] Read 'a0203da2-411e-4d36-a3a5-70dfbf04010a' from file "signal_molecule_76_(sequence_0)_a0203da2-411e-4d36-a3a5-70dfbf04010a.fast5" has been loaded.
+2020-10-28 10:56:31.726001 [guppy/info] Read 'cebf8aaf-402e-419b-851b-cea0fc41eabf' from file "signal_molecule_2503_(sequence_2)_cebf8aaf-402e-419b-851b-cea0fc41eabf.fast5" has been loaded.
+2020-10-28 10:56:31.726009 [guppy/info] Read '5ec31ca0-8c44-4e7c-8495-52a7e5e1a156' from file "signal_molecule_1497_(sequence_1)_5ec31ca0-8c44-4e7c-8495-52a7e5e1a156.fast5" has been loaded.
+2020-10-28 10:56:31.726017 [guppy/info] Read 'f3ca208e-9e22-4600-b6a6-a93b736c6da0' from file "signal_molecule_2658_(sequence_2)_f3ca208e-9e22-4600-b6a6-a93b736c6da0.fast5" has been loaded.
+2020-10-28 10:56:31.726025 [guppy/info] Read 'f2921e3d-6fde-4f83-b910-6d83f376eb5a' from file "signal_molecule_3878_(sequence_3)_f2921e3d-6fde-4f83-b910-6d83f376eb5a.fast5" has been loaded.
+2020-10-28 10:56:31.726032 [guppy/info] Read 'a0f51fc9-1663-4d35-beb1-7a396c876106' from file "signal_molecule_3910_(sequence_3)_a0f51fc9-1663-4d35-beb1-7a396c876106.fast5" has been loaded.
+2020-10-28 10:56:31.726042 [guppy/info] Read 'b9188307-9daa-4333-bdcb-e1fe7f336009' from file "signal_molecule_258_(sequence_0)_b9188307-9daa-4333-bdcb-e1fe7f336009.fast5" has been loaded.
+2020-10-28 10:56:31.726051 [guppy/info] Read 'b08d2183-d16e-4f42-8ab1-a9a1863d091d' from file "signal_molecule_691_(sequence_0)_b08d2183-d16e-4f42-8ab1-a9a1863d091d.fast5" has been loaded.
+2020-10-28 10:56:31.726059 [guppy/info] Read '0aee7161-6a9f-469d-8098-f1b6d020de1c' from file "signal_molecule_2579_(sequence_2)_0aee7161-6a9f-469d-8098-f1b6d020de1c.fast5" has been loaded.
+2020-10-28 10:56:31.726067 [guppy/info] Read '67204620-d622-4e9f-94bf-264c9bbded9f' from file "signal_molecule_1047_(sequence_1)_67204620-d622-4e9f-94bf-264c9bbded9f.fast5" has been loaded.
+2020-10-28 10:56:31.726076 [guppy/info] Read '89c4bfae-eb6c-4db4-9ea3-3d4b8a4abce7' from file "signal_molecule_2870_(sequence_2)_89c4bfae-eb6c-4db4-9ea3-3d4b8a4abce7.fast5" has been loaded.
+2020-10-28 10:56:31.726084 [guppy/info] Read '17f357a2-395c-4d40-85b5-de6bb18d50c1' from file "signal_molecule_1916_(sequence_1)_17f357a2-395c-4d40-85b5-de6bb18d50c1.fast5" has been loaded.
+2020-10-28 10:56:31.726094 [guppy/info] Read '0e5bc39d-4cec-47a8-8b0e-914dca6949e8' from file "signal_molecule_1801_(sequence_1)_0e5bc39d-4cec-47a8-8b0e-914dca6949e8.fast5" has been loaded.
+2020-10-28 10:56:31.726102 [guppy/info] Read '7012afeb-08ea-4f2b-aef9-a349a6650ef7' from file "signal_molecule_643_(sequence_0)_7012afeb-08ea-4f2b-aef9-a349a6650ef7.fast5" has been loaded.
+2020-10-28 10:56:31.726111 [guppy/info] Read 'a17f3e00-3f87-4357-aaaa-956ac833b6ed' from file "signal_molecule_1224_(sequence_1)_a17f3e00-3f87-4357-aaaa-956ac833b6ed.fast5" has been loaded.
+2020-10-28 10:56:31.726119 [guppy/info] Read '34d527da-7f09-47fc-83ef-16702a48493d' from file "signal_molecule_2675_(sequence_2)_34d527da-7f09-47fc-83ef-16702a48493d.fast5" has been loaded.
+2020-10-28 10:56:31.726127 [guppy/info] Read 'a648e4bd-39af-4cdc-94bd-cb30d8f329a8' from file "signal_molecule_2423_(sequence_2)_a648e4bd-39af-4cdc-94bd-cb30d8f329a8.fast5" has been loaded.
+2020-10-28 10:56:31.726135 [guppy/info] Read 'c2d2e4e5-5224-41d4-8e07-e2d640834af1' from file "signal_molecule_508_(sequence_0)_c2d2e4e5-5224-41d4-8e07-e2d640834af1.fast5" has been loaded.
+2020-10-28 10:56:31.726142 [guppy/info] Read 'b797fdd1-b4db-4f5e-b9bb-7862315ccad7' from file "signal_molecule_1581_(sequence_1)_b797fdd1-b4db-4f5e-b9bb-7862315ccad7.fast5" has been loaded.
+2020-10-28 10:56:31.726150 [guppy/info] Read '5cbf7a3f-a376-469f-b443-d4358386be52' from file "signal_molecule_1262_(sequence_1)_5cbf7a3f-a376-469f-b443-d4358386be52.fast5" has been loaded.
+2020-10-28 10:56:31.727231 [guppy/info] Read '172962b7-3aa6-4221-8e56-8efd4721ba74' from file "signal_molecule_831_(sequence_0)_172962b7-3aa6-4221-8e56-8efd4721ba74.fast5" has been loaded.
+2020-10-28 10:56:31.728317 [guppy/info] Read 'e272019c-bb45-4752-a8a4-d94fedb52402' from file "signal_molecule_2097_(sequence_2)_e272019c-bb45-4752-a8a4-d94fedb52402.fast5" has been loaded.
+2020-10-28 10:56:31.729403 [guppy/info] Read '87bdd67c-105e-469b-bafa-c8154c76dade' from file "signal_molecule_1318_(sequence_1)_87bdd67c-105e-469b-bafa-c8154c76dade.fast5" has been loaded.
+2020-10-28 10:56:31.730526 [guppy/info] Read '3b5ff810-0621-4573-aa4d-3082ae60bd68' from file "signal_molecule_502_(sequence_0)_3b5ff810-0621-4573-aa4d-3082ae60bd68.fast5" has been loaded.
+2020-10-28 10:56:31.731640 [guppy/info] Read '43a6bec4-acae-48d5-86a9-c8eaec48c41b' from file "signal_molecule_3449_(sequence_3)_43a6bec4-acae-48d5-86a9-c8eaec48c41b.fast5" has been loaded.
+2020-10-28 10:56:31.733943 [guppy/info] Read 'e51b9148-ec3f-4379-871e-99a5c1e58bb7' from file "signal_molecule_3563_(sequence_3)_e51b9148-ec3f-4379-871e-99a5c1e58bb7.fast5" has been loaded.
+2020-10-28 10:56:31.736128 [guppy/info] Read '334ebd8f-08d1-4446-ad30-549840f96cd1' from file "signal_molecule_2677_(sequence_2)_334ebd8f-08d1-4446-ad30-549840f96cd1.fast5" has been loaded.
+2020-10-28 10:56:31.737244 [guppy/info] Read 'd1cd31f4-b662-4511-887f-a81dc361795f' from file "signal_molecule_784_(sequence_0)_d1cd31f4-b662-4511-887f-a81dc361795f.fast5" has been loaded.
+2020-10-28 10:56:31.738338 [guppy/info] Read '7c494db1-b3a0-431e-a466-c91d48ec5d7b' from file "signal_molecule_2866_(sequence_2)_7c494db1-b3a0-431e-a466-c91d48ec5d7b.fast5" has been loaded.
+2020-10-28 10:56:31.738401 [guppy/info] Dispatched batch 0 containing 100 inputs:
+2020-10-28 10:56:31.738431 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_617_(sequence_0)_71489570-6d28-4ff7-8b73-08091cfcd3a1.fast5
+2020-10-28 10:56:31.738440 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_337_(sequence_0)_358cb222-10f4-45ad-b2a4-6b4fa3cdc4eb.fast5
+2020-10-28 10:56:31.738446 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2200_(sequence_2)_167248f6-5ad7-4271-8000-be522c12a30b.fast5
+2020-10-28 10:56:31.738456 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_191_(sequence_0)_a5d8fe59-ca71-48cb-8d34-483552538c75.fast5
+2020-10-28 10:56:31.738462 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3234_(sequence_3)_656c3e1f-3e6e-42f4-95f4-ab7df577cfd3.fast5
+2020-10-28 10:56:31.738468 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_322_(sequence_0)_058c19a4-923f-419c-b870-37440a81b8af.fast5
+2020-10-28 10:56:31.738473 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_290_(sequence_0)_2272f64d-a3a1-4d27-b9b2-363b4d596fb6.fast5
+2020-10-28 10:56:31.738478 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3611_(sequence_3)_b114a6be-9f8d-42d1-8ce3-cd80f8cb4aa1.fast5
+2020-10-28 10:56:31.738483 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1426_(sequence_1)_ec3a6b0b-9ce0-4589-8d7c-c476bd0d437b.fast5
+2020-10-28 10:56:31.738488 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_175_(sequence_0)_0191bc92-0f41-441b-8ba8-8d4dec86660c.fast5
+2020-10-28 10:56:31.738493 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_971_(sequence_0)_789284ed-b15d-4420-b155-fa3e1f3536b2.fast5
+2020-10-28 10:56:31.738498 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_690_(sequence_0)_a1cf61b2-b1cd-4596-bb4b-6f3c4c1dee91.fast5
+2020-10-28 10:56:31.738503 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1838_(sequence_1)_beba85e6-5d58-4547-9b61-c132d543a04b.fast5
+2020-10-28 10:56:31.738509 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3069_(sequence_3)_c16f7623-5ca5-4440-a4e8-13da67c84ad3.fast5
+2020-10-28 10:56:31.738523 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3034_(sequence_3)_88e5d370-2afa-4d21-a3a1-b135431493df.fast5
+2020-10-28 10:56:31.738529 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_804_(sequence_0)_6e7f283e-92a9-4134-a6d0-ea1bdcd563b0.fast5
+2020-10-28 10:56:31.738534 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3007_(sequence_3)_8d3c4786-91a1-4aa6-921f-2a795459545c.fast5
+2020-10-28 10:56:31.738539 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3057_(sequence_3)_37889669-feb4-4a03-a9cf-3c94ed07ee25.fast5
+2020-10-28 10:56:31.738544 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2915_(sequence_2)_583d436b-7ed1-414d-b265-13c7cbd6983c.fast5
+2020-10-28 10:56:31.738549 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3629_(sequence_3)_6fa0980e-7595-4692-a85f-59ebdd802459.fast5
+2020-10-28 10:56:31.738554 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1647_(sequence_1)_0cc99c6b-e3fa-4030-a459-ea4a5dcaf02d.fast5
+2020-10-28 10:56:31.738559 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_172_(sequence_0)_23b9e2f1-79ab-426e-927f-baa5391d02bd.fast5
+2020-10-28 10:56:31.738564 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_849_(sequence_0)_c26ed354-d558-4f31-8521-d6b1e2704757.fast5
+2020-10-28 10:56:31.738572 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1033_(sequence_1)_7c122ae3-e7a7-40a1-8389-a3b116e74e3d.fast5
+2020-10-28 10:56:31.738578 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2911_(sequence_2)_b4ce33a0-d694-4d92-af44-28f478fda675.fast5
+2020-10-28 10:56:31.738583 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3169_(sequence_3)_116be3ce-11c4-4004-938a-93d4b5019401.fast5
+2020-10-28 10:56:31.738588 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1433_(sequence_1)_348eeb24-6149-4290-8ca0-1a877cb5f355.fast5
+2020-10-28 10:56:31.738593 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2067_(sequence_2)_980564b9-3e20-4f79-8760-2bedaf9f826e.fast5
+2020-10-28 10:56:31.738598 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2022_(sequence_2)_2d8dcb66-0978-4edc-bdde-1e6aae450988.fast5
+2020-10-28 10:56:31.738603 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2272_(sequence_2)_0bf03765-d7c0-48cd-ab51-20d6a006a816.fast5
+2020-10-28 10:56:31.738608 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_874_(sequence_0)_ed3063a3-5dc7-492f-970d-633ba735112c.fast5
+2020-10-28 10:56:31.738613 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1214_(sequence_1)_4656bc39-f2ee-4fff-ba7c-134ca4ada6ea.fast5
+2020-10-28 10:56:31.738618 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_840_(sequence_0)_2cee6ee0-4147-45ba-9b74-e2210e64d1d4.fast5
+2020-10-28 10:56:31.738624 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1164_(sequence_1)_54c6e999-9c9a-45d4-af09-c7ed69898f91.fast5
+2020-10-28 10:56:31.738629 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3126_(sequence_3)_3c56fb19-f499-421d-965e-c2e201cacb0c.fast5
+2020-10-28 10:56:31.738634 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_889_(sequence_0)_1e3a4f06-a3da-411d-a4a9-cc91df17a5c8.fast5
+2020-10-28 10:56:31.738639 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_944_(sequence_0)_b76728fa-b9b7-4a02-ba5d-51dd942540db.fast5
+2020-10-28 10:56:31.738644 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2095_(sequence_2)_7f859fbb-742c-4c1b-95d3-3eb5ab501262.fast5
+2020-10-28 10:56:31.738649 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2610_(sequence_2)_bb433c8c-484d-4231-8485-af55a4a683b2.fast5
+2020-10-28 10:56:31.738654 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2184_(sequence_2)_bdac0eca-f49f-4a15-ac33-bbe870596fc0.fast5
+2020-10-28 10:56:31.738659 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1956_(sequence_1)_2d2f2281-dd11-4b61-91ed-8f1d6b4a8112.fast5
+2020-10-28 10:56:31.738664 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3410_(sequence_3)_d2cb91e7-bcf0-4ef0-a3cf-96fed5dea929.fast5
+2020-10-28 10:56:31.738670 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_636_(sequence_0)_827cac8a-f23a-440e-b98b-41fee3e299f0.fast5
+2020-10-28 10:56:31.738676 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2560_(sequence_2)_9c4f2d8c-90b3-4f49-aadd-117e67069359.fast5
+2020-10-28 10:56:31.738682 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_698_(sequence_0)_8ae842b4-aed3-418f-944b-5124d194c11c.fast5
+2020-10-28 10:56:31.738687 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1088_(sequence_1)_5d12209f-7707-4e2c-99a9-964d0e0ebab3.fast5
+2020-10-28 10:56:31.738692 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2405_(sequence_2)_b557da1b-fabb-43b5-9500-9eef6dee6ff5.fast5
+2020-10-28 10:56:31.738697 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1121_(sequence_1)_3b3aee09-d63a-4758-9d41-177db5069e88.fast5
+2020-10-28 10:56:31.738702 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3654_(sequence_3)_a59783b7-846b-4204-b265-48044306b24e.fast5
+2020-10-28 10:56:31.738708 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3546_(sequence_3)_e03fc0ba-73ec-40c6-921c-3545842c2354.fast5
+2020-10-28 10:56:31.738713 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1100_(sequence_1)_9e6ad786-e5fd-4d77-a0d2-b6da9acbe337.fast5
+2020-10-28 10:56:31.738718 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1993_(sequence_1)_d0c5f1b2-b3ed-4997-bdab-aeb7e2215b58.fast5
+2020-10-28 10:56:31.738723 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2540_(sequence_2)_52115f5c-5c19-4250-945e-48adbf6099c6.fast5
+2020-10-28 10:56:31.738728 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3373_(sequence_3)_3efc740e-2310-4dbb-85a4-22cc6a9960c1.fast5
+2020-10-28 10:56:31.738733 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2694_(sequence_2)_9cc74fc2-7b7e-4c4e-806f-19aaec5bb138.fast5
+2020-10-28 10:56:31.738738 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_236_(sequence_0)_bdeebd23-3a13-4449-89eb-af5e0a0ee861.fast5
+2020-10-28 10:56:31.738743 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2076_(sequence_2)_13e118ea-6033-43d0-87dd-849c2f45e658.fast5
+2020-10-28 10:56:31.738748 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_750_(sequence_0)_baf8d18b-5356-48fe-9d11-955a7de7ca13.fast5
+2020-10-28 10:56:31.738754 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3237_(sequence_3)_486f91fd-fe92-4636-a6a5-e894f6c62a0e.fast5
+2020-10-28 10:56:31.738759 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1138_(sequence_1)_b8c3b149-a5a8-40b3-8c81-93a01400f34e.fast5
+2020-10-28 10:56:31.738764 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2455_(sequence_2)_b6af121a-1626-48b7-8fb7-e7a6f51b4745.fast5
+2020-10-28 10:56:31.738769 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_754_(sequence_0)_99200c45-d9cf-4c27-adc3-71aa9f16a7c9.fast5
+2020-10-28 10:56:31.738774 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1385_(sequence_1)_ef0d03d0-c112-4ba4-b05b-a9ee57db1b22.fast5
+2020-10-28 10:56:31.738781 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1085_(sequence_1)_14d1c12d-29bb-439e-99ae-055a030deefc.fast5
+2020-10-28 10:56:31.738786 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2273_(sequence_2)_0cdc5c37-5881-46e2-9dfd-5b4d7b1b08b8.fast5
+2020-10-28 10:56:31.738791 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_897_(sequence_0)_7a14333f-4645-4a36-8384-e2ebbf4e32c1.fast5
+2020-10-28 10:56:31.738796 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1503_(sequence_1)_da466919-8cbc-4869-9e91-1fc54bbec55b.fast5
+2020-10-28 10:56:31.738801 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1520_(sequence_1)_f92136d4-3e8e-4d5a-947d-420183d5a5dc.fast5
+2020-10-28 10:56:31.738807 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1070_(sequence_1)_6f018de9-938c-4fcb-911d-585f2f0e441b.fast5
+2020-10-28 10:56:31.738812 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1590_(sequence_1)_8d331cb2-a205-49ba-b49b-9fc317c7b112.fast5
+2020-10-28 10:56:31.738817 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2224_(sequence_2)_81fe9ba9-3c03-430f-b6c1-72c98c5c4fb6.fast5
+2020-10-28 10:56:31.738822 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_76_(sequence_0)_a0203da2-411e-4d36-a3a5-70dfbf04010a.fast5
+2020-10-28 10:56:31.738827 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2503_(sequence_2)_cebf8aaf-402e-419b-851b-cea0fc41eabf.fast5
+2020-10-28 10:56:31.738832 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1497_(sequence_1)_5ec31ca0-8c44-4e7c-8495-52a7e5e1a156.fast5
+2020-10-28 10:56:31.738837 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2658_(sequence_2)_f3ca208e-9e22-4600-b6a6-a93b736c6da0.fast5
+2020-10-28 10:56:31.738842 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3878_(sequence_3)_f2921e3d-6fde-4f83-b910-6d83f376eb5a.fast5
+2020-10-28 10:56:31.738847 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3910_(sequence_3)_a0f51fc9-1663-4d35-beb1-7a396c876106.fast5
+2020-10-28 10:56:31.738852 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_258_(sequence_0)_b9188307-9daa-4333-bdcb-e1fe7f336009.fast5
+2020-10-28 10:56:31.738857 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_691_(sequence_0)_b08d2183-d16e-4f42-8ab1-a9a1863d091d.fast5
+2020-10-28 10:56:31.738863 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2579_(sequence_2)_0aee7161-6a9f-469d-8098-f1b6d020de1c.fast5
+2020-10-28 10:56:31.738868 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1047_(sequence_1)_67204620-d622-4e9f-94bf-264c9bbded9f.fast5
+2020-10-28 10:56:31.738873 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2870_(sequence_2)_89c4bfae-eb6c-4db4-9ea3-3d4b8a4abce7.fast5
+2020-10-28 10:56:31.738878 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1916_(sequence_1)_17f357a2-395c-4d40-85b5-de6bb18d50c1.fast5
+2020-10-28 10:56:31.738885 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1801_(sequence_1)_0e5bc39d-4cec-47a8-8b0e-914dca6949e8.fast5
+2020-10-28 10:56:31.738890 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_643_(sequence_0)_7012afeb-08ea-4f2b-aef9-a349a6650ef7.fast5
+2020-10-28 10:56:31.738895 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1224_(sequence_1)_a17f3e00-3f87-4357-aaaa-956ac833b6ed.fast5
+2020-10-28 10:56:31.738900 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2675_(sequence_2)_34d527da-7f09-47fc-83ef-16702a48493d.fast5
+2020-10-28 10:56:31.738905 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2423_(sequence_2)_a648e4bd-39af-4cdc-94bd-cb30d8f329a8.fast5
+2020-10-28 10:56:31.738910 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_508_(sequence_0)_c2d2e4e5-5224-41d4-8e07-e2d640834af1.fast5
+2020-10-28 10:56:31.738916 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1581_(sequence_1)_b797fdd1-b4db-4f5e-b9bb-7862315ccad7.fast5
+2020-10-28 10:56:31.738921 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1262_(sequence_1)_5cbf7a3f-a376-469f-b443-d4358386be52.fast5
+2020-10-28 10:56:31.738926 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_831_(sequence_0)_172962b7-3aa6-4221-8e56-8efd4721ba74.fast5
+2020-10-28 10:56:31.738931 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2097_(sequence_2)_e272019c-bb45-4752-a8a4-d94fedb52402.fast5
+2020-10-28 10:56:31.738936 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_1318_(sequence_1)_87bdd67c-105e-469b-bafa-c8154c76dade.fast5
+2020-10-28 10:56:31.738941 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_502_(sequence_0)_3b5ff810-0621-4573-aa4d-3082ae60bd68.fast5
+2020-10-28 10:56:31.738946 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3449_(sequence_3)_43a6bec4-acae-48d5-86a9-c8eaec48c41b.fast5
+2020-10-28 10:56:31.738951 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_3563_(sequence_3)_e51b9148-ec3f-4379-871e-99a5c1e58bb7.fast5
+2020-10-28 10:56:31.738956 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2677_(sequence_2)_334ebd8f-08d1-4446-ad30-549840f96cd1.fast5
+2020-10-28 10:56:31.738961 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_784_(sequence_0)_d1cd31f4-b662-4511-887f-a81dc361795f.fast5
+2020-10-28 10:56:31.738966 [guppy/info] Batch input 0 : /udd/oboulle/Documents/workflow_global/workflow_1/test/4_sequencing/fast5/signal_molecule_2866_(sequence_2)_7c494db1-b3a0-431e-a466-c91d48ec5d7b.fast5
+2020-10-28 10:56:32.340229 [guppy/info] Read '71489570-6d28-4ff7-8b73-08091cfcd3a1' from file "signal_molecule_617_(sequence_0)_71489570-6d28-4ff7-8b73-08091cfcd3a1.fast5" completed.
+2020-10-28 10:56:32.340418 [guppy/info] Read '358cb222-10f4-45ad-b2a4-6b4fa3cdc4eb' from file "signal_molecule_337_(sequence_0)_358cb222-10f4-45ad-b2a4-6b4fa3cdc4eb.fast5" completed.
+2020-10-28 10:56:32.340508 [guppy/info] Read '167248f6-5ad7-4271-8000-be522c12a30b' from file "signal_molecule_2200_(sequence_2)_167248f6-5ad7-4271-8000-be522c12a30b.fast5" completed.
+2020-10-28 10:56:32.495463 [guppy/info] Read 'a5d8fe59-ca71-48cb-8d34-483552538c75' from file "signal_molecule_191_(sequence_0)_a5d8fe59-ca71-48cb-8d34-483552538c75.fast5" completed.
+2020-10-28 10:56:32.495648 [guppy/info] Read '656c3e1f-3e6e-42f4-95f4-ab7df577cfd3' from file "signal_molecule_3234_(sequence_3)_656c3e1f-3e6e-42f4-95f4-ab7df577cfd3.fast5" completed.
+2020-10-28 10:56:32.495732 [guppy/info] Read '058c19a4-923f-419c-b870-37440a81b8af' from file "signal_molecule_322_(sequence_0)_058c19a4-923f-419c-b870-37440a81b8af.fast5" completed.
+2020-10-28 10:56:32.629930 [guppy/info] Read '2272f64d-a3a1-4d27-b9b2-363b4d596fb6' from file "signal_molecule_290_(sequence_0)_2272f64d-a3a1-4d27-b9b2-363b4d596fb6.fast5" completed.
+2020-10-28 10:56:32.792277 [guppy/info] Read 'b114a6be-9f8d-42d1-8ce3-cd80f8cb4aa1' from file "signal_molecule_3611_(sequence_3)_b114a6be-9f8d-42d1-8ce3-cd80f8cb4aa1.fast5" completed.
+2020-10-28 10:56:32.792433 [guppy/info] Read 'ec3a6b0b-9ce0-4589-8d7c-c476bd0d437b' from file "signal_molecule_1426_(sequence_1)_ec3a6b0b-9ce0-4589-8d7c-c476bd0d437b.fast5" completed.
+2020-10-28 10:56:32.902316 [guppy/info] Read '0191bc92-0f41-441b-8ba8-8d4dec86660c' from file "signal_molecule_175_(sequence_0)_0191bc92-0f41-441b-8ba8-8d4dec86660c.fast5" completed.
+2020-10-28 10:56:33.260087 [guppy/info] Read '789284ed-b15d-4420-b155-fa3e1f3536b2' from file "signal_molecule_971_(sequence_0)_789284ed-b15d-4420-b155-fa3e1f3536b2.fast5" completed.
+2020-10-28 10:56:33.260260 [guppy/info] Read 'a1cf61b2-b1cd-4596-bb4b-6f3c4c1dee91' from file "signal_molecule_690_(sequence_0)_a1cf61b2-b1cd-4596-bb4b-6f3c4c1dee91.fast5" completed.
+2020-10-28 10:56:33.278616 [guppy/info] Read 'beba85e6-5d58-4547-9b61-c132d543a04b' from file "signal_molecule_1838_(sequence_1)_beba85e6-5d58-4547-9b61-c132d543a04b.fast5" completed.
+2020-10-28 10:56:33.422013 [guppy/info] Read 'c16f7623-5ca5-4440-a4e8-13da67c84ad3' from file "signal_molecule_3069_(sequence_3)_c16f7623-5ca5-4440-a4e8-13da67c84ad3.fast5" completed.
+2020-10-28 10:56:33.424183 [guppy/info] Read '88e5d370-2afa-4d21-a3a1-b135431493df' from file "signal_molecule_3034_(sequence_3)_88e5d370-2afa-4d21-a3a1-b135431493df.fast5" completed.
+2020-10-28 10:56:33.711214 [guppy/info] Read '6e7f283e-92a9-4134-a6d0-ea1bdcd563b0' from file "signal_molecule_804_(sequence_0)_6e7f283e-92a9-4134-a6d0-ea1bdcd563b0.fast5" completed.
+2020-10-28 10:56:33.711379 [guppy/info] Read '8d3c4786-91a1-4aa6-921f-2a795459545c' from file "signal_molecule_3007_(sequence_3)_8d3c4786-91a1-4aa6-921f-2a795459545c.fast5" completed.
+2020-10-28 10:56:33.711500 [guppy/info] Read '37889669-feb4-4a03-a9cf-3c94ed07ee25' from file "signal_molecule_3057_(sequence_3)_37889669-feb4-4a03-a9cf-3c94ed07ee25.fast5" completed.
+2020-10-28 10:56:33.851697 [guppy/info] Read '583d436b-7ed1-414d-b265-13c7cbd6983c' from file "signal_molecule_2915_(sequence_2)_583d436b-7ed1-414d-b265-13c7cbd6983c.fast5" completed.
+2020-10-28 10:56:33.851856 [guppy/info] Read '6fa0980e-7595-4692-a85f-59ebdd802459' from file "signal_molecule_3629_(sequence_3)_6fa0980e-7595-4692-a85f-59ebdd802459.fast5" completed.
+2020-10-28 10:56:33.862757 [guppy/info] Read '0cc99c6b-e3fa-4030-a459-ea4a5dcaf02d' from file "signal_molecule_1647_(sequence_1)_0cc99c6b-e3fa-4030-a459-ea4a5dcaf02d.fast5" completed.
+2020-10-28 10:56:33.867250 [guppy/info] Read '23b9e2f1-79ab-426e-927f-baa5391d02bd' from file "signal_molecule_172_(sequence_0)_23b9e2f1-79ab-426e-927f-baa5391d02bd.fast5" completed.
+2020-10-28 10:56:33.867423 [guppy/info] Read 'c26ed354-d558-4f31-8521-d6b1e2704757' from file "signal_molecule_849_(sequence_0)_c26ed354-d558-4f31-8521-d6b1e2704757.fast5" completed.
+2020-10-28 10:56:34.060098 [guppy/info] Read '7c122ae3-e7a7-40a1-8389-a3b116e74e3d' from file "signal_molecule_1033_(sequence_1)_7c122ae3-e7a7-40a1-8389-a3b116e74e3d.fast5" completed.
+2020-10-28 10:56:34.275894 [guppy/info] Read 'b4ce33a0-d694-4d92-af44-28f478fda675' from file "signal_molecule_2911_(sequence_2)_b4ce33a0-d694-4d92-af44-28f478fda675.fast5" completed.
+2020-10-28 10:56:34.445224 [guppy/info] Read '116be3ce-11c4-4004-938a-93d4b5019401' from file "signal_molecule_3169_(sequence_3)_116be3ce-11c4-4004-938a-93d4b5019401.fast5" completed.
+2020-10-28 10:56:34.445470 [guppy/info] Read '348eeb24-6149-4290-8ca0-1a877cb5f355' from file "signal_molecule_1433_(sequence_1)_348eeb24-6149-4290-8ca0-1a877cb5f355.fast5" completed.
+2020-10-28 10:56:34.775653 [guppy/info] Read '980564b9-3e20-4f79-8760-2bedaf9f826e' from file "signal_molecule_2067_(sequence_2)_980564b9-3e20-4f79-8760-2bedaf9f826e.fast5" completed.
+2020-10-28 10:56:34.775816 [guppy/info] Read '2d8dcb66-0978-4edc-bdde-1e6aae450988' from file "signal_molecule_2022_(sequence_2)_2d8dcb66-0978-4edc-bdde-1e6aae450988.fast5" completed.
+2020-10-28 10:56:34.776097 [guppy/info] Read '0bf03765-d7c0-48cd-ab51-20d6a006a816' from file "signal_molecule_2272_(sequence_2)_0bf03765-d7c0-48cd-ab51-20d6a006a816.fast5" completed.
+2020-10-28 10:56:34.776251 [guppy/info] Read 'ed3063a3-5dc7-492f-970d-633ba735112c' from file "signal_molecule_874_(sequence_0)_ed3063a3-5dc7-492f-970d-633ba735112c.fast5" completed.
+2020-10-28 10:56:34.846803 [guppy/info] Read '4656bc39-f2ee-4fff-ba7c-134ca4ada6ea' from file "signal_molecule_1214_(sequence_1)_4656bc39-f2ee-4fff-ba7c-134ca4ada6ea.fast5" completed.
+2020-10-28 10:56:34.880355 [guppy/info] Read '2cee6ee0-4147-45ba-9b74-e2210e64d1d4' from file "signal_molecule_840_(sequence_0)_2cee6ee0-4147-45ba-9b74-e2210e64d1d4.fast5" completed.
+2020-10-28 10:56:34.885906 [guppy/info] Read '54c6e999-9c9a-45d4-af09-c7ed69898f91' from file "signal_molecule_1164_(sequence_1)_54c6e999-9c9a-45d4-af09-c7ed69898f91.fast5" completed.
+2020-10-28 10:56:34.980597 [guppy/info] Read '3c56fb19-f499-421d-965e-c2e201cacb0c' from file "signal_molecule_3126_(sequence_3)_3c56fb19-f499-421d-965e-c2e201cacb0c.fast5" completed.
+2020-10-28 10:56:35.106914 [guppy/info] Read '1e3a4f06-a3da-411d-a4a9-cc91df17a5c8' from file "signal_molecule_889_(sequence_0)_1e3a4f06-a3da-411d-a4a9-cc91df17a5c8.fast5" completed.
+2020-10-28 10:56:35.107131 [guppy/info] Read 'b76728fa-b9b7-4a02-ba5d-51dd942540db' from file "signal_molecule_944_(sequence_0)_b76728fa-b9b7-4a02-ba5d-51dd942540db.fast5" completed.
+2020-10-28 10:56:35.107220 [guppy/info] Read '7f859fbb-742c-4c1b-95d3-3eb5ab501262' from file "signal_molecule_2095_(sequence_2)_7f859fbb-742c-4c1b-95d3-3eb5ab501262.fast5" completed.
+2020-10-28 10:56:35.363160 [guppy/info] Read 'bb433c8c-484d-4231-8485-af55a4a683b2' from file "signal_molecule_2610_(sequence_2)_bb433c8c-484d-4231-8485-af55a4a683b2.fast5" completed.
+2020-10-28 10:56:35.466735 [guppy/info] Read 'bdac0eca-f49f-4a15-ac33-bbe870596fc0' from file "signal_molecule_2184_(sequence_2)_bdac0eca-f49f-4a15-ac33-bbe870596fc0.fast5" completed.
+2020-10-28 10:56:35.466905 [guppy/info] Read '2d2f2281-dd11-4b61-91ed-8f1d6b4a8112' from file "signal_molecule_1956_(sequence_1)_2d2f2281-dd11-4b61-91ed-8f1d6b4a8112.fast5" completed.
+2020-10-28 10:56:35.792842 [guppy/info] Read 'd2cb91e7-bcf0-4ef0-a3cf-96fed5dea929' from file "signal_molecule_3410_(sequence_3)_d2cb91e7-bcf0-4ef0-a3cf-96fed5dea929.fast5" completed.
+2020-10-28 10:56:35.793067 [guppy/info] Read '827cac8a-f23a-440e-b98b-41fee3e299f0' from file "signal_molecule_636_(sequence_0)_827cac8a-f23a-440e-b98b-41fee3e299f0.fast5" completed.
+2020-10-28 10:56:35.793161 [guppy/info] Read '9c4f2d8c-90b3-4f49-aadd-117e67069359' from file "signal_molecule_2560_(sequence_2)_9c4f2d8c-90b3-4f49-aadd-117e67069359.fast5" completed.
+2020-10-28 10:56:35.856693 [guppy/info] Read '8ae842b4-aed3-418f-944b-5124d194c11c' from file "signal_molecule_698_(sequence_0)_8ae842b4-aed3-418f-944b-5124d194c11c.fast5" completed.
+2020-10-28 10:56:35.856856 [guppy/info] Read '5d12209f-7707-4e2c-99a9-964d0e0ebab3' from file "signal_molecule_1088_(sequence_1)_5d12209f-7707-4e2c-99a9-964d0e0ebab3.fast5" completed.
+2020-10-28 10:56:36.131975 [guppy/info] Read 'b557da1b-fabb-43b5-9500-9eef6dee6ff5' from file "signal_molecule_2405_(sequence_2)_b557da1b-fabb-43b5-9500-9eef6dee6ff5.fast5" completed.
+2020-10-28 10:56:36.132225 [guppy/info] Read '3b3aee09-d63a-4758-9d41-177db5069e88' from file "signal_molecule_1121_(sequence_1)_3b3aee09-d63a-4758-9d41-177db5069e88.fast5" completed.
+2020-10-28 10:56:36.132314 [guppy/info] Read 'a59783b7-846b-4204-b265-48044306b24e' from file "signal_molecule_3654_(sequence_3)_a59783b7-846b-4204-b265-48044306b24e.fast5" completed.
+2020-10-28 10:56:36.218252 [guppy/info] Read 'e03fc0ba-73ec-40c6-921c-3545842c2354' from file "signal_molecule_3546_(sequence_3)_e03fc0ba-73ec-40c6-921c-3545842c2354.fast5" completed.
+2020-10-28 10:56:36.218500 [guppy/info] Read '9e6ad786-e5fd-4d77-a0d2-b6da9acbe337' from file "signal_molecule_1100_(sequence_1)_9e6ad786-e5fd-4d77-a0d2-b6da9acbe337.fast5" completed.
+2020-10-28 10:56:36.218687 [guppy/info] Read 'd0c5f1b2-b3ed-4997-bdab-aeb7e2215b58' from file "signal_molecule_1993_(sequence_1)_d0c5f1b2-b3ed-4997-bdab-aeb7e2215b58.fast5" completed.
+2020-10-28 10:56:36.504234 [guppy/info] Read '52115f5c-5c19-4250-945e-48adbf6099c6' from file "signal_molecule_2540_(sequence_2)_52115f5c-5c19-4250-945e-48adbf6099c6.fast5" completed.
+2020-10-28 10:56:36.568324 [guppy/info] Read '3efc740e-2310-4dbb-85a4-22cc6a9960c1' from file "signal_molecule_3373_(sequence_3)_3efc740e-2310-4dbb-85a4-22cc6a9960c1.fast5" completed.
+2020-10-28 10:56:36.671361 [guppy/info] Read '9cc74fc2-7b7e-4c4e-806f-19aaec5bb138' from file "signal_molecule_2694_(sequence_2)_9cc74fc2-7b7e-4c4e-806f-19aaec5bb138.fast5" completed.
+2020-10-28 10:56:36.672698 [guppy/info] Read 'bdeebd23-3a13-4449-89eb-af5e0a0ee861' from file "signal_molecule_236_(sequence_0)_bdeebd23-3a13-4449-89eb-af5e0a0ee861.fast5" completed.
+2020-10-28 10:56:36.760261 [guppy/info] Read '13e118ea-6033-43d0-87dd-849c2f45e658' from file "signal_molecule_2076_(sequence_2)_13e118ea-6033-43d0-87dd-849c2f45e658.fast5" completed.
+2020-10-28 10:56:36.974782 [guppy/info] Read 'baf8d18b-5356-48fe-9d11-955a7de7ca13' from file "signal_molecule_750_(sequence_0)_baf8d18b-5356-48fe-9d11-955a7de7ca13.fast5" completed.
+2020-10-28 10:56:36.975011 [guppy/info] Read '486f91fd-fe92-4636-a6a5-e894f6c62a0e' from file "signal_molecule_3237_(sequence_3)_486f91fd-fe92-4636-a6a5-e894f6c62a0e.fast5" completed.
+2020-10-28 10:56:36.975130 [guppy/info] Read 'b8c3b149-a5a8-40b3-8c81-93a01400f34e' from file "signal_molecule_1138_(sequence_1)_b8c3b149-a5a8-40b3-8c81-93a01400f34e.fast5" completed.
+2020-10-28 10:56:37.120656 [guppy/info] Read 'b6af121a-1626-48b7-8fb7-e7a6f51b4745' from file "signal_molecule_2455_(sequence_2)_b6af121a-1626-48b7-8fb7-e7a6f51b4745.fast5" completed.
+2020-10-28 10:56:37.186572 [guppy/info] Read '99200c45-d9cf-4c27-adc3-71aa9f16a7c9' from file "signal_molecule_754_(sequence_0)_99200c45-d9cf-4c27-adc3-71aa9f16a7c9.fast5" completed.
+2020-10-28 10:56:37.262732 [guppy/info] Read 'ef0d03d0-c112-4ba4-b05b-a9ee57db1b22' from file "signal_molecule_1385_(sequence_1)_ef0d03d0-c112-4ba4-b05b-a9ee57db1b22.fast5" completed.
+2020-10-28 10:56:37.420615 [guppy/info] Read '14d1c12d-29bb-439e-99ae-055a030deefc' from file "signal_molecule_1085_(sequence_1)_14d1c12d-29bb-439e-99ae-055a030deefc.fast5" completed.
+2020-10-28 10:56:37.420786 [guppy/info] Read '0cdc5c37-5881-46e2-9dfd-5b4d7b1b08b8' from file "signal_molecule_2273_(sequence_2)_0cdc5c37-5881-46e2-9dfd-5b4d7b1b08b8.fast5" completed.
+2020-10-28 10:56:37.510634 [guppy/info] Read '7a14333f-4645-4a36-8384-e2ebbf4e32c1' from file "signal_molecule_897_(sequence_0)_7a14333f-4645-4a36-8384-e2ebbf4e32c1.fast5" completed.
+2020-10-28 10:56:37.510831 [guppy/info] Read 'da466919-8cbc-4869-9e91-1fc54bbec55b' from file "signal_molecule_1503_(sequence_1)_da466919-8cbc-4869-9e91-1fc54bbec55b.fast5" completed.
+2020-10-28 10:56:37.606140 [guppy/info] Read 'f92136d4-3e8e-4d5a-947d-420183d5a5dc' from file "signal_molecule_1520_(sequence_1)_f92136d4-3e8e-4d5a-947d-420183d5a5dc.fast5" completed.
+2020-10-28 10:56:37.891389 [guppy/info] Read '6f018de9-938c-4fcb-911d-585f2f0e441b' from file "signal_molecule_1070_(sequence_1)_6f018de9-938c-4fcb-911d-585f2f0e441b.fast5" completed.
+2020-10-28 10:56:37.891574 [guppy/info] Read '8d331cb2-a205-49ba-b49b-9fc317c7b112' from file "signal_molecule_1590_(sequence_1)_8d331cb2-a205-49ba-b49b-9fc317c7b112.fast5" completed.
+2020-10-28 10:56:37.891674 [guppy/info] Read '81fe9ba9-3c03-430f-b6c1-72c98c5c4fb6' from file "signal_molecule_2224_(sequence_2)_81fe9ba9-3c03-430f-b6c1-72c98c5c4fb6.fast5" completed.
+2020-10-28 10:56:37.944433 [guppy/info] Read 'a0203da2-411e-4d36-a3a5-70dfbf04010a' from file "signal_molecule_76_(sequence_0)_a0203da2-411e-4d36-a3a5-70dfbf04010a.fast5" completed.
+2020-10-28 10:56:38.025686 [guppy/info] Read 'cebf8aaf-402e-419b-851b-cea0fc41eabf' from file "signal_molecule_2503_(sequence_2)_cebf8aaf-402e-419b-851b-cea0fc41eabf.fast5" completed.
+2020-10-28 10:56:38.088174 [guppy/info] Read '5ec31ca0-8c44-4e7c-8495-52a7e5e1a156' from file "signal_molecule_1497_(sequence_1)_5ec31ca0-8c44-4e7c-8495-52a7e5e1a156.fast5" completed.
+2020-10-28 10:56:38.088534 [guppy/info] Read 'f3ca208e-9e22-4600-b6a6-a93b736c6da0' from file "signal_molecule_2658_(sequence_2)_f3ca208e-9e22-4600-b6a6-a93b736c6da0.fast5" completed.
+2020-10-28 10:56:38.212107 [guppy/info] Read 'f2921e3d-6fde-4f83-b910-6d83f376eb5a' from file "signal_molecule_3878_(sequence_3)_f2921e3d-6fde-4f83-b910-6d83f376eb5a.fast5" completed.
+2020-10-28 10:56:38.212284 [guppy/info] Read 'a0f51fc9-1663-4d35-beb1-7a396c876106' from file "signal_molecule_3910_(sequence_3)_a0f51fc9-1663-4d35-beb1-7a396c876106.fast5" completed.
+2020-10-28 10:56:38.278901 [guppy/info] Read 'b9188307-9daa-4333-bdcb-e1fe7f336009' from file "signal_molecule_258_(sequence_0)_b9188307-9daa-4333-bdcb-e1fe7f336009.fast5" completed.
+2020-10-28 10:56:38.482536 [guppy/info] Read 'b08d2183-d16e-4f42-8ab1-a9a1863d091d' from file "signal_molecule_691_(sequence_0)_b08d2183-d16e-4f42-8ab1-a9a1863d091d.fast5" completed.
+2020-10-28 10:56:38.482719 [guppy/info] Read '0aee7161-6a9f-469d-8098-f1b6d020de1c' from file "signal_molecule_2579_(sequence_2)_0aee7161-6a9f-469d-8098-f1b6d020de1c.fast5" completed.
+2020-10-28 10:56:38.499206 [guppy/info] Read '67204620-d622-4e9f-94bf-264c9bbded9f' from file "signal_molecule_1047_(sequence_1)_67204620-d622-4e9f-94bf-264c9bbded9f.fast5" completed.
+2020-10-28 10:56:38.499438 [guppy/info] Read '89c4bfae-eb6c-4db4-9ea3-3d4b8a4abce7' from file "signal_molecule_2870_(sequence_2)_89c4bfae-eb6c-4db4-9ea3-3d4b8a4abce7.fast5" completed.
+2020-10-28 10:56:38.582808 [guppy/info] Read '17f357a2-395c-4d40-85b5-de6bb18d50c1' from file "signal_molecule_1916_(sequence_1)_17f357a2-395c-4d40-85b5-de6bb18d50c1.fast5" completed.
+2020-10-28 10:56:38.628922 [guppy/info] Read '0e5bc39d-4cec-47a8-8b0e-914dca6949e8' from file "signal_molecule_1801_(sequence_1)_0e5bc39d-4cec-47a8-8b0e-914dca6949e8.fast5" completed.
+2020-10-28 10:56:38.889216 [guppy/info] Read '7012afeb-08ea-4f2b-aef9-a349a6650ef7' from file "signal_molecule_643_(sequence_0)_7012afeb-08ea-4f2b-aef9-a349a6650ef7.fast5" completed.
+2020-10-28 10:56:39.024358 [guppy/info] Read 'a17f3e00-3f87-4357-aaaa-956ac833b6ed' from file "signal_molecule_1224_(sequence_1)_a17f3e00-3f87-4357-aaaa-956ac833b6ed.fast5" completed.
+2020-10-28 10:56:39.024600 [guppy/info] Read '34d527da-7f09-47fc-83ef-16702a48493d' from file "signal_molecule_2675_(sequence_2)_34d527da-7f09-47fc-83ef-16702a48493d.fast5" completed.
+2020-10-28 10:56:39.252167 [guppy/info] Read 'a648e4bd-39af-4cdc-94bd-cb30d8f329a8' from file "signal_molecule_2423_(sequence_2)_a648e4bd-39af-4cdc-94bd-cb30d8f329a8.fast5" completed.
+2020-10-28 10:56:39.252346 [guppy/info] Read 'c2d2e4e5-5224-41d4-8e07-e2d640834af1' from file "signal_molecule_508_(sequence_0)_c2d2e4e5-5224-41d4-8e07-e2d640834af1.fast5" completed.
+2020-10-28 10:56:39.332863 [guppy/info] Read 'b797fdd1-b4db-4f5e-b9bb-7862315ccad7' from file "signal_molecule_1581_(sequence_1)_b797fdd1-b4db-4f5e-b9bb-7862315ccad7.fast5" completed.
+2020-10-28 10:56:39.433270 [guppy/info] Read '5cbf7a3f-a376-469f-b443-d4358386be52' from file "signal_molecule_1262_(sequence_1)_5cbf7a3f-a376-469f-b443-d4358386be52.fast5" completed.
+2020-10-28 10:56:39.433490 [guppy/info] Read '172962b7-3aa6-4221-8e56-8efd4721ba74' from file "signal_molecule_831_(sequence_0)_172962b7-3aa6-4221-8e56-8efd4721ba74.fast5" completed.
+2020-10-28 10:56:39.568638 [guppy/info] Read 'e272019c-bb45-4752-a8a4-d94fedb52402' from file "signal_molecule_2097_(sequence_2)_e272019c-bb45-4752-a8a4-d94fedb52402.fast5" completed.
+2020-10-28 10:56:39.602958 [guppy/info] Read '87bdd67c-105e-469b-bafa-c8154c76dade' from file "signal_molecule_1318_(sequence_1)_87bdd67c-105e-469b-bafa-c8154c76dade.fast5" completed.
+2020-10-28 10:56:39.603123 [guppy/info] Read '3b5ff810-0621-4573-aa4d-3082ae60bd68' from file "signal_molecule_502_(sequence_0)_3b5ff810-0621-4573-aa4d-3082ae60bd68.fast5" completed.
+2020-10-28 10:56:39.701893 [guppy/info] Read '43a6bec4-acae-48d5-86a9-c8eaec48c41b' from file "signal_molecule_3449_(sequence_3)_43a6bec4-acae-48d5-86a9-c8eaec48c41b.fast5" completed.
+2020-10-28 10:56:39.720498 [guppy/info] Read 'e51b9148-ec3f-4379-871e-99a5c1e58bb7' from file "signal_molecule_3563_(sequence_3)_e51b9148-ec3f-4379-871e-99a5c1e58bb7.fast5" completed.
+2020-10-28 10:56:39.784459 [guppy/info] Read '334ebd8f-08d1-4446-ad30-549840f96cd1' from file "signal_molecule_2677_(sequence_2)_334ebd8f-08d1-4446-ad30-549840f96cd1.fast5" completed.
+2020-10-28 10:56:39.784714 [guppy/info] Read 'd1cd31f4-b662-4511-887f-a81dc361795f' from file "signal_molecule_784_(sequence_0)_d1cd31f4-b662-4511-887f-a81dc361795f.fast5" completed.
+2020-10-28 10:56:39.843325 [guppy/info] Read '7c494db1-b3a0-431e-a466-c91d48ec5d7b' from file "signal_molecule_2866_(sequence_2)_7c494db1-b3a0-431e-a466-c91d48ec5d7b.fast5" completed.
+2020-10-28 10:56:39.863274 [guppy/info] Completed batch 0
+2020-10-28 10:56:39.940973 [guppy/message] Caller time: 8344 ms, Samples called: 100682, samples/s: 12066.4
+2020-10-28 10:56:39.941061 [guppy/message] Finishing up any open output files.
+2020-10-28 10:56:40.340327 [guppy/message] Basecalling completed successfully.
