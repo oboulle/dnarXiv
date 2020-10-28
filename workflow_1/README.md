@@ -12,10 +12,14 @@ necessite d'avoir les projets du Github en local
 
 mettre les chemins des projets locaux dans le fichier project_paths.txt
 
-commande : python3 workflow_1.py
+commande : 
 
-1) Utilisation automatique avec bash
+*python3 workflow_1.py*
 
-modifier tous les paramètres necessaires dans le fichier workflow_1.sh
+2) Utilisation automatique avec bash
 
-commande : ./workflow_1.sh
+modifier tous les paramètres nécessaires dans le fichier workflow_1.sh
+
+commande : 
+
+*./workflow_1.sh*
