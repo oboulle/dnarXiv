@@ -7,8 +7,8 @@
 process_name="process" #name of the directory to save the generated files
 
 #----- parameters for sequence generation -----#
-random_seq=true #generate random sequences (true) or use an existing fasta file (false)
-seq_path="path/sequence.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
+random_seq=false #generate random sequences (true) or use an existing fasta file (false)
+seq_path="test/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated
 seq_gen_script="/udd/oboulle/Documents/synthesis_simulation/sequence_generator/sequence_generator.py" #script for the sequence generation
 nbr_seq="3" #number of sequences
@@ -48,8 +48,18 @@ echo "___Initialisation des séquences de base___"
 if [ $random_seq = true ]
 then
 	python3 $seq_gen_script $base_seq_path $nbr_seq $size_seq $h_max
+	if [ ! $? = 0 ]
+	then
+		exit 1
+	fi
 else
-	cp seq_path base_seq_path
+	if [ -f "$seq_path" ]
+	then
+		cp $seq_path $base_seq_path
+	else
+		echo "sequence file $seq_path not found !"
+		exit 1
+	fi
 fi
 
 #-------------------------------------------------------#
@@ -60,6 +70,10 @@ echo "___Ajout de primers en début et fin de séquences___"
 
 primer_seq_path="$process_name/2_primer_seq_file.fasta"
 python3 $primer_script $base_seq_path $primer_seq_path $primer_path
+if [ ! $? = 0 ]
+then
+	exit 1
+fi
 
 #------------------------------------------------#
 ######### ===== Part 3: synthesis ====== #########
@@ -69,6 +83,10 @@ echo "___Synthèse des séquences___"
 
 synthesis_path="$process_name/3_synthesis_file.fasta"
 python3 $synthesis_script -i $primer_seq_path -o $synthesis_path -n $nbr_synth --i_error $i_error --d_error $d_error --s_error $s_error
+if [ ! $? = 0 ]
+then
+	exit 1
+fi
 
 #-------------------------------------------------#
 ######### ===== Part 4: sequencing ====== #########
@@ -78,7 +96,11 @@ echo "___Séquençage___"
 
 sequencing_path="$process_name/4_sequencing"
 $deep_simulator_script -i $synthesis_path -o $sequencing_path -G 1 -H $deep_simu_home -n $nbr_read
-
+if [ ! $? = 0 ]
+then
+	exit 1
+fi
+	
 #--------------------------------------------------#
 ######### ===== Part 5: basecalling ====== #########
 #--------------------------------------------------#
@@ -88,7 +110,11 @@ echo "___Base Calling___"
 basecalling_path="$process_name/5_basecalling"
 mkdir $basecalling_path
 $basecaller_path -r --input_path $sequencing_path --save_path $basecalling_path -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
-
+if [ ! $? = 0 ]
+then
+	exit 1
+fi
+	
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
 
