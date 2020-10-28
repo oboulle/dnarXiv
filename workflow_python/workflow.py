@@ -61,7 +61,7 @@ def synthetise(primer_seq_path, synthesis_path):
 """
 def sequencing(synthesis_path, sequencing_path):
     nbr_seq = input(" > nombre de séquençage : ")
-    return os.system(paths_dict["deep_simulator"]+" -i "+synthesis_path+" -o "+sequencing_path+" -G 1 -B 3 -H "+paths_dict["DeepSimulator"]+" -n "+nbr_seq)
+    return os.system(paths_dict["deep_simulator"]+" -i "+synthesis_path+" -o "+sequencing_path+" -G 1 -H "+paths_dict["DeepSimulator"]+" -n "+nbr_seq)
   
 #________________début du processus________________#
 
