@@ -6,13 +6,13 @@ from shutil import copyfile
 """
     get the paths of the required projects from a file
 """
-def get_paths(paths_file):
+def get_paths(working_dir, paths_file):
     ff = open(paths_file)
     paths_dict = {}       
     line = ff.readline().replace("\n","")
     while line != "":
         ll = line.split("=")
-        paths_dict[ll[0]] = ll[1]
+        paths_dict[ll[0]] = working_dir+ll[1]
         line = ff.readline().replace("\n","")
     ff.close()
     return paths_dict
@@ -24,7 +24,7 @@ def generate_sequences(base_seq_path):
     nbr_sequence = input(" > nombre de séquences : ")
     size_sequence = input(" > taille des séquences : ")
     h_max = input(" > taille maximale des homopolymères : ")
-    return os.system("python3 "+paths_dict["sequence_generator"]+"/sequence_generator.py '"+base_seq_path+"' "+nbr_sequence+" "+size_sequence+" "+h_max)
+    return os.system("python3 "+paths_dict["sequence_generator"]+"sequence_generator.py '"+base_seq_path+"' "+nbr_sequence+" "+size_sequence+" "+h_max)
     
 """
     get the name of the base sequence file from the user, repeat until valid name is given
@@ -42,8 +42,8 @@ def get_seq_file(base_seq_path):
 """
 def add_primer(base_seq_path, primer_seq_path):
     sequence_primer = paths_dict["sequence_primer"]
-    return os.system("python3 "+sequence_primer+"/sequence_primer.py '"+base_seq_path+"' '"+ \
-                     primer_seq_path+"' "+sequence_primer+"/test_primer.fasta")
+    return os.system("python3 "+sequence_primer+"sequence_primer.py '"+base_seq_path+"' '"+ \
+                     primer_seq_path+"' "+sequence_primer+"test_primer.fasta")
 
 """
     get input parameters from the user to simulate the synthesis of the sequences
@@ -53,7 +53,7 @@ def synthetise(primer_seq_path, synthesis_path):
     i_error = input(" > taux d'erreur d'insertion : ")
     d_error = input(" > taux d'erreur de deletion : ")
     s_error = input(" > taux d'erreur de substitution : ")
-    return os.system("python3 "+paths_dict["synthesis_simulation"]+"/synthesis_simulator.py -i '"+primer_seq_path+"' -o '"+synthesis_path+ \
+    return os.system("python3 "+paths_dict["synthesis_simulation"]+"synthesis_simulator.py -i '"+primer_seq_path+"' -o '"+synthesis_path+ \
                      "' -n "+nbr_synth+" --i_error "+i_error+" --d_error "+d_error+" --s_error "+s_error)
 
 """
@@ -61,7 +61,7 @@ def synthetise(primer_seq_path, synthesis_path):
 """
 def sequencing(synthesis_path, sequencing_path):
     nbr_read = input(" > nombre de lecture : ")
-    return os.system(paths_dict["deep_simulator"]+"/deep_simulator.sh -i '"+synthesis_path+"' -o '"+sequencing_path+"' -H "+paths_dict["deep_simulator"]+" -n "+nbr_read)
+    return os.system(paths_dict["deep_simulator"]+"deep_simulator.sh -i '"+synthesis_path+"' -o '"+sequencing_path+"' -H "+paths_dict["deep_simulator"]+" -n "+nbr_read)
 
 """
     apply the guppy basecalling
@@ -75,11 +75,12 @@ def basecalling(sequencing_path, basecalling_path):
   
 #________________Début du processus________________#
 running_path = os.getcwd() #place where this script is run
-os.chdir("/udd/oboulle/Documents/workflow_global/workflow_1")
+working_dir="/udd/oboulle/Documents/"
+os.chdir(working_dir+"workflow_global/workflow_1")
 
 print("___Début du processus___")
 
-paths_dict = get_paths("project_paths.txt")
+paths_dict = get_paths(working_dir, "project_paths.txt")
 process_path = running_path+"/"+input(" nom du processus : ")
 try:
     os.mkdir(process_path)
