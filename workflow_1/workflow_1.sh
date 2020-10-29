@@ -5,6 +5,7 @@
 #--------------------------------------------------------------#
 
 process_name="exemple" #name of the directory to save the generated files
+workflow_path="/udd/oboulle/Documents/workflow_global/workflow_1" #path of the workflow directory
 
 #----- parameters for sequence generation -----#
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
@@ -37,11 +38,16 @@ basecaller_path="/udd/oboulle/Documents/sequencing_simulation/basecalling/guppy-
 #-----------------------------------------------------#
 ######### ===== Part 1: base sequences ====== #########
 #-----------------------------------------------------#
+running_path=$(pwd)
+cd $workflow_path
 
-rm -rf $process_name
-mkdir -p $process_name
+process_path="$running_path/$process_name"
+echo $process_path
 
-base_seq_path="$process_name/1_base_seq_file.fasta"
+rm -rf $process_path
+mkdir -p $process_path
+
+base_seq_path="$process_path/1_base_seq_file.fasta"
 
 echo "___Initialisation des séquences de base___"
 
@@ -68,7 +74,7 @@ fi
 
 echo "___Ajout de primers en début et fin de séquences___"
 
-primer_seq_path="$process_name/2_primer_seq_file.fasta"
+primer_seq_path="$process_path/2_primer_seq_file.fasta"
 python3 $primer_script $base_seq_path $primer_seq_path $primer_path
 if [ ! $? = 0 ]
 then
@@ -81,7 +87,7 @@ fi
 
 echo "___Synthèse des séquences___"
 
-synthesis_path="$process_name/3_synthesis_file.fasta"
+synthesis_path="$process_path/3_synthesis_file.fasta"
 python3 $synthesis_script -i $primer_seq_path -o $synthesis_path -n $nbr_synth --i_error $i_error --d_error $d_error --s_error $s_error
 if [ ! $? = 0 ]
 then
@@ -94,7 +100,7 @@ fi
 
 echo "___Séquençage___"
 
-sequencing_path="$process_name/4_sequencing"
+sequencing_path="$process_path/4_sequencing"
 $deep_simulator_script -i $synthesis_path -o $sequencing_path -H $deep_simu_home -n $nbr_read
 if [ ! $? = 0 ]
 then
@@ -107,7 +113,7 @@ fi
 
 echo "___Base Calling___"
 
-basecalling_path="$process_name/5_basecalling"
+basecalling_path="$process_path/5_basecalling"
 mkdir $basecalling_path
 $basecaller_path -r --input_path $sequencing_path --save_path $basecalling_path -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
 if [ ! $? = 0 ]
