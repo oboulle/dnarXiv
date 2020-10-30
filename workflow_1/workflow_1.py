@@ -61,7 +61,7 @@ def synthetise(primer_seq_path, synthesis_path):
 """
 def sequencing(synthesis_path, sequencing_path):
     nbr_read = input(" > nombre de lecture : ")
-    return os.system(paths_dict["deep_simulator"]+"deep_simulator.sh -i '"+synthesis_path+"' -o '"+sequencing_path+"' -H "+paths_dict["deep_simulator"]+" -n "+nbr_read)
+    return os.system(paths_dict["deep_simulator"]+"deep_simulator.sh -i '"+synthesis_path+"' -o '"+sequencing_path+"' -H "+paths_dict["deep_simulator"]+" -C '"+conda_dir+"' -n "+nbr_read)
 
 """
     apply the guppy basecalling
@@ -75,7 +75,8 @@ def basecalling(sequencing_path, basecalling_path):
   
 #________________Début du processus________________#
 running_path = os.getcwd() #place where this script is run
-working_dir="/udd/oboulle/Documents/"
+working_dir="/home/oboulle/Documents/"
+conda_dir="/home/oboulle/anaconda2"
 os.chdir(working_dir+"workflow_global/workflow_1")
 
 print("___Début du processus___")

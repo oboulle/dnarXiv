@@ -3,7 +3,7 @@
 #--------------------------------------------------------------#
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
-working_dir="/udd/oboulle/Documents"
+working_dir="/home/oboulle/Documents"
 process_name="exemple" #name of the directory to save the generated files
 workflow_path="$working_dir/workflow_global/workflow_1" #path of the workflow directory
 
@@ -30,10 +30,11 @@ s_error=0.01 #substitution error rate
 #----- parameters for sequencing -----#
 deep_simu_home="$working_dir/sequencing_simulation/deep_simulator" #home of DeepSimulator
 deep_simulator_script="$working_dir/sequencing_simulation/deep_simulator/deep_simulator.sh" #script for the sequencing
+conda_env="/home/oboulle/anaconda2"
 nbr_read=100 #number of read
 
 #----- parameters for basecalling -----#
-basecaller_path="$working_dir/sequencing_simulation/basecalling/guppy-cpu_4.2.2/bin/guppy_basecaller" #path of the basecaller to use
+basecaller_path="$working_dir/sequencing_simulation/ont-guppy-cpu_4.2.2_linux64/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
 
 #-----------------------------------------------------#
 ######### ===== Part 1: base sequences ====== #########
@@ -101,7 +102,7 @@ fi
 echo "___Séquençage___"
 
 sequencing_path="$process_path/4_sequencing"
-$deep_simulator_script -i $synthesis_path -o $sequencing_path -H $deep_simu_home -n $nbr_read
+$deep_simulator_script -i $synthesis_path -o $sequencing_path -H $deep_simu_home -C $conda_env -n $nbr_read
 if [ ! $? = 0 ]
 then
 	exit 1
