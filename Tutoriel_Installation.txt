@@ -1,0 +1,43 @@
+1)
+Initialisation :
+Faire un git clone pour chaque projet du groupe dnarXiv (https://gitlab.inria.fr/dnarxiv)
+
+2)
+Environnement pour Deep Simulator (projet sequencing simulation) :
+
+ wget https://repo.anaconda.com/archive/Anaconda2-2018.12-Linux-x86_64.sh
+
+ bash Anaconda2-2018.12-Linux-x86_64.sh
+
+-> après l'installation, yes pour initialiser Anaconda2 et no pour visual studio
+
+Fermer le terminal et le rouvrir pour lancer le script install.sh dans le dossier sequencing_simulation/deepsimulator
+
+3)
+guppy basecaller :
+
+https://community.nanoporetech.com/downloads 
+-> chercher guppy, télécharger la version linux 64-bit CPU
+extraire le dossier dans sequencing_simulation/
+
+4)
+Script sh :
+ouvrir le script workflow_1.sh dans /workflow_global/workflow_1
+
+modifier le parametre working_dir pour mettre le dossier où se trouvent les projets qui ont été clonés avec git
+
+modifier le parametre conda_env pour mettre le dossier créé par l'installation de l'environnement conda dans la partie 2)
+
+Le script peut ensuite etre lancé pour avoir un workflow automatique
+
+5)
+Script python :
+ouvrir le script workflow_1.py dans /workflow_global/workflow_1
+
+Aller dans la partie #_Début du processus_#,
+
+modifier le parametre working_dir pour mettre le dossier où se trouvent les projets qui ont été clonés avec git
+
+modifier le parametre conda_env pour mettre le dossier créé par l'installation de l'environnement conda dans la partie 2)
+
+le script peut ensuite etre lancé avec python3 pour avoir un workflow interactif
