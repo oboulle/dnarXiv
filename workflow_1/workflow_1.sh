@@ -3,7 +3,7 @@
 #--------------------------------------------------------------#
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
-working_dir="/home/oboulle/Documents"
+working_dir="/home/oboulle/PycharmProjects"
 process_name="exemple" #name of the directory to save the generated files
 workflow_path="$working_dir/workflow_global/workflow_1" #path of the workflow directory
 
@@ -18,7 +18,7 @@ h_max="3" #maximum size for the homopolymeres
 
 #----- parameters for primer addition -----#
 primer_script="$working_dir/synthesis_simulation/sequence_primer/sequence_primer.py" #script for the primer addition
-primer_path="$working_dir/synthesis_simulation/sequence_primer/test_primer.fasta" #path of the primer file (.fasta)
+#primer_path="$working_dir/synthesis_simulation/sequence_primer/test_primer.fasta" #path of the primer file (.fasta)
 
 #----- parameters for synthesis -----#
 synthesis_script="$working_dir/synthesis_simulation/synthesis_simulator.py" #script for the synthesis
@@ -76,7 +76,7 @@ fi
 echo "___Ajout de primers en début et fin de séquences___"
 
 primer_seq_path="$process_path/2_primer_seq_file.fasta"
-python3 $primer_script $base_seq_path $primer_seq_path $primer_path
+python3 $primer_script $base_seq_path $primer_seq_path $process_path
 if [ ! $? = 0 ]
 then
 	exit 1

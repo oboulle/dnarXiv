@@ -40,10 +40,9 @@ def get_seq_file(base_seq_path):
 """
     add a primer at the beginning and the end of the sequences
 """
-def add_primer(base_seq_path, primer_seq_path):
-    sequence_primer = paths_dict["sequence_primer"]
-    return os.system("python3 "+sequence_primer+"sequence_primer.py '"+base_seq_path+"' '"+ \
-                     primer_seq_path+"' "+sequence_primer+"test_primer.fasta")
+def add_primer(base_seq_path, primer_seq_path, process_path):
+    return os.system("python3 "+paths_dict["sequence_primer"]+"sequence_primer.py '"+base_seq_path+"' '"+ \
+                     primer_seq_path+"' "+process_path)
 
 """
     get input parameters from the user to simulate the synthesis of the sequences
@@ -75,7 +74,7 @@ def basecalling(sequencing_path, basecalling_path):
   
 #________________Début du processus________________#
 running_path = os.getcwd() #place where this script is run
-working_dir="/home/oboulle/Documents/"
+working_dir="/home/oboulle/PycharmProjects/"
 conda_env="/home/oboulle/anaconda2"
 os.chdir(working_dir+"workflow_global/workflow_1")
 
@@ -108,7 +107,7 @@ else:
 
 input("___Ajout de primers en début et fin de séquences___")
 primer_seq_path = process_path+"/2_primer_seq_file.fasta"
-result = add_primer(base_seq_path, primer_seq_path)
+result = add_primer(base_seq_path, primer_seq_path, process_path)
 if(result != 0):
     sys.exit(1)
 else:
