@@ -3,7 +3,7 @@
 #--------------------------------------------------------------#
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
-working_dir="/home/oboulle/PycharmProjects"
+working_dir="/home/oboulle/Documents"
 process_name="exemple" #name of the directory to save the generated files
 workflow_path="$working_dir/workflow_global/workflow_1" #path of the workflow directory
 
@@ -13,7 +13,7 @@ seq_path="test/1_base_seq_file.fasta" #if random_seq is false, the sequences fro
 #else the sequences are generated
 seq_gen_script="$working_dir/synthesis_simulation/sequence_generator/sequence_generator.py" #script for the sequence generation
 nbr_seq="3" #number of sequences
-size_seq="100" #size of the sequences
+size_seq="200" #size of the sequences
 h_max="3" #maximum size for the homopolymeres
 
 #----- parameters for primer addition -----#
@@ -23,18 +23,24 @@ primer_script="$working_dir/synthesis_simulation/sequence_primer/sequence_primer
 #----- parameters for synthesis -----#
 synthesis_script="$working_dir/synthesis_simulation/synthesis_simulator.py" #script for the synthesis
 nbr_synth=1000 #nomber of synthesis for each sequence
-i_error=0.01 #insertion error rate
-d_error=0.01 #deletion error rate
-s_error=0.01 #substitution error rate
+i_error=0.00 #insertion error rate
+d_error=0.00 #deletion error rate
+s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
 deep_simu_home="$working_dir/sequencing_simulation/deep_simulator" #home of DeepSimulator
 deep_simulator_script="$working_dir/sequencing_simulation/deep_simulator/deep_simulator.sh" #script for the sequencing
 conda_env="/home/oboulle/anaconda2"
 nbr_read=100 #number of read
+perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
 #----- parameters for basecalling -----#
 basecaller_path="$working_dir/sequencing_simulation/ont-guppy-cpu_4.2.2_linux64/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
+
+#----- parameters for demultiplexing -----#
+demultiplexing_script="$working_dir/sequencing_simulation/demultiplexing/demultiplexing.py" #script for the demultiplexing
+kmer_size=10 #size of the subsequences of the primers to search in the fastq sequences
+point_threshold=10 #threshold of the minimum number of kmer found in the fastq_sequences to link it to a primer
 
 #-----------------------------------------------------#
 ######### ===== Part 1: base sequences ====== #########
@@ -102,7 +108,7 @@ fi
 echo "___Séquençage___"
 
 sequencing_path="$process_path/4_sequencing"
-$deep_simulator_script -i $synthesis_path -o $sequencing_path -H $deep_simu_home -C $conda_env -n $nbr_read
+$deep_simulator_script -i $synthesis_path -o $sequencing_path -H $deep_simu_home -C $conda_env -n $nbr_read -P $perfect
 if [ ! $? = 0 ]
 then
 	exit 1
@@ -117,6 +123,20 @@ echo "___Base Calling___"
 basecalling_path="$process_path/5_basecalling"
 mkdir $basecalling_path
 $basecaller_path -r --input_path $sequencing_path --save_path $basecalling_path -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
+if [ ! $? = 0 ]
+then
+	exit 1
+fi
+
+#-----------------------------------------------------#
+######### ===== Part 6: demultiplexing ====== #########
+#-----------------------------------------------------#
+
+echo "___Demultiplexing___"
+
+demultiplexing_path="$process_path/6_demultiplexing"
+fastq_file=(*.fastq)
+python3 $demultiplexing_script -i $basecalling_path/$fastq_file -o $demultiplexing_path -p $process_path/primers --kmer_size $kmer_size --point-threshold $point_threshold
 if [ ! $? = 0 ]
 then
 	exit 1

@@ -67,14 +67,22 @@ def sequencing(synthesis_path, sequencing_path):
 """
 def basecalling(sequencing_path, basecalling_path):
     os.mkdir(basecalling_path)
-
     return os.system(paths_dict["guppy_basecaller"]+" -r --input_path '"+sequencing_path \
                      +"' --save_path '"+basecalling_path+"' -c dna_r9.4.1_450bps_hac.cfg "\
                      +"--cpu_threads_per_caller 8 --num_callers 1")
-  
+"""
+    sort the sequences by primers
+"""
+def demultiplexing(basecalling_path, demultiplexing_path, process_path):
+    for file in os.listdir(basecalling_path):
+        if file.endswith(".fastq"):
+            fastq_sequences_path = os.path.join(basecalling_path, file)
+            continue
+    return os.system("python3 "+paths_dict["demultiplexing"]+"demultiplexing.py -i '"+fastq_sequences_path+"' -o '"+demultiplexing_path+"' -p '"+process_path+"'/primers")
+
 #________________Début du processus________________#
 running_path = os.getcwd() #place where this script is run
-working_dir="/home/oboulle/PycharmProjects/"
+working_dir="/home/oboulle/Documents/"
 conda_env="/home/oboulle/anaconda2"
 os.chdir(working_dir+"workflow_global/workflow_1")
 
@@ -142,6 +150,16 @@ if(result != 0):
     sys.exit(1)
 else:
     print("\n base calling effectué !\n")
+
+#________________Demultiplexing________________#
+
+input("___Demultiplexing___")
+demultiplexing_path = process_path+"/6_demultiplexing"
+result = demultiplexing(basecalling_path, demultiplexing_path, process_path)
+if(result != 0):
+    sys.exit(1)
+else:
+    print("\n demultiplexing effectué !\n")
 
 
 print("___Fin du processus !___")
