@@ -42,8 +42,8 @@ demultiplexing_script="$working_dir/sequencing_simulation/demultiplexing/demulti
 kmer_size=10 #size of the subsequences of the primers to search in the fastq sequences
 point_threshold=10 #threshold of the minimum number of kmer found in the fastq_sequences to link it to a primer
 
-#----- parameters for sequencing post-processing -----#
-sequencing_post_process_script="$working_dir/sequencing_post_processing/ccsa.py"
+#----- parameters for consensus -----#
+consensus_script="$working_dir/sequencing_post_processing/ccsa.py"
 
 #-----------------------------------------------------#
 ######### ===== Part 1: base sequences ====== #########
@@ -145,17 +145,16 @@ then
 fi
 
 #-----------------------------------------------------------------#
-######### ===== Part 7: sequencing post-processing ====== #########
+######### ===== Part 7: Consensus ====== #########
 #-----------------------------------------------------------------#
-demultiplexing_path="$process_path/6_demultiplexing"
-echo "___Sequencing post-processing___"
+echo "___Consensus___"
 
-result_path="$process_path/7_result"
-mkdir $result_path
+consensus_path="$process_path/7_consensus"
+mkdir $consensus_path
 for sequence_file in $demultiplexing_path/sequence_*.fastq
 do
 	sequence_name=`eval basename -s .fastq $sequence_file`
-	python3 $sequencing_post_process_script -read $sequence_file -primer $process_path/primers/$sequence_name.fasta -length $size_seq -out $result_path/$sequence_name.fasta -graph $result_path/$sequence_name.gexf
+	python3 $consensus_script -read $sequence_file -primer $process_path/primers/$sequence_name.fasta -length $size_seq -out $consensus_path/$sequence_name.fasta -graph $consensus_path/$sequence_name.gexf
 done
 
 #-------------- Exit --------------#
