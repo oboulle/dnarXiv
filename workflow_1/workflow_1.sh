@@ -144,17 +144,20 @@ then
 	exit 1
 fi
 
-#-----------------------------------------------------------------#
+#------------------------------------------------#
 ######### ===== Part 7: Consensus ====== #########
-#-----------------------------------------------------------------#
+#------------------------------------------------#
 echo "___Consensus___"
 
 consensus_path="$process_path/7_consensus"
 mkdir $consensus_path
-for sequence_file in $demultiplexing_path/sequence_*.fastq
+for sequence_file in $demultiplexing_path/*.fastq
 do
-	sequence_name=`eval basename -s .fastq $sequence_file`
-	python3 $consensus_script -read $sequence_file -primer $process_path/primers/$sequence_name.fasta -length $size_seq -out $consensus_path/$sequence_name.fasta -graph $consensus_path/$sequence_name.gexf
+  sequence_name=`eval basename -s .fastq $sequence_file`
+	if [ $sequence_name != unlinked ]
+	then
+	  python3 $consensus_script -read $sequence_file -primer $process_path/primers/$sequence_name.fasta -length $size_seq -out $consensus_path/$sequence_name.fasta -graph $consensus_path/$sequence_name.gexf
+	fi
 done
 
 #-------------- Exit --------------#
