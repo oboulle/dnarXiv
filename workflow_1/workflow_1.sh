@@ -4,7 +4,7 @@
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
 working_dir="/home/oboulle/Documents"
-process_name="exemple" #name of the directory to save the generated files
+process_name="shell_script_test" #name of the directory to save the generated files
 workflow_path="$working_dir/workflow_global/workflow_1" #path of the workflow directory
 
 #----- parameters for sequence generation -----#
@@ -42,6 +42,9 @@ demultiplexing_script="$working_dir/sequencing_simulation/demultiplexing/demulti
 kmer_size=10 #size of the subsequences of the primers to search in the fastq sequences
 point_threshold=10 #threshold of the minimum number of kmer found in the fastq_sequences to link it to a primer
 
+#----- parameters for sequencing post-processing -----#
+sequencing_post_process_script="$working_dir/sequencing_post_processing/ccsa.py"
+
 #-----------------------------------------------------#
 ######### ===== Part 1: base sequences ====== #########
 #-----------------------------------------------------#
@@ -50,7 +53,6 @@ cd $workflow_path
 
 process_path="$running_path/$process_name"
 echo $process_path
-
 rm -rf $process_path
 mkdir -p $process_path
 
@@ -141,7 +143,21 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-	
+
+#-----------------------------------------------------------------#
+######### ===== Part 7: sequencing post-processing ====== #########
+#-----------------------------------------------------------------#
+demultiplexing_path="$process_path/6_demultiplexing"
+echo "___Sequencing post-processing___"
+
+result_path="$process_path/7_result"
+mkdir $result_path
+for sequence_file in $demultiplexing_path/sequence_*.fastq
+do
+	sequence_name=`eval basename -s .fastq $sequence_file`
+	python3 $sequencing_post_process_script -read $sequence_file -primer $process_path/primers/$sequence_name.fasta -length $size_seq -out $result_path/$sequence_name.fasta -graph $result_path/$sequence_name.gexf
+done
+
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
 
