@@ -3,10 +3,12 @@ import os
 import shutil
 from shutil import copyfile
 
-"""
-    get the paths of the required projects from a file
-"""
+global size_sequence
+
 def get_paths(working_dir, paths_file):
+    """
+        get the paths of the required projects from a file
+    """
     ff = open(paths_file)
     paths_dict = {}       
     line = ff.readline().replace("\n","")
@@ -17,37 +19,38 @@ def get_paths(working_dir, paths_file):
     ff.close()
     return paths_dict
 
-"""
-    get input parameters from the user to create random sequences
-"""
 def generate_sequences(base_seq_path):
+    """
+        get input parameters from the user to create random sequences
+    """
     nbr_sequence = input(" > nombre de séquences : ")
+    global size_sequence
     size_sequence = input(" > taille des séquences : ")
     h_max = input(" > taille maximale des homopolymères : ")
     return os.system("python3 "+paths_dict["sequence_generator"]+"sequence_generator.py '"+base_seq_path+"' "+nbr_sequence+" "+size_sequence+" "+h_max)
-    
-"""
-    get the name of the base sequence file from the user, repeat until valid name is given
-"""
+
 def get_seq_file(base_seq_path):
+    """
+        get the name of the base sequence file from the user, repeat until valid name is given
+    """
     seq_path = input("chemin du fichier .fasta des séquences : ")
     if not os.path.isfile(seq_path):
         print ("Le fichier est introuvable : "+seq_path)
         get_seq_file()
     else:
         copyfile(seq_path, base_seq_path)
-     
-"""
-    add a primer at the beginning and the end of the sequences
-"""
+
 def add_primer(base_seq_path, primer_seq_path, process_path):
+    """
+        add a primer at the beginning and the end of the sequences
+    """
     return os.system("python3 "+paths_dict["sequence_primer"]+"sequence_primer.py '"+base_seq_path+"' '"+ \
                      primer_seq_path+"' "+process_path)
 
-"""
-    get input parameters from the user to simulate the synthesis of the sequences
-"""
 def synthetise(primer_seq_path, synthesis_path):
+    """
+        get input parameters from the user to simulate the synthesis of the sequences
+    """
     nbr_synth = input(" > nombre de synthèse pour chaque séquence : ")
     i_error = input(" > taux d'erreur d'insertion : ")
     d_error = input(" > taux d'erreur de deletion : ")
@@ -55,31 +58,47 @@ def synthetise(primer_seq_path, synthesis_path):
     return os.system("python3 "+paths_dict["synthesis_simulation"]+"synthesis_simulator.py -i '"+primer_seq_path+"' -o '"+synthesis_path+ \
                      "' -n "+nbr_synth+" --i_error "+i_error+" --d_error "+d_error+" --s_error "+s_error)
 
-"""
-    sequence the data from the synthesis
-"""
 def sequencing(synthesis_path, sequencing_path):
+    """
+        sequence the data from the synthesis
+    """
     nbr_read = input(" > nombre de lecture : ")
     return os.system(paths_dict["deep_simulator"]+"deep_simulator.sh -i '"+synthesis_path+"' -o '"+sequencing_path+"' -H "+paths_dict["deep_simulator"]+" -C '"+conda_env+"' -n "+nbr_read)
 
-"""
-    apply the guppy basecalling
-"""
 def basecalling(sequencing_path, basecalling_path):
+    """
+        apply the guppy basecalling
+    """
     os.mkdir(basecalling_path)
     return os.system(paths_dict["guppy_basecaller"]+" -r --input_path '"+sequencing_path \
                      +"' --save_path '"+basecalling_path+"' -c dna_r9.4.1_450bps_hac.cfg "\
                      +"--cpu_threads_per_caller 8 --num_callers 1")
-"""
-    sort the sequences by primers
-"""
+
 def demultiplexing(basecalling_path, demultiplexing_path, process_path):
+    """
+        sort the sequences by primers
+    """
     for file in os.listdir(basecalling_path):
         if file.endswith(".fastq"):
             fastq_sequences_path = os.path.join(basecalling_path, file)
             continue
     return os.system("python3 "+paths_dict["demultiplexing"]+"demultiplexing.py -i '"+fastq_sequences_path+"' -o '"+demultiplexing_path+"' -p '"+process_path+"'/primers")
 
+def consensus(demultiplexing_path, consensus_path, process_path):
+    """
+        create a consensus for the sequences
+    """
+    os.mkdir(consensus_path)
+    for file in os.listdir(demultiplexing_path):
+        if file != "unlinked.fastq":
+            fastq_sequence_path = os.path.join(demultiplexing_path, file)
+            sequence_name = file.replace(".fastq","")
+            result = os.system("python3 " + paths_dict["consensus"] + "ccsa.py -read '"+fastq_sequence_path +"' -primer '"+process_path+"'/primers/"+sequence_name+".fasta "\
+            +" -length "+size_sequence+" -out '"+consensus_path+"'/"+sequence_name+".fasta -graph '"+consensus_path+"'/"+sequence_name+".gexf")
+            if result != 0:
+                return result
+
+    #return
 #________________Début du processus________________#
 running_path = os.getcwd() #place where this script is run
 working_dir="/home/oboulle/Documents/"
@@ -90,6 +109,7 @@ print("___Début du processus___")
 
 paths_dict = get_paths(working_dir, "project_paths.txt")
 process_path = running_path+"/"+input(" nom du processus : ")
+
 try:
     os.mkdir(process_path)
 except OSError:
@@ -161,41 +181,17 @@ if(result != 0):
 else:
     print("\n demultiplexing effectué !\n")
 
+#________________Consensus________________#
+input("___Consensus___")
+consensus_path = process_path+"/7_consensus"
+result = consensus(demultiplexing_path, consensus_path, process_path)
+if(result != 0):
+    sys.exit(1)
+else:
+    print("\n consensus effectué !\n")
 
+#________________Fin________________#
 print("___Fin du processus !___")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

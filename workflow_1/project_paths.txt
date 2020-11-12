@@ -4,3 +4,4 @@ synthesis_simulation=synthesis_simulation/
 deep_simulator=sequencing_simulation/deep_simulator/
 guppy_basecaller=sequencing_simulation/ont-guppy-cpu_4.2.2_linux64/ont-guppy-cpu/bin/guppy_basecaller
 demultiplexing=sequencing_simulation/demultiplexing/
+consensus=sequencing_post_processing/
