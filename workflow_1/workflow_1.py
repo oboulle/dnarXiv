@@ -97,12 +97,16 @@ def consensus(demultiplexing_path, consensus_path, process_path):
             +" -length "+size_sequence+" -out '"+consensus_path+"'/"+sequence_name+".fasta -graph '"+consensus_path+"'/"+sequence_name+".gexf")
             if result != 0:
                 return result
+    return 0
 
-    #return
 #________________Début du processus________________#
 running_path = os.getcwd() #place where this script is run
-working_dir="/home/oboulle/Documents/"
-conda_env="/home/oboulle/anaconda2"
+if "genouest" in running_path:
+    working_dir = "/home/genouest/genscale/oboulle/documents/"
+    conda_env = "/home/genouest/genscale/oboulle/anaconda2"
+else:
+    working_dir="/home/oboulle/Documents/"
+    conda_env="/home/oboulle/anaconda2"
 os.chdir(working_dir+"workflow_global/workflow_1")
 
 print("___Début du processus___")
