@@ -50,7 +50,7 @@ def get_seq_file(base_seq_path):
         get_seq_file(base_seq_path)
     else:
         copyfile(seq_path, base_seq_path)
-        return dfr.get_sequence_size(seq_path)
+        return str(dfr.get_sequence_size(seq_path))
 
 
 def add_primer(base_seq_path, primer_seq_path, process_path):
