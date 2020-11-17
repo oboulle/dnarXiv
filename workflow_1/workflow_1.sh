@@ -3,55 +3,55 @@
 #--------------------------------------------------------------#
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
-working_dir="/home/oboulle/Documents"
+project_dir="/home/oboulle/Documents"
 process_name="shell_script_test" #name of the directory to save the generated files
-workflow_path="$working_dir/workflow_global/workflow_1" #path of the workflow directory
+workflow_path="$project_dir/workflow_global/workflow_1" #path of the workflow directory
 
 #----- parameters for sequence generation -----#
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
 seq_path="test/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated
-seq_gen_script="$working_dir/synthesis_simulation/sequence_generator/sequence_generator.py" #script for the sequence generation
+seq_gen_script="$project_dir/synthesis_simulation/sequence_generator/sequence_generator.py" #script for the sequence generation
 nbr_seq="3" #number of sequences
 size_seq="200" #size of the sequences
 h_max="3" #maximum size for the homopolymeres
 
 #----- parameters for primer addition -----#
-primer_script="$working_dir/synthesis_simulation/sequence_primer/sequence_primer.py" #script for the primer addition
-#primer_path="$working_dir/synthesis_simulation/sequence_primer/test_primer.fasta" #path of the primer file (.fasta)
+primer_script="$project_dir/synthesis_simulation/sequence_primer/sequence_primer.py" #script for the primer addition
+#primer_path="$project_dir/synthesis_simulation/sequence_primer/test_primer.fasta" #path of the primer file (.fasta)
 
 #----- parameters for synthesis -----#
-synthesis_script="$working_dir/synthesis_simulation/synthesis_simulator.py" #script for the synthesis
+synthesis_script="$project_dir/synthesis_simulation/synthesis_simulator.py" #script for the synthesis
 nbr_synth=1000 #nomber of synthesis for each sequence
 i_error=0.00 #insertion error rate
 d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
-deep_simu_home="$working_dir/sequencing_simulation/deep_simulator" #home of DeepSimulator
-deep_simulator_script="$working_dir/sequencing_simulation/deep_simulator/deep_simulator.sh" #script for the sequencing
+deep_simu_home="$project_dir/sequencing_simulation/deep_simulator" #home of DeepSimulator
+deep_simulator_script="$project_dir/sequencing_simulation/deep_simulator/deep_simulator.sh" #script for the sequencing
 conda_env="/home/oboulle/anaconda2"
 nbr_read=100 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
 #----- parameters for basecalling -----#
-basecaller_path="$working_dir/sequencing_simulation/ont-guppy-cpu_4.2.2_linux64/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
+basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu_4.2.2_linux64/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
 
 #----- parameters for demultiplexing -----#
-demultiplexing_script="$working_dir/sequencing_simulation/demultiplexing/demultiplexing.py" #script for the demultiplexing
+demultiplexing_script="$project_dir/sequencing_simulation/demultiplexing/demultiplexing.py" #script for the demultiplexing
 kmer_size=10 #size of the subsequences of the primers to search in the fastq sequences
 point_threshold=10 #threshold of the minimum number of kmer found in the fastq_sequences to link it to a primer
 
 #----- parameters for consensus -----#
-consensus_script="$working_dir/sequencing_post_processing/ccsa.py"
+consensus_script="$project_dir/sequencing_post_processing/ccsa.py"
 
 #-----------------------------------------------------#
 ######### ===== Part 1: base sequences ====== #########
 #-----------------------------------------------------#
-running_path=$(pwd)
+working_dir=$(pwd)
 cd $workflow_path
 
-process_path="$running_path/$process_name"
+process_path="$working_dir/$process_name"
 echo $process_path
 rm -rf $process_path
 mkdir -p $process_path
