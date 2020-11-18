@@ -3,9 +3,6 @@ import os
 import shutil
 from shutil import copyfile
 
-sys.path.insert(0, '../../synthesis_simulation/utils')
-import dna_file_reader as dfr
-
 
 def get_paths(working_dir, paths_file):
     """
@@ -157,11 +154,12 @@ if "genouest" in working_dir:
 else:
     project_dir = "/home/oboulle/Documents/"
     conda_env = "/home/oboulle/anaconda2"
-os.chdir(project_dir + "workflow_global/workflow_1")
 
+sys.path.insert(0, project_dir+'/synthesis_simulation/utils')
+import dna_file_reader as dfr
 print("___Début du processus___")
 
-paths_dict = get_paths(project_dir, "project_paths.txt")
+paths_dict = get_paths(project_dir, project_dir+"/workflow_global/workflow_1/project_paths.txt")
 process_path = working_dir + "/" + input(" nom du processus : ")
 
 try:
