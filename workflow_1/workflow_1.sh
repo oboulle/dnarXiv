@@ -49,7 +49,6 @@ consensus_script="$project_dir/sequencing_post_processing/ccsa.py"
 ######### ===== Part 1: base sequences ====== #########
 #-----------------------------------------------------#
 working_dir=$(pwd)
-cd $workflow_path
 
 process_path="$working_dir/$process_name"
 echo $process_path
