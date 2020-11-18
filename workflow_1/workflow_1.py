@@ -149,19 +149,20 @@ def consensus(demultiplexing_path, consensus_path, process_path, sequences_size)
 
 
 # ________________Start of the process________________ #
-running_path = os.getcwd()  # place where this script is run
-if "genouest" in running_path:
-    working_dir = "/home/genouest/genscale/oboulle/documents/"
+
+working_dir = os.getcwd()  # place where this script is run
+if "genouest" in working_dir:
+    project_dir = "/home/genouest/genscale/oboulle/documents/"
     conda_env = "/home/genouest/genscale/oboulle/anaconda2"
 else:
-    working_dir = "/home/oboulle/Documents/"
+    project_dir = "/home/oboulle/Documents/"
     conda_env = "/home/oboulle/anaconda2"
-os.chdir(working_dir + "workflow_global/workflow_1")
+os.chdir(project_dir + "workflow_global/workflow_1")
 
 print("___Début du processus___")
 
-paths_dict = get_paths(working_dir, "project_paths.txt")
-process_path = running_path + "/" + input(" nom du processus : ")
+paths_dict = get_paths(project_dir, "project_paths.txt")
+process_path = working_dir + "/" + input(" nom du processus : ")
 
 try:
     os.mkdir(process_path)
@@ -245,4 +246,5 @@ else:
     print("\n consensus effectué !\n")
 
 # ________________End________________ #
+
 print("___Fin du processus !___")
