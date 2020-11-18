@@ -3,8 +3,8 @@
 #--------------------------------------------------------------#
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
-project_dir="/home/oboulle/Documents"
-process_name="shell_script_test" #name of the directory to save the generated files
+project_dir="/home/genouest/genscale/oboulle/documents"
+process_name="shell_script_test22" #name of the directory to save the generated files
 workflow_path="$project_dir/workflow_global/workflow_1" #path of the workflow directory
 
 #----- parameters for sequence generation -----#
@@ -30,7 +30,7 @@ s_error=0.00 #substitution error rate
 #----- parameters for sequencing -----#
 deep_simu_home="$project_dir/sequencing_simulation/deep_simulator" #home of DeepSimulator
 deep_simulator_script="$project_dir/sequencing_simulation/deep_simulator/deep_simulator.sh" #script for the sequencing
-conda_env="/home/oboulle/anaconda2"
+conda_env="/home/genouest/genscale/oboulle/anaconda2"
 nbr_read=100 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
@@ -110,6 +110,9 @@ fi
 echo "___Séquençage___"
 
 sequencing_path="$process_path/4_sequencing"
+echo "conda env : $conda_env"
+conda config --add envs_dirs "$conda_env/envs"
+conda info --envs
 $deep_simulator_script -i $synthesis_path -o $sequencing_path -H $deep_simu_home -C $conda_env -n $nbr_read -P $perfect
 if [ ! $? = 0 ]
 then
