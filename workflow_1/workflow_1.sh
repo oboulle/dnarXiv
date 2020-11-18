@@ -110,9 +110,7 @@ fi
 echo "___Séquençage___"
 
 sequencing_path="$process_path/4_sequencing"
-echo "conda env : $conda_env"
 conda config --add envs_dirs "$conda_env/envs"
-conda info --envs
 $deep_simulator_script -i $synthesis_path -o $sequencing_path -H $deep_simu_home -C $conda_env -n $nbr_read -P $perfect
 if [ ! $? = 0 ]
 then
