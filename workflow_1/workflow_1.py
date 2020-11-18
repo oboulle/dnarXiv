@@ -138,8 +138,8 @@ def consensus(demultiplexing_path, consensus_path, process_path, sequences_size)
             fastq_sequence_path = os.path.join(demultiplexing_path, file)
             sequence_name = file.replace(".fastq", "")
             result = os.system("python3 " + paths_dict[
-                "consensus"] + "ccsa.py -read '" + fastq_sequence_path + "' -primer '" + process_path + "'/primers/" + sequence_name + ".fasta "
-                               + " -length " + sequences_size + " -out '" + consensus_path + "'/" + sequence_name + ".fasta -graph '" + consensus_path + "'/" + sequence_name + ".gexf")
+                "consensus"] + "ccsa.py -read '" + fastq_sequence_path + "' -primer '" + process_path + "'/primers/'" + sequence_name + "'.fasta "
+                               + " -length " + sequences_size + " -out '" + consensus_path + "'/'" + sequence_name + "'.fasta -graph '" + consensus_path + "'/'" + sequence_name + "'.gexf")
             if result != 0:
                 return result
     return 0
