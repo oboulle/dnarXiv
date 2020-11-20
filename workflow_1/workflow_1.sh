@@ -9,7 +9,7 @@ process_name="shell_script_test" #name of the directory to save the generated fi
 #----- parameters for sequence generation -----#
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
 seq_path="test/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
-#else the sequences are generated
+#else the sequences are generated with the following parameters
 nbr_seq="3" #number of sequences
 size_seq="200" #size of the sequences
 h_max="3" #maximum size for the homopolymeres
@@ -32,18 +32,16 @@ point_threshold=10 #threshold of the minimum number of kmer found in the fastq_s
 ######### ===== Part 1: base sequences ====== #########
 #-----------------------------------------------------#
 working_dir=$(pwd)
-
-if [[ $working_dir == *"genouest"* ]]
+if [ $HOME == "/home/oboulle" ]
 then
-  project_dir="/home/genouest/genscale/oboulle/documents"
-	conda_env="/home/genouest/genscale/oboulle/anaconda2"
-else
   project_dir="/home/oboulle/Documents"
   conda_env="/home/oboulle/anaconda2"
+else
+  project_dir="/home/genouest/genscale/oboulle/documents"
+	conda_env="/home/genouest/genscale/oboulle/anaconda2"
 fi
 
 process_path="$working_dir/$process_name"
-echo $process_path
 rm -rf $process_path
 mkdir -p $process_path
 
