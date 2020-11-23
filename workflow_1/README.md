@@ -4,7 +4,7 @@ workflow utilisant les différents simulateurs
 
 fonctionne sans interface graphique, l'utilisateur doit juste donner les paramètres demandés
 
-le cycle fait : séquences -> ajout des primers -> synthèse -> séquençage -> basecalling
+le cycle fait : séquences -> ajout des primers -> synthèse -> séquençage -> basecalling -> demultiplexing -> consensus
 
 necessite d'avoir les projets du Github en local
 
