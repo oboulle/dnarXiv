@@ -4,7 +4,7 @@
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
 
-process_name="worflow_2_test" #name of the directory to save the generated files
+process_name="workflow_2_test" #name of the directory to save the generated files
 
 #----- parameters for sequence generation -----#
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
@@ -48,8 +48,8 @@ else
 fi
 
 process_path="$working_dir/$process_name"
-rm -rf $process_path
-mkdir -p $process_path
+rm -rf "$process_path"
+mkdir -p "$process_path"
 
 base_seq_path="$process_path/1_base_seq_file.fasta"
 
@@ -59,7 +59,7 @@ echo "___Initialisation des séquences de base___"
 seq_gen_script="$project_dir/synthesis_simulation/sequence_generator/sequence_generator.py" #script for the sequence generation
 if [ $random_seq = true ]
 then
-	python3 $seq_gen_script $base_seq_path $nbr_seq $size_seq $h_max
+	python3 $seq_gen_script "$base_seq_path" $nbr_seq $size_seq $h_max
 	if [ ! $? = 0 ]
 	then
 		exit 1
@@ -67,7 +67,7 @@ then
 else
 	if [ -f "$seq_path" ]
 	then
-		cp $seq_path $base_seq_path
+		cp "$seq_path" "$base_seq_path"
 	else
 		echo "sequence file $seq_path not found !"
 		exit 1
@@ -82,7 +82,7 @@ echo "___Fragmentation des séquences avec chevauchements___"
 
 fragmentation_script="$project_dir/synthesis_simulation/overlap_fragmentation/overlap_fragmentation.py" #script for the overlap fragmentation
 fragmentation_seq_path="$process_path/2_fragmented_seq_file.fasta"
-python3 $fragmentation_script $base_seq_path $fragmentation_seq_path $frag_size $overlap_size
+python3 $fragmentation_script "$base_seq_path" "$fragmentation_seq_path" $frag_size $overlap_size
 if [ ! $? = 0 ]
 then
 	exit 1
@@ -96,7 +96,7 @@ echo "___Synthèse des séquences___"
 
 synthesis_script="$project_dir/synthesis_simulation/synthesis_with_spacers/synthesis_with_spacers.py" #script for the synthesis with spacers
 synthesis_path="$process_path/3_synthesis_file.fasta"
-python3 $synthesis_script -i $fragmentation_seq_path -o $synthesis_path -s $spacer_path -n $nbr_synth --n_frag $n_frag --i_error $i_error --d_error $d_error --s_error $s_error
+python3 $synthesis_script -i "$fragmentation_seq_path" -o "$synthesis_path" -s "$spacer_path" -n $nbr_synth --n_frag $n_frag --i_error $i_error --d_error $d_error --s_error $s_error
 if [ ! $? = 0 ]
 then
 	exit 1
@@ -112,7 +112,7 @@ deep_simu_home="$project_dir/sequencing_simulation/deep_simulator" #home of Deep
 deep_simulator_script="$project_dir/sequencing_simulation/deep_simulator/deep_simulator.sh" #script for the sequencing
 sequencing_path="$process_path/4_sequencing"
 conda config --add envs_dirs "$conda_env/envs"
-$deep_simulator_script -i $synthesis_path -o $sequencing_path -H $deep_simu_home -C $conda_env -n $nbr_read -P $perfect
+$deep_simulator_script -i "$synthesis_path" -o "$sequencing_path" -H "$deep_simu_home" -C "$conda_env" -n $nbr_read -P $perfect
 if [ ! $? = 0 ]
 then
 	exit 1
@@ -126,8 +126,8 @@ echo "___Base Calling___"
 
 basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu_4.2.2_linux64/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
 basecalling_path="$process_path/5_basecalling"
-mkdir $basecalling_path
-$basecaller_path -r --input_path $sequencing_path --save_path $basecalling_path -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
+mkdir "$basecalling_path"
+$basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
 if [ ! $? = 0 ]
 then
 	exit 1
