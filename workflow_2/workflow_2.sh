@@ -11,12 +11,12 @@ random_seq=true #generate random sequences (true) or use an existing fasta file 
 seq_path="test/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq="1" #number of sequences
-size_seq="200" #size of the sequences
+size_seq="2000" #size of the sequences
 h_max="2" #maximum size for the homopolymeres
 
 #----- parameters for overlap fragmentation -----#
-frag_size=20 #size of the fragments
-overlap_size=10 #size of the overlap
+frag_size=220 #size of the fragments
+overlap_size=20 #size of the overlap
 
 #----- parameters for synthesis -----#
 spacer_path="spacer.fasta" #path to the spacer to se (.fasta file)
@@ -27,7 +27,7 @@ d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
-nbr_read=100 #number of read
+nbr_read=1000 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
 #----- parameters for demultiplexing -----#
@@ -133,7 +133,20 @@ then
 	exit 1
 fi
 
+#-----------------------------------------------------#
+######### ===== Part 6: reconstruction ====== #########
+#-----------------------------------------------------#
 
+echo "___Reconstruction___"
+reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct.py" #script for the reconstruction
+reconstruction_path="$process_path/6_reconstruction"
+mkdir "$reconstruction_path"
+fastq_file=(*.fastq)
+python3 $reconstruction_script "$basecalling_path/"$fastq_file "$reconstruction_path/result_sequence.fasta" "$spacer_path" $frag_size $overlap_size
+if [ ! $? = 0 ]
+then
+	exit 1
+fi
 
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
