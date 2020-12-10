@@ -10,9 +10,9 @@ process_name="workflow_2_test" #name of the directory to save the generated file
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
 seq_path="test/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
-nbr_seq="1" #number of sequences
-size_seq="2000" #size of the sequences
-h_max="2" #maximum size for the homopolymeres
+nbr_seq=1 #number of sequences
+size_seq=2000 #size of the sequences
+h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for overlap fragmentation -----#
 frag_size=220 #size of the fragments
@@ -21,7 +21,7 @@ overlap_size=20 #size of the overlap
 #----- parameters for synthesis -----#
 spacer_path="spacer.fasta" #path to the spacer to se (.fasta file)
 nbr_synth=1000 #nomber of molecule to generate
-n_frag=6 #number of sequence fragments in each molecule
+n_frag=5 #number of sequence fragments in each molecule
 i_error=0.1 #insertion error rate
 d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
@@ -35,7 +35,7 @@ kmer_size=10 #size of the subsequences of the primers to search in the fastq seq
 point_threshold=10 #threshold of the minimum number of kmer found in the fastq_sequences to link it to a primer
 
 #-----------------------------------------------------#
-######### ===== Part 1: base sequences ====== #########
+######### ===== Part 0: initialisation ====== #########
 #-----------------------------------------------------#
 working_dir=$(pwd)
 if [ $HOME == "/home/oboulle" ]
@@ -50,6 +50,12 @@ fi
 process_path="$working_dir/$process_name"
 rm -rf "$process_path"
 mkdir -p "$process_path"
+time_file="$process_path/times.txt"
+
+#-----------------------------------------------------#
+######### ===== Part 1: base sequences ====== #########
+#-----------------------------------------------------#
+start_time=$(($(date +%s%N)/1000000))
 
 base_seq_path="$process_path/1_base_seq_file.fasta"
 
@@ -73,11 +79,12 @@ else
 		exit 1
 	fi
 fi
-
+end_time=$(($(date +%s%N)/1000000))
+echo "base sequences : $(($end_time - $start_time)) ms" >> $time_file
 #------------------------------------------------------------#
 ######### ===== Part 2: overlap fragmentation ====== #########
 #------------------------------------------------------------#
-
+start_time=$(($(date +%s%N)/1000000))
 echo "___Fragmentation des séquences avec chevauchements___"
 
 fragmentation_script="$project_dir/synthesis_simulation/overlap_fragmentation/overlap_fragmentation.py" #script for the overlap fragmentation
@@ -87,11 +94,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-
+end_time=$(($(date +%s%N)/1000000))
+echo "overlap fragmentation : $(($end_time - $start_time)) ms" >> $time_file
 #------------------------------------------------#
 ######### ===== Part 3: synthesis ====== #########
 #------------------------------------------------#
-
+start_time=$(($(date +%s%N)/1000000))
 echo "___Synthèse des séquences___"
 
 synthesis_script="$project_dir/synthesis_simulation/synthesis_with_spacers/synthesis_with_spacers.py" #script for the synthesis with spacers
@@ -101,11 +109,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-
+end_time=$(($(date +%s%N)/1000000))
+echo "synthesis : $(($end_time - $start_time)) ms" >> $time_file
 #-------------------------------------------------#
 ######### ===== Part 4: sequencing ====== #########
 #-------------------------------------------------#
-
+start_time=$(($(date +%s%N)/1000000))
 echo "___Séquençage___"
 
 deep_simu_home="$project_dir/sequencing_simulation/deep_simulator" #home of DeepSimulator
@@ -117,11 +126,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-	
+end_time=$(($(date +%s%N)/1000000))
+echo "sequencing : $(($end_time - $start_time)) ms" >> $time_file
 #--------------------------------------------------#
 ######### ===== Part 5: basecalling ====== #########
 #--------------------------------------------------#
-
+start_time=$(($(date +%s%N)/1000000))
 echo "___Base Calling___"
 
 basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu_4.2.2_linux64/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
@@ -132,11 +142,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-
+end_time=$(($(date +%s%N)/1000000))
+echo "basecalling : $(($end_time - $start_time)) ms" >> $time_file
 #-----------------------------------------------------#
 ######### ===== Part 6: reconstruction ====== #########
 #-----------------------------------------------------#
-
+start_time=$(($(date +%s%N)/1000000))
 echo "___Reconstruction___"
 reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct.py" #script for the reconstruction
 reconstruction_path="$process_path/6_reconstruction"
@@ -147,7 +158,8 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-
+end_time=$(($(date +%s%N)/1000000))
+echo "reconstruction : $(($end_time - $start_time)) ms" >> $time_file
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
 
