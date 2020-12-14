@@ -5,16 +5,17 @@ Created on Tue Nov 17 09:16:59 2020
 
 @author: oboulle
 """
+
 import os
 import sys
 import inspect
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
-sys.path.insert(0, parentdir+"/synthesis_simulation/utils")
+sys.path.insert(0, parentdir+"/synthesis_simulation")
 
-import dna_file_reader as dfr
-import alignment_NW
+import utils.dna_file_reader as dfr
+import utils.alignment_NW as aNW
 
 
 def select_sequences(initial_sequences_path, result_sequences_path):
@@ -46,7 +47,6 @@ def count_error_rates(initial_sequences, result_sequences):
     count the rate for the errors in the result sequences
     :param initial_sequences: dictionary of the initial sequences
     :param result_sequences: dictionary of the result sequences
-    :return:
     """
     tot_i_errors = 0
     tot_d_errors = 0
@@ -55,15 +55,15 @@ def count_error_rates(initial_sequences, result_sequences):
     for seq_name, init_seq_value in initial_sequences.items():
         result_seq_value = result_sequences[seq_name]
         if result_seq_value is None: continue
-        alignment_A, alignment_B = alignment_NW.alignment_nw(init_seq_value, result_seq_value)
-        i_errors, d_errors, s_errors = alignment_NW.calculate_errors(alignment_A, alignment_B)
+        alignment_A, alignment_B = aNW.alignment_nw(init_seq_value, result_seq_value)
+        i_errors, d_errors, s_errors = aNW.calculate_errors(alignment_A, alignment_B)
         tot_i_errors += i_errors
         tot_d_errors += d_errors
         tot_s_errors += s_errors
         tot_size += len(init_seq_value)
-        print(seq_name)
-
-    print("insertion errors :", tot_i_errors/tot_size, "; deletion errors :", tot_d_errors/tot_size, "; substitution errors :", tot_s_errors/tot_size)
+    print("insertion errors :", i_errors/tot_size, "("+str(i_errors)+")")
+    print("deletion errors :", d_errors/tot_size, "("+str(d_errors)+")")
+    print("substitution errors :", s_errors/tot_size, "("+str(s_errors)+")")
 
 
 if len(sys.argv) != 3:
