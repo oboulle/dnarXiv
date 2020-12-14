@@ -15,19 +15,19 @@ size_seq=2000 #size of the sequences
 h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for overlap fragmentation -----#
-frag_size=220 #size of the fragments
+frag_size=200 #size of the fragments
 overlap_size=20 #size of the overlap
 
 #----- parameters for synthesis -----#
 spacer_path="spacer.fasta" #path to the spacer to se (.fasta file)
-nbr_synth=1000 #nomber of molecule to generate
-n_frag=5 #number of sequence fragments in each molecule
-i_error=0.1 #insertion error rate
+nbr_synth=500 #nomber of molecule to generate
+n_frag=10 #number of sequence fragments in each molecule
+i_error=0.00 #insertion error rate
 d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
-nbr_read=1000 #number of read
+nbr_read=500 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
 #----- parameters for demultiplexing -----#
@@ -150,16 +150,22 @@ echo "basecalling : $(($end_time - $start_time)) ms" >> $time_file
 start_time=$(($(date +%s%N)/1000000))
 echo "___Reconstruction___"
 reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct.py" #script for the reconstruction
-reconstruction_path="$process_path/6_reconstruction"
-mkdir "$reconstruction_path"
+reconstruction_path="$process_path/6_result_sequence.fasta"
 fastq_file=(*.fastq)
-python3 $reconstruction_script "$basecalling_path/"$fastq_file "$reconstruction_path/result_sequence.fasta" "$spacer_path" $frag_size $overlap_size
+python3 $reconstruction_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size $overlap_size
 if [ ! $? = 0 ]
 then
 	exit 1
 fi
 end_time=$(($(date +%s%N)/1000000))
 echo "reconstruction : $(($end_time - $start_time)) ms" >> $time_file
+#------------------------------------------------------#
+######### ===== Part 7: Result Analysis ====== #########
+#------------------------------------------------------#
+echo "___Results___"
+result_analysis_script="$project_dir/workflow_global/result_analysis/result_analysis_workflow_2.py"
+python3 $result_analysis_script $base_seq_path $reconstruction_path
+
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
 
