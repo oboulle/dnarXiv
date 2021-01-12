@@ -11,7 +11,7 @@ random_seq=true #generate random sequences (true) or use an existing fasta file 
 seq_path="test/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq=1 #number of sequences
-size_seq=2000 #size of the sequences
+size_seq=4000 #size of the sequences
 h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for overlap fragmentation -----#
@@ -30,18 +30,15 @@ s_error=0.00 #substitution error rate
 nbr_read=500 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
-#----- parameters for demultiplexing -----#
-kmer_size=10 #size of the subsequences of the primers to search in the fastq sequences
-point_threshold=10 #threshold of the minimum number of kmer found in the fastq_sequences to link it to a primer
-
 #-----------------------------------------------------#
 ######### ===== Part 0: initialisation ====== #########
 #-----------------------------------------------------#
 working_dir=$(pwd)
-if [ $HOME == "/home/oboulle" ]
+echo $HOME
+if [ $HOME == "/Users/oboulle" ]
 then
-  project_dir="/home/oboulle/Documents"
-  conda_env="/home/oboulle/anaconda2"
+  project_dir="/Users/oboulle/Documents"
+  conda_env="/Users/oboulle/anaconda2"
 else
   project_dir="/home/genouest/genscale/oboulle/documents"
 	conda_env="/home/genouest/genscale/oboulle/anaconda2"
@@ -55,7 +52,7 @@ time_file="$process_path/times.txt"
 #-----------------------------------------------------#
 ######### ===== Part 1: base sequences ====== #########
 #-----------------------------------------------------#
-start_time=$(($(date +%s%N)/1000000))
+#start_time=$(($(date +%s%N)/1000000))
 
 base_seq_path="$process_path/1_base_seq_file.fasta"
 
@@ -79,12 +76,12 @@ else
 		exit 1
 	fi
 fi
-end_time=$(($(date +%s%N)/1000000))
-echo "base sequences : $(($end_time - $start_time)) ms" >> $time_file
+#end_time=$(($(date +%s%N)/1000000))
+#echo "base sequences : $(($end_time - $start_time)) ms" >> $time_file
 #------------------------------------------------------------#
 ######### ===== Part 2: overlap fragmentation ====== #########
 #------------------------------------------------------------#
-start_time=$(($(date +%s%N)/1000000))
+#start_time=$(($(date +%s%N)/1000000))
 echo "___Fragmentation des séquences avec chevauchements___"
 
 fragmentation_script="$project_dir/synthesis_simulation/overlap_fragmentation/overlap_fragmentation.py" #script for the overlap fragmentation
@@ -94,12 +91,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-end_time=$(($(date +%s%N)/1000000))
-echo "overlap fragmentation : $(($end_time - $start_time)) ms" >> $time_file
+#end_time=$(($(date +%s%N)/1000000))
+#echo "overlap fragmentation : $(($end_time - $start_time)) ms" >> $time_file
 #------------------------------------------------#
 ######### ===== Part 3: synthesis ====== #########
 #------------------------------------------------#
-start_time=$(($(date +%s%N)/1000000))
+#start_time=$(($(date +%s%N)/1000000))
 echo "___Synthèse des séquences___"
 
 synthesis_script="$project_dir/synthesis_simulation/synthesis_with_spacers/synthesis_with_spacers.py" #script for the synthesis with spacers
@@ -109,12 +106,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-end_time=$(($(date +%s%N)/1000000))
-echo "synthesis : $(($end_time - $start_time)) ms" >> $time_file
+#end_time=$(($(date +%s%N)/1000000))
+#echo "synthesis : $(($end_time - $start_time)) ms" >> $time_file
 #-------------------------------------------------#
 ######### ===== Part 4: sequencing ====== #########
 #-------------------------------------------------#
-start_time=$(($(date +%s%N)/1000000))
+#start_time=$(($(date +%s%N)/1000000))
 echo "___Séquençage___"
 
 deep_simu_home="$project_dir/sequencing_simulation/deep_simulator" #home of DeepSimulator
@@ -126,15 +123,15 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-end_time=$(($(date +%s%N)/1000000))
-echo "sequencing : $(($end_time - $start_time)) ms" >> $time_file
+#end_time=$(($(date +%s%N)/1000000))
+#echo "sequencing : $(($end_time - $start_time)) ms" >> $time_file
 #--------------------------------------------------#
 ######### ===== Part 5: basecalling ====== #########
 #--------------------------------------------------#
-start_time=$(($(date +%s%N)/1000000))
+#start_time=$(($(date +%s%N)/1000000))
 echo "___Base Calling___"
 
-basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu_4.2.2_linux64/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
+basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
 basecalling_path="$process_path/5_basecalling"
 mkdir "$basecalling_path"
 $basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
@@ -142,12 +139,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-end_time=$(($(date +%s%N)/1000000))
-echo "basecalling : $(($end_time - $start_time)) ms" >> $time_file
+#end_time=$(($(date +%s%N)/1000000))
+#echo "basecalling : $(($end_time - $start_time)) ms" >> $time_file
 #-----------------------------------------------------#
 ######### ===== Part 6: reconstruction ====== #########
 #-----------------------------------------------------#
-start_time=$(($(date +%s%N)/1000000))
+#start_time=$(($(date +%s%N)/1000000))
 echo "___Reconstruction___"
 reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct.py" #script for the reconstruction
 reconstruction_path="$process_path/6_result_sequence.fasta"
@@ -157,8 +154,8 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-end_time=$(($(date +%s%N)/1000000))
-echo "reconstruction : $(($end_time - $start_time)) ms" >> $time_file
+#end_time=$(($(date +%s%N)/1000000))
+#echo "reconstruction : $(($end_time - $start_time)) ms" >> $time_file
 #------------------------------------------------------#
 ######### ===== Part 7: Result Analysis ====== #########
 #------------------------------------------------------#
