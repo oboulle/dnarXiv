@@ -39,9 +39,11 @@ if [ $HOME == "/Users/oboulle" ]
 then
   project_dir="/Users/oboulle/Documents"
   conda_env="/Users/oboulle/anaconda2"
-else
-  project_dir="/home/genouest/genscale/oboulle/documents"
-	conda_env="/home/genouest/genscale/oboulle/anaconda2"
+fi
+if [ $HOME == "/home/oboulle" ]
+then
+  project_dir="/home/oboulle/Documents"
+  conda_env="/home/oboulle/anaconda2"
 fi
 
 process_path="$working_dir/$process_name"

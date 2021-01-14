@@ -8,10 +8,10 @@ process_name="workflow_2_test" #name of the directory to save the generated file
 
 #----- parameters for sequence generation -----#
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
-seq_path="test/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
+seq_path="workflow_2_fail/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq=1 #number of sequences
-size_seq=4000 #size of the sequences
+size_seq=1000 #size of the sequences
 h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for overlap fragmentation -----#
@@ -34,14 +34,17 @@ perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost pe
 ######### ===== Part 0: initialisation ====== #########
 #-----------------------------------------------------#
 working_dir=$(pwd)
+
 echo $HOME
 if [ $HOME == "/Users/oboulle" ]
 then
   project_dir="/Users/oboulle/Documents"
   conda_env="/Users/oboulle/anaconda2"
-else
-  project_dir="/home/genouest/genscale/oboulle/documents"
-	conda_env="/home/genouest/genscale/oboulle/anaconda2"
+fi
+if [ $HOME == "/home/oboulle" ]
+then
+  project_dir="/home/oboulle/Documents"
+  conda_env="/home/oboulle/anaconda2"
 fi
 
 process_path="$working_dir/$process_name"
@@ -56,8 +59,8 @@ time_file="$process_path/times.txt"
 
 base_seq_path="$process_path/1_base_seq_file.fasta"
 
-echo "Lancement du Workflow 2 :"
-echo "___Initialisation des séquences de base___"
+echo "Lancement du Workflow 2 : (taille $size_seq)"
+echo "___Initialisation de la séquence de base___"
 
 seq_gen_script="$project_dir/synthesis_simulation/sequence_generator/sequence_generator.py" #script for the sequence generation
 if [ $random_seq = true ]
