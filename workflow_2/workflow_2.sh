@@ -11,7 +11,7 @@ random_seq=true #generate random sequences (true) or use an existing fasta file 
 seq_path="workflow_2_fail/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq=1 #number of sequences
-size_seq=1000 #size of the sequences
+size_seq=10100 #size of the sequences
 h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for overlap fragmentation -----#
@@ -20,14 +20,14 @@ overlap_size=20 #size of the overlap
 
 #----- parameters for synthesis -----#
 spacer_path="spacer.fasta" #path to the spacer to se (.fasta file)
-nbr_synth=500 #nomber of molecule to generate
+nbr_synth=300 #nomber of molecule to generate
 n_frag=10 #number of sequence fragments in each molecule
 i_error=0.00 #insertion error rate
 d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
-nbr_read=500 #number of read
+nbr_read=300 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
 #-----------------------------------------------------#
@@ -47,15 +47,35 @@ then
   conda_env="/home/oboulle/anaconda2"
 fi
 
-process_path="$working_dir/$process_name"
+process_path="$working_dir/$process_name"_$(date +"%H:%M:%S")
 rm -rf "$process_path"
 mkdir -p "$process_path"
 time_file="$process_path/times.txt"
 
+summary="$process_path/summary.txt"
+
+cat > $summary << eof
+$process_name
+
+--parameters--
+size_seq : $size_seq
+frag_size : $frag_size
+overlap_size : $overlap_size
+nbr_synth : $nbr_synth
+n_frag : $n_frag
+i_error : $i_error
+d_error : $d_error
+s_error : $s_error
+nbr_read : $nbr_read
+perfect_sequencing : $perfect
+
+--results--
+eof
+
 #-----------------------------------------------------#
 ######### ===== Part 1: base sequences ====== #########
 #-----------------------------------------------------#
-#start_time=$(($(date +%s%N)/1000000))
+start_time=$(date +"%s")
 
 base_seq_path="$process_path/1_base_seq_file.fasta"
 
@@ -79,12 +99,12 @@ else
 		exit 1
 	fi
 fi
-#end_time=$(($(date +%s%N)/1000000))
-#echo "base sequences : $(($end_time - $start_time)) ms" >> $time_file
+end_time=$(date +"%s")
+echo "base sequences : $(($end_time - $start_time)) s" >> $time_file
 #------------------------------------------------------------#
 ######### ===== Part 2: overlap fragmentation ====== #########
 #------------------------------------------------------------#
-#start_time=$(($(date +%s%N)/1000000))
+start_time=$(date +"%s")
 echo "___Fragmentation des séquences avec chevauchements___"
 
 fragmentation_script="$project_dir/synthesis_simulation/overlap_fragmentation/overlap_fragmentation.py" #script for the overlap fragmentation
@@ -94,12 +114,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-#end_time=$(($(date +%s%N)/1000000))
-#echo "overlap fragmentation : $(($end_time - $start_time)) ms" >> $time_file
+end_time=$(date +"%s")
+echo "overlap fragmentation : $(($end_time - $start_time)) ms" >> $time_file
 #------------------------------------------------#
 ######### ===== Part 3: synthesis ====== #########
 #------------------------------------------------#
-#start_time=$(($(date +%s%N)/1000000))
+start_time=$(date +"%s")
 echo "___Synthèse des séquences___"
 
 synthesis_script="$project_dir/synthesis_simulation/synthesis_with_spacers/synthesis_with_spacers.py" #script for the synthesis with spacers
@@ -109,12 +129,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-#end_time=$(($(date +%s%N)/1000000))
-#echo "synthesis : $(($end_time - $start_time)) ms" >> $time_file
+end_time=$(date +"%s")
+echo "synthesis : $(($end_time - $start_time)) s" >> $time_file
 #-------------------------------------------------#
 ######### ===== Part 4: sequencing ====== #########
 #-------------------------------------------------#
-#start_time=$(($(date +%s%N)/1000000))
+start_time=$(date +"%s")
 echo "___Séquençage___"
 
 deep_simu_home="$project_dir/sequencing_simulation/deep_simulator" #home of DeepSimulator
@@ -126,12 +146,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-#end_time=$(($(date +%s%N)/1000000))
-#echo "sequencing : $(($end_time - $start_time)) ms" >> $time_file
+end_time=$(date +"%s")
+echo "sequencing : $(($end_time - $start_time)) s" >> $time_file
 #--------------------------------------------------#
 ######### ===== Part 5: basecalling ====== #########
 #--------------------------------------------------#
-#start_time=$(($(date +%s%N)/1000000))
+start_time=$(date +"%s")
 echo "___Base Calling___"
 
 basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
@@ -142,12 +162,12 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-#end_time=$(($(date +%s%N)/1000000))
-#echo "basecalling : $(($end_time - $start_time)) ms" >> $time_file
+end_time=$(date +"%s")
+echo "basecalling : $(($end_time - $start_time)) s" >> $time_file
 #-----------------------------------------------------#
 ######### ===== Part 6: reconstruction ====== #########
 #-----------------------------------------------------#
-#start_time=$(($(date +%s%N)/1000000))
+start_time=$(date +"%s")
 echo "___Reconstruction___"
 reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct.py" #script for the reconstruction
 reconstruction_path="$process_path/6_result_sequence.fasta"
@@ -157,14 +177,16 @@ if [ ! $? = 0 ]
 then
 	exit 1
 fi
-#end_time=$(($(date +%s%N)/1000000))
-#echo "reconstruction : $(($end_time - $start_time)) ms" >> $time_file
+end_time=$(date +"%s")
+echo "reconstruction : $(($end_time - $start_time)) s" >> $time_file
 #------------------------------------------------------#
 ######### ===== Part 7: Result Analysis ====== #########
 #------------------------------------------------------#
 echo "___Results___"
 result_analysis_script="$project_dir/workflow_global/result_analysis/result_analysis_workflow_2.py"
-python3 $result_analysis_script $base_seq_path $reconstruction_path
+python3 $result_analysis_script $base_seq_path $reconstruction_path | while read line ; do
+    echo $line >> $summary
+done
 
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
