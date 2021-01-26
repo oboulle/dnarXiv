@@ -4,7 +4,7 @@
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
 
-process_name="workflow_2_test" #name of the directory to save the generated files
+process_name="workflow_2_test/workflow_2" #name of the directory to save the generated files
 
 #----- parameters for sequence generation -----#
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
@@ -20,14 +20,14 @@ overlap_size=20 #size of the overlap
 
 #----- parameters for synthesis -----#
 spacer_path="spacer.fasta" #path to the spacer to se (.fasta file)
-nbr_synth=300 #nomber of molecule to generate
+nbr_synth=250 #nomber of molecule to generate
 n_frag=10 #number of sequence fragments in each molecule
 i_error=0.00 #insertion error rate
 d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
-nbr_read=300 #number of read
+nbr_read=250 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
 #-----------------------------------------------------#
@@ -107,7 +107,7 @@ echo "base sequences : $(($end_time - $start_time)) s" >> $time_file
 start_time=$(date +"%s")
 echo "___Fragmentation des séquences avec chevauchements___"
 
-fragmentation_script="$project_dir/synthesis_simulation/overlap_fragmentation/overlap_fragmentation.py" #script for the overlap fragmentation
+fragmentation_script="$project_dir/synthesis_simulation/fragmentation/overlap_fragmentation.py" #script for the overlap fragmentation
 fragmentation_seq_path="$process_path/2_fragmented_seq_file.fasta"
 python3 $fragmentation_script "$base_seq_path" "$fragmentation_seq_path" $frag_size $overlap_size
 if [ ! $? = 0 ]

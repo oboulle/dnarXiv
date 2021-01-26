@@ -4,7 +4,7 @@
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
 
-process_name="workflow_2_perfect_test" #name of the directory to save the generated files
+process_name="workflow_2_perfect_test/workflow_2" #name of the directory to save the generated files
 
 #----- parameters for sequence generation -----#
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
@@ -105,7 +105,7 @@ fi
 #start_time=$(($(date +%s%N)/1000000))
 echo "___Fragmentation des séquences avec chevauchements___"
 
-fragmentation_script="$project_dir/synthesis_simulation/overlap_fragmentation/overlap_fragmentation.py" #script for the overlap fragmentation
+fragmentation_script="$project_dir/synthesis_simulation/fragmentation/overlap_fragmentation.py" #script for the overlap fragmentation
 fragmentation_seq_path="$process_path/2_fragmented_seq_file.fasta"
 python3 $fragmentation_script "$base_seq_path" "$fragmentation_seq_path" $frag_size $overlap_size
 if [ ! $? = 0 ]
