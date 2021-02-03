@@ -11,7 +11,7 @@ random_seq=true #generate random sequences (true) or use an existing fasta file 
 seq_path="workflow_3_fail/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq=1 #number of sequences
-size_seq=3000 #size of the sequences
+size_seq=3060 #size of the sequences
 h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for fragmentation -----#
@@ -142,7 +142,7 @@ python3 $fasta_to_fastq_script "$synthesis_path" "$fastq_file"
 #-----------------------------------------------------#
 start_time=$(date +"%s")
 echo "___Reconstruction___"
-reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct.py" #script for the reconstruction
+reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_tag.py" #script for the reconstruction
 reconstruction_path="$process_path/5_result_sequence.fasta"
 python3 $reconstruction_script "$fastq_file" "$reconstruction_path" "$spacer_path" $frag_size $tag_size
 if [ ! $? = 0 ]
@@ -157,6 +157,7 @@ echo "reconstruction : $(($end_time - $start_time)) s" >> $time_file
 echo "___Results___"
 result_analysis_script="$project_dir/workflow_global/result_analysis/result_analysis_workflow_2.py"
 python3 $result_analysis_script $base_seq_path $reconstruction_path | while read line ; do
+	echo $line
     echo $line >> $summary
 done
 
