@@ -107,7 +107,7 @@ echo "base sequences : $(($end_time - $start_time)) s" >> $time_file
 start_time=$(date +"%s")
 echo "___Fragmentation des séquences___"
 
-fragmentation_script="$project_dir/synthesis_simulation/fragmentation/fragmentation_with_tag.py" #script for the overlap fragmentation
+fragmentation_script="$project_dir/synthesis_simulation/fragmentation/fragmentation_with_tag.py" #script for the fragmentation
 fragmentation_seq_path="$process_path/2_fragmented_seq_file.fasta"
 python3 $fragmentation_script "$base_seq_path" "$fragmentation_seq_path" "$spacer_path" $frag_size $tag_size
 if [ ! $? = 0 ]
@@ -122,7 +122,7 @@ echo "fragmentation with tag : $(($end_time - $start_time)) ms" >> $time_file
 start_time=$(date +"%s")
 echo "___Synthèse des séquences___"
 
-synthesis_script="$project_dir/synthesis_simulation/synthesis_with_spacers/synthesis_with_spacers.py" #script for the synthesis with spacers
+synthesis_script="$project_dir/synthesis_simulation/synthesis/molecule_synthesis_with_spacers.py" #script for the synthesis with spacers
 synthesis_path="$process_path/3_synthesis_file.fasta"
 python3 $synthesis_script -i "$fragmentation_seq_path" -o "$synthesis_path" -s "$spacer_path" -n $nbr_synth --n_frag $n_frag --i_error $i_error --d_error $d_error --s_error $s_error
 if [ ! $? = 0 ]
