@@ -16,7 +16,7 @@ h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for fragmentation -----#
 frag_size=200 #size of the fragments
-tag_size=20
+tag_size=13 #size of the tag
 spacer_path="spacer.fasta" #path to the spacer to use (.fasta file)
 
 #----- parameters for synthesis -----#
@@ -145,7 +145,7 @@ python3 $fasta_to_fastq_script "$synthesis_path" "$fastq_file"
 #-----------------------------------------------------#
 start_time=$(date +"%s")
 echo "___Reconstruction___"
-reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_tag.py" #script for the reconstruction
+reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_workflow_4.py" #script for the reconstruction
 reconstruction_path="$process_path/5_result_sequence.fasta"
 python3 $reconstruction_script "$fastq_file" "$reconstruction_path" "$spacer_path" $frag_size $tag_size
 if [ ! $? = 0 ]
