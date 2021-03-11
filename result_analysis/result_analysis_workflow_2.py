@@ -25,6 +25,8 @@ def count_error_rates(init_seq_value, result_seq_value):
     :param result_sequence: value of the result sequences
     """
     alignment_A, alignment_B = aNW.alignment_nw(init_seq_value, result_seq_value)
+    print(alignment_A)
+    print(alignment_B)
     i_errors, d_errors, s_errors = aNW.calculate_errors(alignment_A, alignment_B)
     seq_size = len(init_seq_value)
     print("insertion errors :", i_errors/seq_size, "("+str(i_errors)+")")
@@ -37,7 +39,7 @@ if len(sys.argv) != 3:
     sys.exit(1)
 
 initial_sequence_path = sys.argv[1]  # .fasta file containing the initial sequence used in the workflow 2
-result_sequence_path = sys.argv[2]  # directory containing the resulting sequence of the workflow 2
+result_sequence_path = sys.argv[2]+"/reconstructed_sequence.fasta"  # directory containing the resulting sequence of the workflow 2
 
 init_seq_value = next(iter(dfr.read_fasta(initial_sequence_path).values()))
 result_seq_value = next(iter(dfr.read_fasta(result_sequence_path).values()))

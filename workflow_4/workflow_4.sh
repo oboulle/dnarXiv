@@ -11,7 +11,7 @@ random_seq=true #generate random sequences (true) or use an existing fasta file 
 seq_path="workflow_4_fail/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq=1 #number of sequences
-size_seq=3060 #size of the sequences
+size_seq=10000 #size of the sequences
 h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for fragmentation -----#
@@ -21,14 +21,14 @@ spacer_path="spacer.fasta" #path to the spacer to use (.fasta file)
 
 #----- parameters for synthesis -----#
 primers_path="primers.fasta" #path to the primers to use (.fasta file)
-nbr_synth=500 #nomber of molecule to generate
+nbr_synth=3000 #nomber of molecule to generate
 n_frag=10 #number of sequence fragments in each molecule
 i_error=0.00 #insertion error rate
 d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
-nbr_read=500 #number of read
+nbr_read=400 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
 #-----------------------------------------------------#
@@ -173,7 +173,8 @@ echo "basecalling : $(($end_time - $start_time)) s" >> $time_file
 start_time=$(date +"%s")
 echo "___Reconstruction___"
 reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_workflow_4.py" #script for the reconstruction
-reconstruction_path="$process_path/5_result_sequence.fasta"
+reconstruction_path="$process_path/6_reconstruction"
+mkdir "$reconstruction_path"
 fastq_file=(*.fastq)
 python3 $reconstruction_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size $tag_size
 if [ ! $? = 0 ]

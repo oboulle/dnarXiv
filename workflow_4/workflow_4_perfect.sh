@@ -146,7 +146,8 @@ python3 $fasta_to_fastq_script "$synthesis_path" "$fastq_file"
 start_time=$(date +"%s")
 echo "___Reconstruction___"
 reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_workflow_4.py" #script for the reconstruction
-reconstruction_path="$process_path/5_result_sequence.fasta"
+reconstruction_path="$process_path/5_reconstruction"
+mkdir "$reconstruction_path"
 python3 $reconstruction_script "$fastq_file" "$reconstruction_path" "$spacer_path" $frag_size $tag_size
 if [ ! $? = 0 ]
 then
