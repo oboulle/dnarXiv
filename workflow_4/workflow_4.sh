@@ -28,6 +28,7 @@ d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
+gpu=true #use the gpu version of guppy basecaller, the cpu version will be used if false
 nbr_read=400 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
@@ -41,12 +42,11 @@ if [ $HOME == "/Users/oboulle" ]
 then
   project_dir="/Users/oboulle/Documents"
   conda_env="/Users/oboulle/anaconda2"
-fi
-if [ $HOME == "/home/oboulle" ]
-then
+else
   project_dir="/home/oboulle/Documents"
   conda_env="/home/oboulle/anaconda2"
 fi
+
 
 process_path="$working_dir/$process_name"_$(date +"%H:%M:%S")
 rm -rf "$process_path"
@@ -69,6 +69,7 @@ n_frag : $n_frag
 i_error : $i_error
 d_error : $d_error
 s_error : $s_error
+gpu : $gpu
 nbr_read : $nbr_read
 perfect_sequencing : $perfect
 
@@ -86,7 +87,7 @@ echo "Lancement du Workflow 4 : (taille $size_seq)"
 echo "___Initialisation de la séquence de base___"
 
 seq_gen_script="$project_dir/synthesis_simulation/sequence_generator/sequence_generator.py" #script for the sequence generation
-if [ $random_seq = true ]
+if [ $random_seq ]
 then
 	python3 $seq_gen_script "$base_seq_path" $nbr_seq $size_seq $h_max
 	if [ ! $? = 0 ]
@@ -157,7 +158,17 @@ echo "sequencing : $(($end_time - $start_time)) s" >> $time_file
 start_time=$(date +"%s")
 echo "___Base Calling___"
 
-basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu/bin/guppy_basecaller" #path of the basecaller to use
+if [ $gpu ]
+then
+	basecaller_path="$project_dir/sequencing_simulation/ont-guppy-gpu/bin/guppy_basecaller" #path of the gpu basecaller to use
+	if [ ! -f "$basecaller_path" ]
+	then
+		echo "gpu basecaller not found at $basecaller_path, using cpu..."
+		basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu/bin/guppy_basecaller" #path of the cpu basecaller to use
+	fi
+else
+	basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu/bin/guppy_basecaller" #path of the cpu basecaller to use
+fi
 basecalling_path="$process_path/5_basecalling"
 mkdir "$basecalling_path"
 $basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
