@@ -158,20 +158,19 @@ echo "sequencing : $(($end_time - $start_time)) s" >> $time_file
 start_time=$(date +"%s")
 echo "___Base Calling___"
 
-if [ $gpu ]
-then
-	basecaller_path="$project_dir/sequencing_simulation/ont-guppy-gpu/bin/guppy_basecaller" #path of the gpu basecaller to use
-	if [ ! -f "$basecaller_path" ]
-	then
-		echo "gpu basecaller not found at $basecaller_path, using cpu..."
-		basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu/bin/guppy_basecaller" #path of the cpu basecaller to use
-	fi
-else
-	basecaller_path="$project_dir/sequencing_simulation/ont-guppy-cpu/bin/guppy_basecaller" #path of the cpu basecaller to use
-fi
 basecalling_path="$process_path/5_basecalling"
 mkdir "$basecalling_path"
-$basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
+
+basecaller_path="$project_dir/sequencing_simulation/ont-guppy/bin/guppy_basecaller" #path of the basecaller to use
+
+if [ $gpu ]
+then
+	$basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg -x "cuda:0"
+else
+	$basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
+	
+fi
+
 if [ ! $? = 0 ]
 then
 	exit 1
