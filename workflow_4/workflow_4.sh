@@ -87,7 +87,7 @@ echo "Lancement du Workflow 4 : (taille $size_seq)"
 echo "___Initialisation de la séquence de base___"
 
 seq_gen_script="$project_dir/synthesis_simulation/sequence_generator/sequence_generator.py" #script for the sequence generation
-if [ $random_seq ]
+if [ "$random_seq" = true ]
 then
 	python3 $seq_gen_script "$base_seq_path" $nbr_seq $size_seq $h_max
 	if [ ! $? = 0 ]
@@ -163,10 +163,12 @@ mkdir "$basecalling_path"
 
 basecaller_path="$project_dir/sequencing_simulation/ont-guppy/bin/guppy_basecaller" #path of the basecaller to use
 
-if [ $gpu ]
+if [ "$gpu" = true ]
 then
+	echo "using GPU" 
 	$basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg -x "cuda:0"
 else
+	echo "using CPU"
 	$basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
 	
 fi
