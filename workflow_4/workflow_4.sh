@@ -11,7 +11,7 @@ random_seq=true #generate random sequences (true) or use an existing fasta file 
 seq_path="workflow_4_fail/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq=1 #number of sequences
-size_seq=10000 #size of the sequences
+size_seq=10075 #size of the sequence
 h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for fragmentation -----#
@@ -28,7 +28,7 @@ d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
-gpu=true #use the gpu version of guppy basecaller, the cpu version will be used if false
+gpu=false #use the gpu version of guppy basecaller, the cpu version will be used if false
 nbr_read=400 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
@@ -166,7 +166,7 @@ basecaller_path="$project_dir/sequencing_simulation/ont-guppy/bin/guppy_basecall
 if [ "$gpu" = true ]
 then
 	echo "using GPU" 
-	$basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg -x "cuda:0"
+	$basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg --num_callers 1 --gpu_runners_per_device 1 --chunks_per_runner 256 --chunk_size 1024 -x "cuda:0"
 else
 	echo "using CPU"
 	$basecaller_path -r --input_path "$sequencing_path" --save_path "$basecalling_path" -c dna_r9.4.1_450bps_hac.cfg --cpu_threads_per_caller 8 --num_callers 1
