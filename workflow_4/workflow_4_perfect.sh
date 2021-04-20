@@ -28,6 +28,7 @@ d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
+gpu=false #use the gpu version of guppy basecaller, the cpu version will be used if false
 nbr_read=250 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
@@ -145,10 +146,15 @@ python3 $fasta_to_fastq_script "$synthesis_path" "$fastq_file"
 #-----------------------------------------------------#
 start_time=$(date +"%s")
 echo "___Reconstruction___"
-reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_workflow_4.py" #script for the reconstruction
+#reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_workflow_4.py" #script for the reconstruction
+reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/C++functions/src/reconstruction" #script for the reconstruction
+
 reconstruction_path="$process_path/5_reconstruction"
 mkdir "$reconstruction_path"
-python3 $reconstruction_script "$fastq_file" "$reconstruction_path" "$spacer_path" $frag_size $tag_size
+
+#python3 $reconstruction_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size $tag_size
+$reconstruction_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size $tag_size
+
 if [ ! $? = 0 ]
 then
 	exit 1
@@ -167,5 +173,3 @@ done
 
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
-
-exit 0

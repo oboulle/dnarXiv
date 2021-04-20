@@ -4,14 +4,14 @@
 ######### ===== Set the parameters in this part ====== #########
 #--------------------------------------------------------------#
 
-process_name="workflow_4_test/workflow_4" #name of the directory to save the generated files
+process_name="workflow_4_C_test/workflow_4" #name of the directory to save the generated files
 
 #----- parameters for sequence generation -----#
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
 seq_path="workflow_4_fail/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq=1 #number of sequences
-size_seq=1000 #size of the sequence
+size_seq=1085 #size of the sequence
 h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for fragmentation -----#
@@ -215,4 +215,4 @@ done
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
 
-exit 0
+#exit 0
