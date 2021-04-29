@@ -48,7 +48,7 @@ else
 fi
 
 
-process_path="$working_dir/$process_name"_$(date +"%H:%M:%S")
+process_path="$working_dir/$process_name"_$(date +"%Hh%Mm%S")
 rm -rf "$process_path"
 mkdir -p "$process_path"
 time_file="$process_path/times.txt"
@@ -72,8 +72,6 @@ s_error : $s_error
 gpu : $gpu
 nbr_read : $nbr_read
 perfect_sequencing : $perfect
-
---results--
 eof
 
 
@@ -206,11 +204,8 @@ echo "reconstruction : $(($end_time - $start_time)) s" >> $time_file
 ######### ===== Part 7: Result Analysis ====== #########
 #------------------------------------------------------#
 echo "___Results___"
-result_analysis_script="$project_dir/workflow_global/result_analysis/result_analysis_workflow_2.py"
-python3 $result_analysis_script $base_seq_path $reconstruction_path | while read line ; do
-	echo $line
-    echo $line >> $summary
-done
+result_analysis_script="$project_dir/fasta36/bin/ggsearch36"
+$result_analysis_script -O "$process_path/result.txt" "$base_seq_path" "$reconstruction_path/reconstructed_sequence.fasta"
 
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
