@@ -22,7 +22,7 @@ spacer_path="spacer.fasta" #path to the spacer to use (.fasta file)
 #----- parameters for synthesis -----#
 primers_path="primers.fasta" #path to the primers to use (.fasta file)
 nbr_synth=100 #nomber of molecule to generate
-n_frag=10 #number of sequence fragments in each molecule
+mean_n_frag=10 #number of sequence fragments in each molecule
 i_error=0.00 #insertion error rate
 d_error=0.00 #deletion error rate
 s_error=0.00 #substitution error rate
@@ -65,7 +65,7 @@ tag_size : $tag_size
 spacer_path : $spacer_path
 primers_path : $primers_path
 nbr_synth : $nbr_synth
-n_frag : $n_frag
+mean_n_frag : $mean_n_frag
 i_error : $i_error
 d_error : $d_error
 s_error : $s_error
@@ -127,7 +127,7 @@ echo "___Synthèse des séquences___"
 
 synthesis_script="$project_dir/synthesis_simulation/synthesis/molecule_synthesis.py" #script for the synthesis
 synthesis_path="$process_path/3_synthesis_file.fasta"
-python3 $synthesis_script -i "$fragmentation_seq_path" -o "$synthesis_path" -p $primers_path -n $nbr_synth --n_frag $n_frag --i_error $i_error --d_error $d_error --s_error $s_error
+python3 $synthesis_script -i "$fragmentation_seq_path" -o "$synthesis_path" -p $primers_path -n $nbr_synth --mean_n_frag $mean_n_frag --i_error $i_error --d_error $d_error --s_error $s_error
 if [ ! $? = 0 ]
 then
 	exit 1
