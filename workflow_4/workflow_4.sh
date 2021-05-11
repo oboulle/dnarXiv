@@ -11,7 +11,7 @@ random_seq=true #generate random sequences (true) or use an existing fasta file 
 seq_path="workflow_4_fail/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq=1 #number of sequences
-size_seq=1075 #size of the sequence
+size_seq=10075 #size of the sequence #can be redefined with param -s
 h_max=3 #maximum size for the homopolymeres
 
 #----- parameters for fragmentation -----#
@@ -21,7 +21,7 @@ spacer_path="spacer.fasta" #path to the spacer to use (.fasta file)
 
 #----- parameters for synthesis -----#
 primers_path="primers.fasta" #path to the primers to use (.fasta file)
-nbr_synth=200 #nomber of molecule to generate
+nbr_synth=600 #number of molecule to generate #can be redefined with param -n
 mean_n_frag=10 #mean of the number of sequence fragments in each molecule
 i_error=0.00 #insertion error rate
 d_error=0.00 #deletion error rate
@@ -29,7 +29,6 @@ s_error=0.00 #substitution error rate
 
 #----- parameters for sequencing -----#
 gpu=false #use the gpu version of guppy basecaller, the cpu version will be used if false
-nbr_read=400 #number of read
 perfect=2 # 0 = normal sequencing, 1 = no length repeat and noise, 2 = almost perfect reads without any randomness 
 
 #-----------------------------------------------------#
@@ -47,6 +46,23 @@ else
   conda_env="/home/oboulle/anaconda2"
 fi
 
+helpFunction() {
+   echo ""
+   echo "Usage: $0 -s size_seq -n nbr_synth"
+   echo -e "\t-s Size of the sequence to generate"
+   echo -e "\t-n Number of molecule to synthesis"
+   exit 1 # Exit script after printing help
+}
+
+while getopts "s:n:" opt
+do
+   case "$opt" in
+      s ) size_seq="$OPTARG" ;;
+      n ) nbr_synth="$OPTARG" ;;
+      h ) helpFunction ;;
+      ? ) helpFunction ;; # Print helpFunction in case parameter is non-existent
+   esac
+done
 
 process_path="$working_dir/$process_name"_$(date +"%Hh%Mm%S")
 rm -rf "$process_path"
@@ -70,7 +86,6 @@ i_error : $i_error
 d_error : $d_error
 s_error : $s_error
 gpu : $gpu
-nbr_read : $nbr_read
 perfect_sequencing : $perfect
 eof
 
@@ -144,7 +159,7 @@ deep_simu_home="$project_dir/sequencing_simulation/deep_simulator" #home of Deep
 deep_simulator_script="$project_dir/sequencing_simulation/deep_simulator/deep_simulator.sh" #script for the sequencing
 sequencing_path="$process_path/4_sequencing"
 conda config --add envs_dirs "$conda_env/envs"
-$deep_simulator_script -i "$synthesis_path" -o "$sequencing_path" -H "$deep_simu_home" -C "$conda_env" -n $nbr_read -P $perfect
+$deep_simulator_script -i "$synthesis_path" -o "$sequencing_path" -H "$deep_simu_home" -C "$conda_env" -n $nbr_synth -P $perfect
 if [ ! $? = 0 ]
 then
 	exit 1
@@ -187,10 +202,13 @@ echo "___Reconstruction___"
 reconstruction_path="$process_path/6_reconstruction"
 mkdir "$reconstruction_path"
 
-reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_workflow_4.py" #script for the reconstruction
-fastq_file=(*.fastq)
-python3 $reconstruction_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size $tag_size
+reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/C++functions/src/reconstruction" #script for the reconstruction
+fastq_file=(*.fastq) #TODO plusieurs fastq quand trop grande séquence
 
+$reconstruction_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size $tag_size
+
+reconstruction_script_2="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_workflow_4_after_C.py" #script for the reconstruction
+python3 $reconstruction_script_2 "$reconstruction_path" "$spacer_path" $frag_size $tag_size
 if [ ! $? = 0 ]
 then
 	exit 1
@@ -202,7 +220,7 @@ echo "reconstruction : $(($end_time - $start_time)) s" >> $time_file
 #------------------------------------------------------#
 echo "___Results___"
 result_analysis_script="$project_dir/fasta36/bin/ggsearch36"
-$result_analysis_script -O "$process_path/result.txt" "$base_seq_path" "$reconstruction_path/reconstructed_sequence.fasta"
+$result_analysis_script -3 -O "$process_path/result.txt" "$base_seq_path" "$reconstruction_path/reconstructed_sequence.fasta"
 
 #-------------- Exit --------------#
 echo "___Fin du processus \!___"
