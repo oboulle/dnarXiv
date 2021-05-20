@@ -8,7 +8,7 @@ process_name="workflow_4_test/workflow_4" #name of the directory to save the gen
 
 #----- parameters for sequence generation -----#
 random_seq=true #generate random sequences (true) or use an existing fasta file (false)
-seq_path="workflow_4_fail/1_base_seq_file.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
+seq_path="image_seq.fasta" #if random_seq is false, the sequences from this path are used (one .fasta file)
 #else the sequences are generated with the following parameters
 nbr_seq=1 #number of sequences
 size_seq=10075 #size of the sequence #can be redefined with param -s
@@ -21,7 +21,7 @@ spacer_path="spacer.fasta" #path to the spacer to use (.fasta file)
 
 #----- parameters for synthesis -----#
 primers_path="primers.fasta" #path to the primers to use (.fasta file)
-nbr_synth=600 #number of molecule to generate #can be redefined with param -n
+nbr_synth=300 #number of molecule to generate #can be redefined with param -n
 mean_n_frag=10 #mean of the number of sequence fragments in each molecule
 i_error=0.00 #insertion error rate
 d_error=0.00 #deletion error rate
@@ -202,13 +202,13 @@ echo "___Reconstruction___"
 reconstruction_path="$process_path/6_reconstruction"
 mkdir "$reconstruction_path"
 
-reconstruction_script="$project_dir/sequencing_simulation/spacer_sequencing/C++functions/src/reconstruction" #script for the reconstruction
+clustering_script="$project_dir/sequencing_simulation/spacer_sequencing/C++functions/src/clustering" #script for the clustering
 fastq_file=(*.fastq) #TODO plusieurs fastq quand trop grande séquence
 
-$reconstruction_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size $tag_size
+$clustering_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size $tag_size
 
-reconstruction_script_2="$project_dir/sequencing_simulation/spacer_sequencing/reconstruct_workflow_4_after_C.py" #script for the reconstruction
-python3 $reconstruction_script_2 "$reconstruction_path" "$spacer_path" $frag_size $tag_size
+compute_consensus_script="$project_dir/sequencing_simulation/spacer_sequencing/compute_consensus.py" #script for the reconstruction
+python3 $compute_consensus_script "$reconstruction_path" "$spacer_path" $frag_size $tag_size
 if [ ! $? = 0 ]
 then
 	exit 1
