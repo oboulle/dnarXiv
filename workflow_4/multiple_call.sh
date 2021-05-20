@@ -4,21 +4,10 @@
 
 SCRIPT_PATH="workflow_4.sh"
 
-
-echo "_________run _________";
-. "$SCRIPT_PATH" -n 125
-. "$SCRIPT_PATH" -n 150
-. "$SCRIPT_PATH" -n 175
-. "$SCRIPT_PATH" -n 200
-. "$SCRIPT_PATH" -n 225
-. "$SCRIPT_PATH" -n 250
-. "$SCRIPT_PATH" -n 275
-. "$SCRIPT_PATH" -n 300
-. "$SCRIPT_PATH" -n 325
-. "$SCRIPT_PATH" -n 350
-. "$SCRIPT_PATH" -n 375
-. "$SCRIPT_PATH" -n 400
-
+for i in 125 150 175 200 225 250 275 300 325 350 375 400
+do
+	./workflow_4.sh -n "$i ";
+done
 
 
 #-------------- Exit --------------#

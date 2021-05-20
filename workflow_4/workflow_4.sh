@@ -21,7 +21,7 @@ spacer_path="spacer.fasta" #path to the spacer to use (.fasta file)
 
 #----- parameters for synthesis -----#
 primers_path="primers.fasta" #path to the primers to use (.fasta file)
-nbr_synth=300 #number of molecule to generate #can be redefined with param -n
+nbr_synth=500#number of molecule to generate #can be redefined with param -n
 mean_n_frag=10 #mean of the number of sequence fragments in each molecule
 i_error=0.00 #insertion error rate
 d_error=0.00 #deletion error rate
@@ -56,9 +56,10 @@ helpFunction() {
 
 while getopts "s:n:" opt
 do
-   case "$opt" in
-      s ) size_seq="$OPTARG" ;;
-      n ) nbr_synth="$OPTARG" ;;
+	
+   case "${opt}" in
+      s ) size_seq="${OPTARG}" ;;
+      n ) nbr_synth="${OPTARG}" ;;
       h ) helpFunction ;;
       ? ) helpFunction ;; # Print helpFunction in case parameter is non-existent
    esac
