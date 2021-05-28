@@ -208,7 +208,7 @@ clustering_script="$project_dir/sequencing_simulation/spacer_sequencing/C++funct
 
 fastq_file=(*.fastq) #TODO plusieurs fastq quand trop grande séquence
 
-$clustering_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size $tag_size
+$clustering_script "$basecalling_path/"$fastq_file "$reconstruction_path" "$spacer_path" $frag_size
 
 compute_consensus_script="$project_dir/sequencing_simulation/spacer_sequencing/compute_consensus.py" #script for the reconstruction
 python3 $compute_consensus_script "$reconstruction_path" "$spacer_path" $frag_size $tag_size
