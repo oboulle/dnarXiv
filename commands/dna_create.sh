@@ -74,7 +74,7 @@ eof
 cdi_file="$container_path/.cdi"
 
 cat > $cdi_file << eof
-DI=0
+0
 eof
 
 echo "Container $container_name created successfully !"
