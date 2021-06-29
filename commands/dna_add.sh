@@ -60,7 +60,8 @@ fi
 
 meta_file="$stored_document_path/.meta"
 cat > $meta_file << eof
-$document_index
+document_index $document_index
+creation_date $(date +'%d/%m/%Y %R')
 eof
 
 cancel_dna_add() {
@@ -71,11 +72,8 @@ cancel_dna_add() {
 #----Source Encoding----#
 
 # get the fragment length from the container options
-while read -r line; do
-    if [[ $line =~ (frag_length=)([0-9]+$) ]]
-    then
-    	frag_length="${BASH_REMATCH[2]}"
-    fi
+while read var value; do
+    export "$var"="$value"
 done < "$container_path/.options"
 
 source_encoding_script="$project_dir/synthesis_simulation/source_encoding/source_encoding.py" 
@@ -85,8 +83,8 @@ python3 $source_encoding_script "$document_path" "$source_path" "$frag_length" "
 if [ ! $? = 0 ]
 then
 	echo "error in source encoding"
-	cancel_dna_add
-	exit 1
+	#cancel_dna_add#TODO
+	#exit 1
 fi
 
 #----Channel Encoding----#
@@ -98,8 +96,8 @@ python3 $channel_encoding_script "$source_path" "$channel_path" #TODO
 if [ ! $? = 0 ]
 then
 	echo "error in channel encoding"
-	cancel_dna_add
-	exit 1
+	#cancel_dna_add#TODO
+	#exit 1
 fi
 
 #----Homopolymere Deletion----#
@@ -111,13 +109,15 @@ python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
 if [ ! $? = 0 ]
 then
 	echo "error in homopolymere deletion"
-	cancel_dna_add
-	exit 1
+	#cancel_dna_add#TODO
+	#exit 1
 fi
 
 #----Update .cdi----#
+document_index=$((document_index+1))
+
 cat > $cdi_file << eof
-$$((document_index+1))
+$document_index
 eof
 
 
