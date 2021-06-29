@@ -29,6 +29,12 @@ fi
 ######### ====== list documents ====== #########
 #--------------------------------------------#
 
+if [[ $(find $container_path -maxdepth 1 -type d | wc -l) -eq 1 ]]
+then
+	echo "this container is empty"
+	exit 0
+fi
+
 for directory in $container_path/*/ ; do	
 	#read the data in the .meta file of each stored document and asign it to variables
     while read var value; do
