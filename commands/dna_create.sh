@@ -65,10 +65,10 @@ mkdir -p "$container_path"
 options_file="$container_path/.options"
 
 cat > $options_file << eof
-simulation=$simulation
-frag_length=$frag_length
-spacer=$spacer
-container_name=$container_name
+simulation $simulation
+frag_length $frag_length
+spacer $spacer
+container_name $container_name
 eof
 
 cdi_file="$container_path/.cdi"
