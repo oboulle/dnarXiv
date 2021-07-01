@@ -1,24 +1,24 @@
 #!/bin/bash
 
+is_meta=false
 #-----------------------------------------------#
 ######### ====== read parameters ====== #########
 #-----------------------------------------------#
 
 help_function() {
    echo ""
-   echo "Usage: dna_add Dname Cname"
+   echo "Usage: dna_add [-meta] Dname Cname"
+   echo -e "\t-meta : used to add a metadata file to the container"
    exit 1 # Exit script after printing help
 }
 
-document_path="${1}"
-container_path="${2}"
-
-if [ "$#" != 2 ]
-then
-	echo "error invalid number of arguments"
-	help_function
-	exit 1
-fi
+while true; do
+  case "$1" in
+    -meta ) is_meta=true ; shift ;;
+    -* ) echo "unknown parameter $1" ; exit 1;;
+    * ) document_path="${1}" ; container_path="${2}" ; break ;;
+  esac
+done
 
 if [ ! -d "$container_path" ] 
 then
@@ -43,6 +43,11 @@ if (( $document_index < 0 ))
 then
 	echo "the container is not editable"
 	exit 1
+fi
+
+if [ $is_meta = true ]
+then
+	document_index="META"
 fi
 
 stored_document_path="$container_path/$document_index"
@@ -114,6 +119,13 @@ then
 fi
 
 #----Update .cdi----#
+
+#no update if the document is the meta file of the container
+if [ $is_meta = true ]
+then
+	echo "Meta document successfully added to container $container_path !"
+	exit 0
+fi
 document_index=$((document_index+1))
 
 cat > $cdi_file << eof
