@@ -124,7 +124,7 @@ python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
 if [ ! $? = 0 ]
 then
 	#echo "error in homopolymere deletion"
-	echo "homopolymere deletion not implemented yep; skipping..."
+	echo "homopolymere deletion not implemented yet; skipping..."
 	#cancel_dna_add#TODO
 	#exit 1
 fi
