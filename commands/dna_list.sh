@@ -7,6 +7,8 @@
 help_function() {
    echo ""
    echo "Usage: dna_list Cname"
+   echo -e "\tCname : path to the container"
+   echo ""
    exit 1 # Exit script after printing help
 }
 
@@ -35,7 +37,7 @@ then
 	exit 0
 fi
 
-for directory in $container_path/*/ ; do	
+for directory in $container_path/*/ ; do
 	#read the data in the .meta file of each stored document and asign it to variables
     while read var value; do
     	export "$var"="$value"

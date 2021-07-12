@@ -11,6 +11,7 @@ help_function() {
    echo -e "\t-meta : used to add a metadata file to the container"
    echo -e "\tDname : path to the document"
    echo -e "\tCname : path to the container"
+   echo ""
    exit 1 # Exit script after printing help
 }
 
