@@ -7,6 +7,9 @@
 help_function() {
    echo ""
    echo "Usage: dna_del Cname DI"
+   echo -e "\tCname : path to the container"
+   echo -e "\tDI : index of the document to delete"
+   echo ""
    exit 1 # Exit script after printing help
 }
 
