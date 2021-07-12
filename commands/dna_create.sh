@@ -15,6 +15,7 @@ help_function() {
    echo -e "\t-sim : turn on simulator mode [default = false]"
    echo -e "\t-fl : specify fragment length [default = 200]"
    echo -e "\t-sp : specify spacer [default = AAAA]"
+   echo -e "\tCname : name of the container"
    exit 1 # Exit script after printing help
 }
 
