@@ -13,6 +13,10 @@ s_error=0
 help_function() {
    echo ""
    echo "Usage: dna_read Cname DI Dname"
+   echo -e "\tCname : path to the container"
+   echo -e "\tDI : index of the document to read"
+   echo -e "\tDname : path to save the document"
+   echo ""
    exit 1 # Exit script after printing help
 }
 
