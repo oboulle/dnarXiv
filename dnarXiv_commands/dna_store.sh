@@ -74,8 +74,10 @@ else
 fi
 
 cancel_dna_store() {
+	#TODO
+	#remove primers
+	#remove META dir
 	echo "cancel dna_store"
-	
 }
 
 # get parameters from the container options
@@ -88,7 +90,7 @@ done < "$container_path/.options"
 primers_generation_script="$project_dir/synthesis_simulation/primer_generation/primer_generation.py"
 
 for directory in $container_path/*/ ; do
-	python3 $primers_generation_script "$directory/source.fasta" "$directory/primers.fasta" "$spacer"#TODO
+	python3 $primers_generation_script "$directory/fragments.fasta" "$directory/primers.fasta" "$spacer"#TODO
 	if [ ! $? = 0 ]
 	then
 		echo "error in primers generation"
@@ -147,7 +149,7 @@ then
 	synthesis_script="$project_dir/synthesis_simulation/synthesis/synthesis.py"
 	
 	for directory in $container_path/*/ ; do
-		python3 $synthesis_script -i "$directory/source.fasta" -o "$directory/synthesis.fasta" -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
+		python3 $synthesis_script -i "$directory/fragments.fasta" -o "$directory/synthesis.fasta" -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
 		if [ ! $? = 0 ]
 		then
 			echo "error in synthesis simulation"
@@ -157,6 +159,7 @@ then
 	done
 else
 	echo "container is not in simulation mode"
+	#TODO call a real synthesis
 fi
 
 #----Molecule design----#
