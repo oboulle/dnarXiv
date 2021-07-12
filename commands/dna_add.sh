@@ -9,6 +9,8 @@ help_function() {
    echo ""
    echo "Usage: dna_add [-meta] Dname Cname"
    echo -e "\t-meta : used to add a metadata file to the container"
+   echo -e "\tDname : path to the document"
+   echo -e "\tCname : path to the container"
    exit 1 # Exit script after printing help
 }
 
@@ -19,6 +21,13 @@ while true; do
     * ) document_path="${1}" ; container_path="${2}" ; break ;;
   esac
 done
+
+if test -z "$container_path"
+then
+	echo "container path missing"
+	help_function
+	exit 1
+fi
 
 if [ ! -d "$container_path" ] 
 then
@@ -37,9 +46,9 @@ fi
 #--------------------------------------------#
 
 cdi_file="$container_path/.cdi"
-document_index=$(head -n 1 "$cdi_file")
+container_index=$(head -n 1 "$cdi_file")
 
-if (( $document_index < 0 ))
+if (( $container_index < 0 ))
 then
 	echo "the container is not editable"
 	exit 1
@@ -47,10 +56,10 @@ fi
 
 if [ $is_meta = true ]
 then
-	document_index="META"
+	container_index="META"
 fi
 
-stored_document_path="$container_path/$document_index"
+stored_document_path="$container_path/$container_index"
  
 mkdir -p "$stored_document_path"
 
@@ -65,7 +74,7 @@ fi
 
 meta_file="$stored_document_path/.meta"
 cat > $meta_file << eof
-document_index $document_index
+container_index $container_index
 creation_date $(date +'%d/%m/%Y %R')
 eof
 
@@ -94,10 +103,10 @@ fi
 
 #----Channel Encoding----#
 
-channel_encoding_script="$project_dir/synthesis_simulation/channel_encoding/channel_encoding.py" 
+channel_encoding_script="$project_dir/channel_coding/LDPC/encode_from_file.jl" 
 channel_path="$stored_document_path/channel.fasta"
 
-python3 $channel_encoding_script "$source_path" "$channel_path" #TODO
+julia $channel_encoding_script "$source_path" "$channel_path" #TODO
 if [ ! $? = 0 ]
 then
 	echo "error in channel encoding"
@@ -126,10 +135,10 @@ then
 	echo "Meta document successfully added to container $container_path !"
 	exit 0
 fi
-document_index=$((document_index+1))
+container_index=$((container_index+1))
 
 cat > $cdi_file << eof
-$document_index
+$container_index
 eof
 
 
