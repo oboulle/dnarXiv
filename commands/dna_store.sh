@@ -17,6 +17,8 @@ help_function() {
    echo -e "\t-i_error : specify insertion error rate in synthesis simulation [default = 0]"
    echo -e "\t-d_error : specify deletion error rate in synthesis simulation [default = 0]"
    echo -e "\t-s_error : specify substitution error rate in synthesis simulation [default = 0]"
+   echo -e "\tCname : path to the container"
+   echo ""
    exit 1 # Exit script after printing help
 }
 
@@ -54,9 +56,9 @@ fi
 #--------------------------------------------#
 
 cdi_file="$container_path/.cdi"
-document_index=$(head -n 1 "$cdi_file")
+container_index=$(head -n 1 "$cdi_file")
 
-if (( $document_index < 0 ))
+if (( $container_index < 0 ))
 then
 	echo "the container is not editable"
 	exit 1
@@ -73,6 +75,7 @@ fi
 
 cancel_dna_store() {
 	echo "cancel dna_store"
+	
 }
 
 # get parameters from the container options
