@@ -75,7 +75,7 @@ fi
 
 meta_file="$stored_document_path/.meta"
 cat > $meta_file << eof
-container_index $container_index
+document_index $container_index
 creation_date $(date +'%d/%m/%Y %R')
 eof
 
