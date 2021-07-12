@@ -123,7 +123,7 @@ then
 fi
 
 #add the metadata concatenation to the container as a file (source encoding, channel encoding, etc)
-$project_dir/workflow_global/commands/dna_add.sh -meta "$meta_concatenation_path" "$container_path"
+$project_dir/workflow_global/dnarXiv_commands/dna_add.sh -meta "$meta_concatenation_path" "$container_path"
 if [ ! $? = 0 ]
 then
 	echo "error in global metadata addition"
