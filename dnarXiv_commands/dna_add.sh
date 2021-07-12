@@ -125,6 +125,7 @@ if [ ! $? = 0 ]
 then
 	#echo "error in homopolymere deletion"
 	echo "homopolymere deletion not implemented yet; skipping..."
+	cp channel_path fragments_path
 	#cancel_dna_add#TODO
 	#exit 1
 fi
