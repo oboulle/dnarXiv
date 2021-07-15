@@ -169,7 +169,7 @@ then
 	molecule_design_script="$project_dir/synthesis_simulation/synthesis/molecule_design.py"
 	
 	for directory in $container_path/*/ ; do
-		python3 $molecule_design_script -i "$directory/synthesis.fasta" -o "$directory/molecules.fasta" -s "spacer" -p "$directory/primers.fasta" -n $n_synth
+		python3 $molecule_design_script -i "$directory/synthesis.fasta" -o "$directory/molecules.fasta" -s "$spacer" -p "$directory/primers.fasta" -n $n_synth
 		if [ ! $? = 0 ]
 		then
 			echo "error in molecule design"
