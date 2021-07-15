@@ -64,8 +64,6 @@ then
 	exit 1
 fi
 
-working_dir=$(pwd)
-
 if [ $HOME == "/Users/oboulle" ]
 then
   project_dir="/Users/oboulle/Documents"
@@ -90,7 +88,7 @@ done < "$container_path/.options"
 primers_generation_script="$project_dir/synthesis_simulation/primer_generation/primer_generation.py"
 
 for directory in $container_path/*/ ; do
-	python3 $primers_generation_script "$directory/fragments.fasta" "$directory/primers.fasta" "$spacer"#TODO
+	python3 $primers_generation_script "$directory/fragments.fasta" "$directory/primers.fasta" "$spacer" "$directory/.meta"
 	if [ ! $? = 0 ]
 	then
 		echo "error in primers generation"
@@ -134,7 +132,7 @@ then
 fi
 
 #generate the primers for this new file
-python3 $primers_generation_script "$meta_doc_path/source.fasta" "$meta_doc_path/primers.fasta" "$spacer"
+python3 $primers_generation_script "$meta_doc_path/source.fasta" "$meta_doc_path/primers.fasta" "$spacer" "$meta_doc_path/.meta"
 if [ ! $? = 0 ]
 then
 	echo "error in primers generation"
