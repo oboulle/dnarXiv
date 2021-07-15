@@ -64,8 +64,6 @@ stored_document_path="$container_path/$container_index"
  
 mkdir -p "$stored_document_path"
 
-working_dir=$(pwd)
-
 if [ $HOME == "/Users/oboulle" ]
 then
   project_dir="/Users/oboulle/Documents"
