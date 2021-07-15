@@ -56,8 +56,6 @@ then
 	exit 1
 fi
 
-working_dir=$(pwd)
-
 if [ $HOME == "/Users/oboulle" ]
 then
   project_dir="/Users/oboulle/Documents"
