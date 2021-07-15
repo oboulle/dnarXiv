@@ -51,6 +51,7 @@ then
     exit 1
 fi
 
+
 #--------------------------------------------#
 ######### ====== store document ====== #########
 #--------------------------------------------#
@@ -74,7 +75,6 @@ fi
 cancel_dna_store() {
 	#TODO
 	#remove primers
-	#remove META dir
 	echo "cancel dna_store"
 }
 
@@ -85,54 +85,12 @@ done < "$container_path/.options"
 
 #----Primers Generation----#
 
+#copy all the fragments from all the documents into one file
+cat "$container_path"/*/fragments.fasta > "$container_path/container_fragments.fasta"
+
 primers_generation_script="$project_dir/synthesis_simulation/primer_generation/primer_generation.py"
 
-for directory in $container_path/*/ ; do
-	python3 $primers_generation_script "$directory/fragments.fasta" "$directory/primers.fasta" "$spacer" "$directory/.meta"
-	if [ ! $? = 0 ]
-	then
-		echo "error in primers generation"
-		#cancel_dna_store#TODO
-		#exit 1
-	fi
-done
-
-#----Global metadata generation----#
-
-meta_doc_path="$container_path/META"
-
-if [ -d "$meta_doc_path" ] 
-then
-    rm -rf $meta_doc_path
-fi 
-
-#create a META dir in the container
-mkdir -p "$meta_doc_path"
-
-metadata_generation_script="$project_dir/synthesis_simulation/source_encoding/metadata_generation.py" 
-
-meta_concatenation_path="$meta_doc_path/concatenation.txt"
-
-#generate the concatenation of the container .meta files 
-python3 $metadata_generation_script "$container_path" "$meta_concatenation_path" #TODO
-if [ ! $? = 0 ]
-then
-	echo "error in global metadata generation"
-	#cancel_dna_store#TODO
-	#exit 1
-fi
-
-#add the metadata concatenation to the container as a file (source encoding, channel encoding, etc)
-$project_dir/workflow_global/dnarXiv_commands/dna_add.sh -meta "$meta_concatenation_path" "$container_path"
-if [ ! $? = 0 ]
-then
-	echo "error in global metadata addition"
-	#cancel_dna_store#TODO
-	#exit 1
-fi
-
-#generate the primers for this new file
-python3 $primers_generation_script "$meta_doc_path/source.fasta" "$meta_doc_path/primers.fasta" "$spacer" "$meta_doc_path/.meta"
+python3 $primers_generation_script "$container_path" "$spacer"
 if [ ! $? = 0 ]
 then
 	echo "error in primers generation"
@@ -175,6 +133,8 @@ then
 			#exit 1
 		fi
 	done
+	#concatenate all the molecules files into one to represent the physical container
+	cat "$container_path"/*/molecules.fasta > "$container_path/container_molecules.fasta"
 else
 	echo ""
 fi
