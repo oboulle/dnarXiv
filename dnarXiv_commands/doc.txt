@@ -1,5 +1,1 @@
-test
-
-<
->
-eof
+Ceci est un test
