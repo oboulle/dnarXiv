@@ -120,16 +120,17 @@ fi
 h_deletion_script="$project_dir/synthesis_simulation/homoplymere_deletion/homopolymere_deletion.py" 
 fragments_path="$stored_document_path/fragments.fasta"
 
-python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
+echo "homopolymere deletion not implemented yet; skipping..."
+cp $channel_path $fragments_path
+
+: 'python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
 if [ ! $? = 0 ]
 then
 	#echo "error in homopolymere deletion"
-	echo "homopolymere deletion not implemented yet; skipping..."
-	cp $channel_path $fragments_path
 	#cancel_dna_add#TODO
 	#exit 1
 fi
-
+'
 #----Update .cdi----#
 
 #no update if the document is the meta file of the container
