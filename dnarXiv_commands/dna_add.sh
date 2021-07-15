@@ -81,7 +81,7 @@ while read var value; do
     export "$var"="$value"
 done < "$container_path/.options"
 
-source_encoding_script="$project_dir/synthesis_simulation/source_encoding/source_encoding.py" 
+source_encoding_script="$project_dir/source_encoding/source_encoding.py" 
 source_path="$stored_document_path/source.fasta"
 
 python3 $source_encoding_script "$document_path" "$source_path" "$frag_length" "$meta_file" #TODO

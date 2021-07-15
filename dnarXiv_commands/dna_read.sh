@@ -57,13 +57,9 @@ else
   project_dir="/home/oboulle/Documents"
 fi
 
-#get metadata informations of META
-#if META not already sequenced
-#sequence META dir
+#get primers and metadata of DI
+#sequence molecules from container molecules with the good primers
 
-#get metadata informations of DI
-
-#sequence DI
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
 exit 0

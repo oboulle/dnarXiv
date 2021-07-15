@@ -88,7 +88,7 @@ done < "$container_path/.options"
 #copy all the fragments from all the documents into one file
 cat "$container_path"/*/fragments.fasta > "$container_path/container_fragments.fasta"
 
-primers_generation_script="$project_dir/synthesis_simulation/primer_generation/primer_generation.py"
+primers_generation_script="$project_dir/synthesis_simulation/primer_generation.py"
 
 python3 $primers_generation_script "$container_path" "$spacer"
 if [ ! $? = 0 ]
@@ -102,7 +102,7 @@ fi
 
 if [ "$simulation" = true ]
 then
-	synthesis_script="$project_dir/synthesis_simulation/synthesis/synthesis.py"
+	synthesis_script="$project_dir/synthesis_simulation/synthesis.py"
 	
 	for directory in $container_path/*/ ; do
 		python3 $synthesis_script -i "$directory/fragments.fasta" -o "$directory/synthesis.fasta" -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
@@ -122,7 +122,7 @@ fi
 
 if [ "$simulation" = true ]
 then
-	molecule_design_script="$project_dir/synthesis_simulation/synthesis/molecule_design.py"
+	molecule_design_script="$project_dir/synthesis_simulation/molecule_design.py"
 	
 	for directory in $container_path/*/ ; do
 		python3 $molecule_design_script -i "$directory/synthesis.fasta" -o "$directory/molecules.fasta" -s "$spacer" -p "$directory/primers.fasta" -n $n_synth
