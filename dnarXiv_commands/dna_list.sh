@@ -47,6 +47,11 @@ for directory in $container_path/*/ ; do
 	printf "\tname $doc_name\n"
 	printf "\ttype $type\n"
 	printf "\t$n_frag fragments\n"
+	if test "$start_primer"
+	then
+		printf "\tstart_primer $start_primer\n"
+		printf "\tstop_primer $stop_primer\n"
+	fi
 done
 
 exit 0
