@@ -90,7 +90,7 @@ cat "$container_path"/*/fragments.fasta > "$container_path/container_fragments.f
 
 primers_generation_script="$project_dir/synthesis_simulation/primer_generation.py"
 
-python3 $primers_generation_script "$container_path" "$spacer"
+python3 $primers_generation_script "$container_path"
 if [ ! $? = 0 ]
 then
 	echo "error in primers generation"
