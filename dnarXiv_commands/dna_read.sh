@@ -57,8 +57,54 @@ else
   project_dir="/home/oboulle/Documents"
 fi
 
-#get primers and metadata of DI
+# get parameters from the container options
+while read var value; do
+    export "$var"="$value"
+done < "$container_path/.options"
+
+#simulation frag_length spacer 
+
+# get parameters from the .meta file of the document to read
+while read var value; do
+    export "$var"="$value"
+done < "$container_path/$document_index/.meta"
+
+#type n_frag metadata start_primer stop_primer
+
+#----Sequence Selection----#
+
+nbr_seq=50 #TODO
+sequence_selection_script="$project_dir/sequencing_simulation/select_sequences.py" 
+
 #sequence molecules from container molecules with the good primers
+python3 $sequence_selection_script "$container_path/container_molecules.fasta" "$container_path/$document_index/select_mol.fasta" $start_primer $stop_primer $nbr_seq
+
+#----Sequencing & Basecalling----#
+
+#sequencing + basecalling the selected molecules #TODO
+convert_fasta_script="$project_dir/synthesis_simulation/dna_file_reader.py" #script to convert fasta to fastq
+python3 $convert_fasta_script "$container_path/$document_index/select_mol.fasta" "$container_path/$document_index/sequenced_mol.fastq"
+
+#----Clustering----#
+
+consensus_frag_dir="$container_path/$document_index/frag"
+rm -rf consensus_frag_dir
+
+clustering_script="$project_dir/sequencing_simulation/clustering" #script for the clustering
+$clustering_script "$container_path/$document_index/sequenced_mol.fastq" $consensus_frag_dir "$spacer" $frag_length
+if [ ! $? = 0 ]
+then
+	echo "error in clustering"
+	exit 1
+fi
+
+#----Consensus----#
+
+consensus_script="$project_dir/sequencing_simulation/consensus.py"
+mkdir "$container_path/$document_index/consensus"
+python3 $consensus_script "$consensus_frag_dir" "$container_path/$document_index/consensus" "$spacer" $frag_length
+
+#----Channel Decoding----#
 
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
