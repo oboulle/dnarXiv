@@ -3,7 +3,7 @@
 #----- default parameters -----#
 simulation=false
 frag_length=200
-spacer="AAAA"
+spacer="AAAAAAAACCCCCCCC"
 
 #-----------------------------------------------#
 ######### ====== read parameters ====== #########
@@ -14,7 +14,7 @@ help_function() {
    echo "Usage: dna_create [-sim] [-fl int] [-sp string] Cname"
    echo -e "\t-sim : turn on simulator mode [default = false]"
    echo -e "\t-fl : specify fragment length [default = 200]"
-   echo -e "\t-sp : specify spacer [default = AAAA]"
+   echo -e "\t-sp : specify spacer [default = AAAAAAAACCCCCCCC]"
    echo -e "\tCname : name of the container"
    echo ""
    exit 1 # Exit script after printing help
