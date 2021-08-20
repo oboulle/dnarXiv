@@ -88,21 +88,21 @@ python3 $source_encoding_script "$document_path" "$source_path" "$frag_length" "
 if [ ! $? = 0 ]
 then
 	echo "error in source encoding"
-	#cancel_dna_add#TODO
-	#exit 1
+	cancel_dna_add#TODO
+	exit 1
 fi
 
 #----Channel Encoding----#
 
-channel_encoding_script="$project_dir/channel_coding/LDPC/encode_from_file.jl" 
+channel_encoding_script="$project_dir/channel_code/encode_from_file.jl" 
 channel_path="$stored_document_path/channel.fasta"
 
 julia $channel_encoding_script "$source_path" "$channel_path" #TODO
 if [ ! $? = 0 ]
 then
 	echo "error in channel encoding"
-	#cancel_dna_add#TODO
-	#exit 1
+	cancel_dna_add#TODO
+	exit 1
 fi
 
 #----Homopolymere Deletion----#

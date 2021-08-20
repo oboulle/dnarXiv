@@ -89,6 +89,7 @@ python3 $convert_fasta_script "$container_path/$document_index/select_mol.fasta"
 
 consensus_frag_dir="$container_path/$document_index/frag"
 rm -rf consensus_frag_dir
+mkdir $consensus_frag_dir
 
 clustering_script="$project_dir/sequencing_simulation/clustering" #script for the clustering
 $clustering_script "$container_path/$document_index/sequenced_mol.fastq" $consensus_frag_dir "$spacer" $frag_length
@@ -101,10 +102,11 @@ fi
 #----Consensus----#
 
 consensus_script="$project_dir/sequencing_simulation/consensus.py"
-mkdir "$container_path/$document_index/consensus"
-python3 $consensus_script "$consensus_frag_dir" "$container_path/$document_index/consensus" "$spacer" $frag_length
+#mkdir "$container_path/$document_index/consensus"
+python3 $consensus_script "$consensus_frag_dir" "$container_path/$document_index/consensus.fasta" "$spacer" $frag_length
 
 #----Channel Decoding----#
+
 
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
