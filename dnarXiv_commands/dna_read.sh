@@ -102,12 +102,15 @@ fi
 #----Consensus----#
 
 consensus_script="$project_dir/sequencing_simulation/consensus.py"
-#mkdir "$container_path/$document_index/consensus"
-python3 $consensus_script "$consensus_frag_dir" "$container_path/$document_index/consensus.fasta" "$spacer" $frag_length
+consensus_path="$container_path/$document_index/consensus.fasta"
+python3 $consensus_script "$consensus_frag_dir" $consensus_path "$spacer" $frag_length
 
 #----Channel Decoding----#
 
+decoding_script="$project_dir/channel_code/file_decoder.sh"
+$decoding_script $consensus_path $frag_length "$container_path/$document_index/decoded_sequences.fasta" "$container_path/$document_index/validity_check.txt"
 
+#----Source Decoding----#
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
 exit 0
