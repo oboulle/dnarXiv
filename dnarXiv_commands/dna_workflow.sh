@@ -14,5 +14,6 @@ $commands_dir/dna_add.sh $commands_dir/doc.txt test_workflow
 $commands_dir/dna_add.sh $commands_dir/img.png test_workflow
 $commands_dir/dna_store.sh test_workflow 
 $commands_dir/dna_list.sh test_workflow
+$commands_dir/dna_read.sh test_workflow 0 test.txt
 
 exit 0
