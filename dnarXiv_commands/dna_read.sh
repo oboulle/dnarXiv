@@ -107,10 +107,14 @@ python3 $consensus_script "$consensus_frag_dir" $consensus_path "$spacer" $frag_
 
 #----Channel Decoding----#
 
-decoding_script="$project_dir/channel_code/file_decoder.sh"
-$decoding_script $consensus_path $frag_length "$container_path/$document_index/decoded_sequences.fasta" "$container_path/$document_index/validity_check.txt"
+channel_decoding_script="$project_dir/channel_code/file_decoder.sh"
+decoded_sequences_path="$container_path/$document_index/decoded_sequences.fasta"
+$channel_decoding_script $consensus_path $frag_length $decoded_sequences_path "$container_path/$document_index/validity_check.txt"
 
 #----Source Decoding----#
+
+source_decoding_script="$project_dir/source_encoding/source_decoding.py"
+python3 $source_decoding_script $decoded_sequences_path $document_path $type $frag_length
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
 exit 0
