@@ -40,7 +40,6 @@ fi
 #---------------------------------------------#
 ######### ====== read document ====== #########
 #---------------------------------------------#
-
 cdi_file="$container_path/.cdi"
 container_index=$(head -n 1 "$cdi_file")
 
@@ -71,19 +70,23 @@ done < "$container_path/$document_index/.meta"
 
 #type n_frag metadata start_primer stop_primer
 
-#----Sequence Selection----#
+#----Molecule Selection----#
+start_time=$(date +"%s")
 
-nbr_seq=50 #TODO
-sequence_selection_script="$project_dir/sequencing_simulation/select_sequences.py" 
-
-#sequence molecules from container molecules with the good primers
-python3 $sequence_selection_script "$container_path/container_molecules.fasta" "$container_path/$document_index/select_mol.fasta" $start_primer $stop_primer $nbr_seq
+nbr_seq=7 #TODO
+molecule_selection_script="$project_dir/sequencing_simulation/select_sequences.py" 
+selected_mol_path="$container_path/$document_index/select_mol.fasta"
+#select molecules from container molecules with the good primers
+python3 $molecule_selection_script "$container_path/container_molecules.fasta" $selected_mol_path $start_primer $stop_primer $nbr_seq
+seq_sel_time=$(date +"%s")
 
 #----Sequencing & Basecalling----#
 
 #sequencing + basecalling the selected molecules #TODO
 convert_fasta_script="$project_dir/synthesis_simulation/dna_file_reader.py" #script to convert fasta to fastq
-python3 $convert_fasta_script "$container_path/$document_index/select_mol.fasta" "$container_path/$document_index/sequenced_mol.fastq"
+sequenced_mol_path="$container_path/$document_index/sequenced_mol.fastq"
+python3 $convert_fasta_script $selected_mol_path $sequenced_mol_path
+seq_bc_time=$(date +"%s")
 
 #----Clustering----#
 
@@ -92,29 +95,57 @@ rm -rf consensus_frag_dir
 mkdir $consensus_frag_dir
 
 clustering_script="$project_dir/sequencing_simulation/clustering" #script for the clustering
-$clustering_script "$container_path/$document_index/sequenced_mol.fastq" $consensus_frag_dir "$spacer" $frag_length
+$clustering_script $sequenced_mol_path $consensus_frag_dir "$spacer" $frag_length
 if [ ! $? = 0 ]
 then
 	echo "error in clustering"
 	exit 1
 fi
+clust_time=$(date +"%s")
 
 #----Consensus----#
 
 consensus_script="$project_dir/sequencing_simulation/consensus.py"
 consensus_path="$container_path/$document_index/consensus.fasta"
 python3 $consensus_script "$consensus_frag_dir" $consensus_path "$spacer" $frag_length
+if [ ! $? = 0 ]
+then
+	echo "error in consensus"
+	exit 1
+fi
+consensus_time=$(date +"%s")
 
 #----Channel Decoding----#
 
 channel_decoding_script="$project_dir/channel_code/file_decoder.sh"
 decoded_sequences_path="$container_path/$document_index/decoded_sequences.fasta"
 $channel_decoding_script $consensus_path $frag_length $decoded_sequences_path "$container_path/$document_index/validity_check.txt"
+if [ ! $? = 0 ]
+then
+	echo "error in channel decoding"
+	exit 1
+fi
+channel_time=$(date +"%s")
 
 #----Source Decoding----#
 
 source_decoding_script="$project_dir/source_encoding/source_decoding.py"
 python3 $source_decoding_script $decoded_sequences_path $document_path $type $frag_length
+if [ ! $? = 0 ]
+then
+	echo "error in source decoding"
+	exit 1
+fi
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
+echo ""
+end_time=$(date +"%s")
+echo "dna_read : $(($end_time - $start_time)) s" >> workflow_times.txt
+echo "   > sequences_select       : $(($seq_sel_time - $start_time)) s" >> workflow_times.txt
+echo "   > sequencing_basecalling : $(($seq_bc_time - $seq_sel_time)) s" >> workflow_times.txt
+echo "   > clustering             : $(($clust_time - $seq_bc_time)) s" >> workflow_times.txt
+echo "   > consensus              : $(($consensus_time - $clust_time)) s" >> workflow_times.txt
+echo "   > channel_decoding       : $(($channel_time - $consensus_time)) s" >> workflow_times.txt
+echo "   > source_decoding        : $(($end_time - $channel_time)) s" >> workflow_times.txt
+
 exit 0

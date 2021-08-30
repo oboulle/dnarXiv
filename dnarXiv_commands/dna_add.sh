@@ -42,7 +42,7 @@ fi
 #--------------------------------------------#
 ######### ====== add document ====== #########
 #--------------------------------------------#
-
+time=$(date +"%s")
 cdi_file="$container_path/.cdi"
 container_index=$(head -n 1 "$cdi_file")
 
@@ -131,4 +131,6 @@ eof
 
 
 echo "Document $document_path successfully added to container $container_path !"
+end_time=$(date +"%s")
+echo "dna_add : $(($end_time - $time)) s" >> workflow_times.txt
 exit 0
