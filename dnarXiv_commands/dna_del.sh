@@ -1,9 +1,5 @@
 #!/bin/bash
 
-#-----------------------------------------------#
-######### ====== read parameters ====== #########
-#-----------------------------------------------#
-
 help_function() {
    echo ""
    echo "Usage: dna_del Cname DI"
@@ -12,6 +8,10 @@ help_function() {
    echo ""
    exit 1 # Exit script after printing help
 }
+
+#-----------------------------------------------#
+######### ====== read parameters ====== #########
+#-----------------------------------------------#
 
 container_path="${1}"
 document_index="${2}"

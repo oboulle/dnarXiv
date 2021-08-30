@@ -1,9 +1,5 @@
 #!/bin/bash
 
-#-----------------------------------------------#
-######### ====== read parameters ====== #########
-#-----------------------------------------------#
-
 help_function() {
    echo ""
    echo "Usage: dna_add Dname Cname"
@@ -12,6 +8,21 @@ help_function() {
    echo ""
    exit 1 # Exit script after printing help
 }
+
+check_error_function () { #end the program if the previously called script has returned an error
+	if [ ! $? = 0 ]
+	then
+		echo "error in $1"
+		echo "cancel dna_add"
+		rm -rf $stored_document_path
+		exit 1
+	fi
+}
+
+#-----------------------------------------------#
+######### ====== read parameters ====== #########
+#-----------------------------------------------#
+
 
 while true; do
   case "$1" in
@@ -69,10 +80,6 @@ document_index $container_index
 creation_date $(date +'%d/%m/%Y %R')
 eof
 
-cancel_dna_add() {
-	echo "cancel dna_add"
-	rm -rf $stored_document_path
-}
 
 #----Source Encoding----#
 
@@ -85,12 +92,8 @@ source_encoding_script="$project_dir/source_encoding/source_encoding.py"
 source_path="$stored_document_path/source.fasta"
 
 python3 $source_encoding_script "$document_path" "$source_path" "$frag_length" "$meta_file" #TODO
-if [ ! $? = 0 ]
-then
-	echo "error in source encoding"
-	cancel_dna_add#TODO
-	exit 1
-fi
+check_error_function "error in source encoding"
+
 
 #----Channel Encoding----#
 
@@ -98,12 +101,8 @@ channel_encoding_script="$project_dir/channel_code/encode_from_file.jl"
 channel_path="$stored_document_path/channel.fasta"
 
 julia $channel_encoding_script "$source_path" "$channel_path" #TODO
-if [ ! $? = 0 ]
-then
-	echo "error in channel encoding"
-	cancel_dna_add#TODO
-	exit 1
-fi
+check_error_function "error in channel encoding"
+
 
 #----Homopolymere Deletion----#
 
@@ -114,12 +113,7 @@ echo "homopolymere deletion not implemented yet; skipping..."
 cp $channel_path $fragments_path
 
 : 'python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
-if [ ! $? = 0 ]
-then
-	#echo "error in homopolymere deletion"
-	#cancel_dna_add#TODO
-	#exit 1
-fi
+check_error_function "error in homopolymere deletion"
 '
 #----Update .cdi----#
 

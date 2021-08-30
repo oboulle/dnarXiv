@@ -1,15 +1,5 @@
 #!/bin/bash
 
-#----- default parameters -----#
-n_synth=100
-i_error=0
-d_error=0
-s_error=0
-
-#-----------------------------------------------#
-######### ====== read parameters ====== #########
-#-----------------------------------------------#
-
 help_function() {
    echo ""
    echo "Usage: dna_store [-n_synth int] [-i_error int] [-d_error int] [-s_error int] Cname"
@@ -21,6 +11,24 @@ help_function() {
    echo ""
    exit 1 # Exit script after printing help
 }
+
+check_error_function () { #end the program if the previously called script has returned an error
+	if [ ! $? = 0 ]
+	then
+		echo "error in $1"
+		exit 1
+	fi
+}
+
+#----- default parameters -----#
+n_synth=100
+i_error=0
+d_error=0
+s_error=0
+
+#-----------------------------------------------#
+######### ====== read parameters ====== #########
+#-----------------------------------------------#
 
 while true; do
   case "$1" in
@@ -73,12 +81,6 @@ else
   project_dir="/home/oboulle/Documents"
 fi
 
-cancel_dna_store() {
-	#TODO
-	#remove primers
-	echo "cancel dna_store"
-}
-
 # get parameters from the container options
 while read var value; do
     export "$var"="$value"
@@ -92,12 +94,7 @@ cat "$container_path"/*/fragments.fasta > "$container_path/container_fragments.f
 primers_generation_script="$project_dir/synthesis_simulation/primer_generation.py"
 
 python3 $primers_generation_script "$container_path"
-if [ ! $? = 0 ]
-then
-	echo "error in primers generation"
-	#cancel_dna_store#TODO
-	#exit 1
-fi
+check_error_function "primer generation"
 
 #----Synthesis----#
 
@@ -107,12 +104,7 @@ then
 	
 	for directory in $container_path/*/ ; do
 		python3 $synthesis_script -i "$directory/fragments.fasta" -o "$directory/synthesis.fasta" -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
-		if [ ! $? = 0 ]
-		then
-			echo "error in synthesis simulation"
-			#cancel_dna_store#TODO
-			#exit 1
-		fi
+		check_error_function "synthesis simulation"
 	done
 else
 	echo "container is not in simulation mode"
@@ -127,12 +119,7 @@ then
 	
 	for directory in $container_path/*/ ; do
 		python3 $molecule_design_script -i "$directory/synthesis.fasta" -o "$directory/molecules.fasta" -s "$spacer" -p "$directory/primers.fasta" -n $n_synth
-		if [ ! $? = 0 ]
-		then
-			echo "error in molecule design"
-			#cancel_dna_store#TODO
-			#exit 1
-		fi
+		check_error_function "error in molecule design"
 	done
 	#concatenate all the molecules files into one to represent the physical container
 	cat "$container_path"/*/molecules.fasta > "$container_path/container_molecules.fasta"

@@ -1,14 +1,5 @@
 #!/bin/bash
 
-#----- default parameters -----#
-simulation=false
-frag_length=200
-spacer="AAAAAAAACCCCCCCC"
-
-#-----------------------------------------------#
-######### ====== read parameters ====== #########
-#-----------------------------------------------#
-
 help_function() {
    echo ""
    echo "Usage: dna_create [-sim] [-fl int] [-sp string] Cname"
@@ -19,6 +10,15 @@ help_function() {
    echo ""
    exit 1 # Exit script after printing help
 }
+
+#----- default parameters -----#
+simulation=false
+frag_length=200
+spacer="AAAAAAAACCCCCCCC"
+
+#-----------------------------------------------#
+######### ====== read parameters ====== #########
+#-----------------------------------------------#
 
 while true; do
   case "$1" in
