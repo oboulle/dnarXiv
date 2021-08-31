@@ -3,7 +3,7 @@
 help_function() {
    echo ""
    echo "Usage: dna_store [-n_synth int] [-i_error int] [-d_error int] [-s_error int] Cname"
-   echo -e "\t-n_synth : specify number of synthesis per fragments [default = 100]"
+   echo -e "\t-n_synth : specify number of synthesis per fragments [default = 10000]"
    echo -e "\t-i_error : specify insertion error rate in synthesis simulation [default = 0]"
    echo -e "\t-d_error : specify deletion error rate in synthesis simulation [default = 0]"
    echo -e "\t-s_error : specify substitution error rate in synthesis simulation [default = 0]"
@@ -21,7 +21,7 @@ check_error_function () { #end the program if the previously called script has r
 }
 
 #----- default parameters -----#
-n_synth=100
+n_synth=10000
 i_error=0
 d_error=0
 s_error=0
