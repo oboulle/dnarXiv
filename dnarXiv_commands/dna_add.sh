@@ -92,7 +92,7 @@ source_encoding_script="$project_dir/source_encoding/source_encoding.py"
 source_path="$stored_document_path/source.fasta"
 
 python3 $source_encoding_script "$document_path" "$source_path" "$frag_length" "$meta_file" #TODO
-check_error_function "error in source encoding"
+check_error_function "source encoding"
 
 
 #----Channel Encoding----#
@@ -101,7 +101,7 @@ channel_encoding_script="$project_dir/channel_code/encode_from_file.jl"
 channel_path="$stored_document_path/channel.fasta"
 
 julia $channel_encoding_script "$source_path" "$channel_path" #TODO
-check_error_function "error in channel encoding"
+check_error_function "channel encoding"
 
 
 #----Homopolymere Deletion----#
@@ -113,7 +113,7 @@ echo "homopolymere deletion not implemented yet; skipping..."
 cp $channel_path $fragments_path
 
 : 'python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
-check_error_function "error in homopolymere deletion"
+check_error_function "homopolymere deletion"
 '
 #----Update .cdi----#
 
