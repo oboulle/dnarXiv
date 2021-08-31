@@ -121,7 +121,7 @@ then
 		while read var value; do
 		    export "$var"="$value"
 		done < "$directory/.meta"
-		n_mol=$(($n_frag * 10))
+		n_mol=$(($n_frag * 20))
 		python3 $molecule_design_script -i "$directory/synthesis.fasta" -o "$directory/molecules.fasta" -s "$spacer" -p "$directory/primers.fasta" -n $n_mol
 		check_error_function "error in molecule design"
 	done

@@ -81,7 +81,7 @@ done < "$container_path/$document_index/.meta"
 #----Molecule Selection----#
 start_time=$(date +"%s")
 
-nbr_seq=$(($n_frag * 10))
+nbr_seq=$(($n_frag * 15))
 molecule_selection_script="$project_dir/sequencing_simulation/select_sequences.py" 
 selected_mol_path="$container_path/$document_index/select_mol.fasta"
 #select molecules from container molecules with the good primers
