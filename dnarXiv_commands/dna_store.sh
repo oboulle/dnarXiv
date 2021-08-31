@@ -116,9 +116,13 @@ fi
 if [ "$simulation" = true ]
 then
 	molecule_design_script="$project_dir/synthesis_simulation/molecule_design.py"
-	
 	for directory in $container_path/*/ ; do
-		python3 $molecule_design_script -i "$directory/synthesis.fasta" -o "$directory/molecules.fasta" -s "$spacer" -p "$directory/primers.fasta" -n $n_synth
+		# get parameters from the .meta file of the document to store
+		while read var value; do
+		    export "$var"="$value"
+		done < "$directory/.meta"
+		n_mol=$(($n_frag * 10))
+		python3 $molecule_design_script -i "$directory/synthesis.fasta" -o "$directory/molecules.fasta" -s "$spacer" -p "$directory/primers.fasta" -n $n_mol
 		check_error_function "error in molecule design"
 	done
 	#concatenate all the molecules files into one to represent the physical container
