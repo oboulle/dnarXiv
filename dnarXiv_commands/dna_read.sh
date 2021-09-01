@@ -134,12 +134,12 @@ check_error_function "source decoding"
 echo "Document $document_index of $container_path successfully saved to $document_path !"
 echo ""
 end_time=$(date +"%s")
-echo "dna_read : $(($end_time - $start_time)) s" >> workflow_times.txt
-echo "   > sequences_select       : $(($seq_sel_time - $start_time)) s" >> workflow_times.txt
-echo "   > sequencing_basecalling : $(($seq_bc_time - $seq_sel_time)) s" >> workflow_times.txt
-echo "   > clustering             : $(($clust_time - $seq_bc_time)) s" >> workflow_times.txt
-echo "   > consensus              : $(($consensus_time - $clust_time)) s" >> workflow_times.txt
-echo "   > channel_decoding       : $(($channel_time - $consensus_time)) s" >> workflow_times.txt
-echo "   > source_decoding        : $(($end_time - $channel_time)) s" >> workflow_times.txt
+echo "dna_read : $(($end_time - $start_time)) s" >> "$container_path/workflow_times.txt"
+echo "   > sequences_select       : $(($seq_sel_time - $start_time)) s" >> "$container_path/workflow_times.txt"
+echo "   > sequencing_basecalling : $(($seq_bc_time - $seq_sel_time)) s" >> "$container_path/workflow_times.txt"
+echo "   > clustering             : $(($clust_time - $seq_bc_time)) s" >> "$container_path/workflow_times.txt"
+echo "   > consensus              : $(($consensus_time - $clust_time)) s" >> "$container_path/workflow_times.txt"
+echo "   > channel_decoding       : $(($channel_time - $consensus_time)) s" >> "$container_path/workflow_times.txt"
+echo "   > source_decoding        : $(($end_time - $channel_time)) s" >> "$container_path/workflow_times.txt"
 
 exit 0

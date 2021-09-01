@@ -126,5 +126,5 @@ eof
 
 echo "Document $document_path successfully added to container $container_path !"
 end_time=$(date +"%s")
-echo "dna_add : $(($end_time - $time)) s" >> workflow_times.txt
+echo "dna_add : $(($end_time - $time)) s" >> "$container_path/workflow_times.txt"
 exit 0

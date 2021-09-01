@@ -53,7 +53,7 @@ echo "sim=$simulation frag_length=$frag_length spacer=$spacer container=$contain
 #----------------------------------------------------------#
 ######### ====== create directory and files ====== #########
 #----------------------------------------------------------#
-echo workflow $(date +"%Hh%Mm%S") >> workflow_times.txt
+echo workflow $(date +"%Hh%Mm%S") >> "$container_path/workflow_times.txt"
 time=$(date +"%s")
 
 container_path="$(pwd)/$container_name"
@@ -83,5 +83,5 @@ eof
 
 echo "Container $container_name created successfully !"
 end_time=$(date +"%s")
-echo "dna_create : $(($end_time - $time)) s" >> workflow_times.txt
+echo "dna_create : $(($end_time - $time)) s" >> "$container_path/workflow_times.txt"
 exit 0

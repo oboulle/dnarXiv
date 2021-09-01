@@ -139,5 +139,5 @@ eof
 
 echo "Documents of $container_path successfully stored !"
 end_time=$(date +"%s")
-echo "dna_store : $(($end_time - $time)) s" >> workflow_times.txt
+echo "dna_store : $(($end_time - $time)) s" >> "$container_path/workflow_times.txt"
 exit 0
