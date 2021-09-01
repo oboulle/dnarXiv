@@ -89,7 +89,7 @@ done < "$container_path/.options"
 #----Primers Generation----#
 
 #copy all the fragments from all the documents into one file
-cat "$container_path"/*/fragments.fasta > "$container_path/container_fragments.fasta"
+cat "$container_path"/*/final_fragments.fasta > "$container_path/container_fragments.fasta"
 
 primers_generation_script="$project_dir/synthesis_simulation/primer_generation.py"
 
@@ -103,7 +103,7 @@ then
 	synthesis_script="$project_dir/synthesis_simulation/synthesis.py"
 	
 	for directory in $container_path/*/ ; do
-		python3 $synthesis_script -i "$directory/fragments.fasta" -o "$directory/synthesis.fasta" -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
+		python3 $synthesis_script -i "$directory/final_fragments.fasta" -o "$directory/synthesis.fasta" -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
 		check_error_function "synthesis simulation"
 	done
 else

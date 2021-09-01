@@ -89,7 +89,7 @@ while read var value; do
 done < "$container_path/.options"
 
 source_encoding_script="$project_dir/source_encoding/source_encoding.py" 
-source_path="$stored_document_path/source.fasta"
+source_path="$stored_document_path/fragments.fasta"
 
 python3 $source_encoding_script "$document_path" "$source_path" "$frag_length" "$meta_file" #TODO
 check_error_function "source encoding"
@@ -107,7 +107,7 @@ check_error_function "channel encoding"
 #----Homopolymere Deletion----#
 
 h_deletion_script="$project_dir/synthesis_simulation/homoplymere_deletion/homopolymere_deletion.py" 
-fragments_path="$stored_document_path/fragments.fasta"
+fragments_path="$stored_document_path/final_fragments.fasta"
 
 echo "homopolymere deletion not implemented yet; skipping..."
 cp $channel_path $fragments_path
