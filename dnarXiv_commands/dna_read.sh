@@ -128,7 +128,7 @@ channel_time=$(date +"%s")
 #----Source Decoding----#
 
 source_decoding_script="$project_dir/source_encoding/source_decoding.py"
-python3 $source_decoding_script $decoded_sequences_path $document_path $type $frag_length
+python3 $source_decoding_script $decoded_sequences_path $document_path $type $frag_length $n_frag
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
