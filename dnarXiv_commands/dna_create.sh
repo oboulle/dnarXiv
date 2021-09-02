@@ -53,7 +53,7 @@ echo "sim=$simulation frag_length=$frag_length spacer=$spacer container=$contain
 #----------------------------------------------------------#
 ######### ====== create directory and files ====== #########
 #----------------------------------------------------------#
-echo workflow $(date +"%Hh%Mm%S") >> "$container_path/workflow_times.txt"
+echo workflow $(date +"%Hh%Mm%S") >> "$container_name/workflow_times.txt"
 time=$(date +"%s")
 
 container_path="$(pwd)/$container_name"
