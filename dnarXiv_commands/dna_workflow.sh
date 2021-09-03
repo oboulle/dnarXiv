@@ -15,8 +15,8 @@ $commands_dir/dna_create.sh -sim -fl 100 test_workflow
 $commands_dir/dna_add.sh $commands_dir/img_small.png test_workflow
 $commands_dir/dna_store.sh test_workflow 
 #$commands_dir/dna_list.sh test_workflow
-$commands_dir/dna_read.sh test_workflow 0 test_workflow/resultat_du_workflow.txt
+$commands_dir/dna_read.sh test_workflow 0 test_workflow/resultat_du_workflow.png
 
 exit 0
 
-# scp oboulle@dnarxiv.irisa.fr:~/Documents/workflow_global/dnarXiv_commands/resultat_du_workflow.png .
+# scp -r oboulle@dnarxiv.irisa.fr:~/Documents/workflow_global/dnarXiv_commands/test_workflow/0 .
