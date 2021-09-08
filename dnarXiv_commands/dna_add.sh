@@ -69,9 +69,12 @@ mkdir -p "$stored_document_path"
 
 if [ $HOME == "/Users/oboulle" ]
 then
-  project_dir="/Users/oboulle/Documents"
+	project_dir="/Users/oboulle/Documents"
+elif [ $HOME == "/udd/oboulle" ]
+then
+	project_dir="/udd/oboulle/Documents"
 else
-  project_dir="/home/oboulle/Documents"
+	project_dir="/home/oboulle/Documents"
 fi
 
 meta_file="$stored_document_path/.meta"
