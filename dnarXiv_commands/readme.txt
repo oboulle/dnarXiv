@@ -1,24 +1,16 @@
-Commandes pour le workflow dnarXiv
+Dnarxiv commands
 
-dna create
-	crée un container
+dna_create
+	create an empty container
 dna_add
-	ajoute un document dans le container
+	add a document in the container
 dna_del
-	supprime un document du container
+	delete a document from the container
 dna_list
-	affiche la liste des documents du container
+	display the list of documents in the container
 dna_store
-	synthétise les documents du container
+	synthetise the documents of the container into dna molecules
 dna_read
-	séquence les documents du container
+	sequence the documents of the container
 dna_workflow
-	test du cycle complet
-
-
----Coté serveur---
-Rendre les commandes globales
-	sudo nano /etc/environment -> ajouter le chemin du dossier des commandes
-
-Alias des commandes 
-	/etc/profile.d/dnarxiv_aliases.sh
+	complete cycle test
