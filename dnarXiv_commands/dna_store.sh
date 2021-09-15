@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#DNA STORE - synthetise the documents of the container into molecules
+
 help_function() {
    echo ""
    echo "Usage: dna_store [-n_synth int] [-i_error int] [-d_error int] [-s_error int] Cname"

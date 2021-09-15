@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#DNA ADD - add a document to the container
+
 help_function() {
    echo ""
    echo "Usage: dna_add Dname Cname"

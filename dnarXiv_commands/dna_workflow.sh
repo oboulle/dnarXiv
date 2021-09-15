@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#DNA WORFLOW - run the complete cycle of archiving and extracting a document in a container
+
 check_error_function () { #end the program if the previously called script has returned an error
 	if [ ! $? = 0 ]
 	then
@@ -35,4 +37,5 @@ check_error_function "dna_read"
 
 exit 0
 
-# scp -r oboulle@dnarxiv.irisa.fr:~/Documents/workflow_global/dnarXiv_commands/test_workflow/0 .
+#command to copy the total workflow from the dnarxiv server
+# scp -r oboulle@dnarxiv.irisa.fr:~/Documents/workflow_global/dnarXiv_commands/test_workflow .

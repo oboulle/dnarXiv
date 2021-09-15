@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#DNA CREATE - initialise an empty container
+
 help_function() {
    echo ""
    echo "Usage: dna_create [-sim] [-fl int] [-sp string] Cname"

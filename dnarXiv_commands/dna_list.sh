@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#DNA LIST - display the informations of every documents in the container
+
 #-----------------------------------------------#
 ######### ====== read parameters ====== #########
 #-----------------------------------------------#

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#DNA READ - extract a document from a container
+
 help_function () {
    echo ""
    echo "Usage: dna_read Cname DI Dname"

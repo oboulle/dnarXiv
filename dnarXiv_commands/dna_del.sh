@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#DNA DEL - remove a document from the container
+
 help_function() {
    echo ""
    echo "Usage: dna_del Cname DI"
