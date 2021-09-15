@@ -10,7 +10,7 @@ else
 	project_dir="/home/oboulle/Documents"
 fi
 
-commands_dir="$project_dir"/workflow_global/dnarXiv_commands
+commands_dir="$project_dir"/workflow_commands
 container_name="test_workflow"
 rm -rf "$container_name"
 "$commands_dir"/dna_create.sh -sim -fl 100 "$container_name" 
