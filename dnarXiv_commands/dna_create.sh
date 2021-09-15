@@ -23,8 +23,8 @@ spacer="AAAAAAAACCCCCCCC"
 while true; do
   case "$1" in
     -sim ) simulation=true ; shift ;;
-    -fl ) frag_length="$2" ; shift 2 ;;
-    -sp ) spacer="$2" ; shift 2 ;;
+    -fl ) frag_length=$2 ; shift 2 ;;
+    -sp ) spacer=$2 ; shift 2 ;;
     -h | --help ) help_function ; shift ;;
     -* ) echo "unknown parameter $1" ; exit 1;;
     * ) container_name="${1}" ; break ;;
@@ -63,22 +63,22 @@ fi
 
 mkdir -p "$container_path"
 
-options_file="$container_path/.options"
+options_file="$container_path"/.options
 
-cat > $options_file << eof
+cat > "$options_file" << eof
 simulation $simulation
 frag_length $frag_length
 spacer $spacer
 container_name $container_name
 eof
 
-cdi_file="$container_path/.cdi"
+cdi_file="$container_path"/.cdi
 
-cat > $cdi_file << eof
+cat > "$cdi_file" << eof
 0
 eof
 
 echo "Container $container_name created successfully !"
 
-echo workflow $(date +"%Hh%Mm%S") >> "$container_path/workflow_times.txt"
+echo workflow $(date +"%Hh%Mm%S") >> "$container_path"/workflow_times.txt
 exit 0

@@ -29,7 +29,7 @@ then
     exit 1
 fi
 
-if [ ! -d "$container_path/$document_index" ] 
+if [ ! -d "$container_path"/$document_index ] 
 then
     echo "error : $container_path does not contain a document of index $document_index" 
     exit 1
@@ -39,16 +39,16 @@ fi
 ######### ====== delete document ====== #########
 #-----------------------------------------------#
 
-cdi_file="$container_path/.cdi"
+cdi_file="$container_path"/.cdi
 current_document_index=$(head -n 1 "$cdi_file")
 
 if (( $current_document_index < 0 ))
 then
-	echo "the container is not editable"
+	echo "the container is not editable (the documents have been stored)"
 	exit 1
 fi
 
-rm -rf "$container_path/$document_index"
+rm -rf "$container_path"/$document_index
 echo "Document $document_index successfully deleted from $container_path !"
 
 exit 0

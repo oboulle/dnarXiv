@@ -54,7 +54,7 @@ fi
 ######### ====== add document ====== #########
 #--------------------------------------------#
 time=$(date +"%s")
-cdi_file="$container_path/.cdi"
+cdi_file="$container_path"/.cdi
 container_index=$(head -n 1 "$cdi_file")
 
 if (( $container_index < 0 ))
@@ -63,7 +63,7 @@ then
 	exit 1
 fi
 
-stored_document_path="$container_path/$container_index"
+stored_document_path="$container_path"/$container_index
  
 mkdir -p "$stored_document_path"
 
@@ -77,8 +77,8 @@ else
 	project_dir="/home/oboulle/Documents"
 fi
 
-meta_file="$stored_document_path/.meta"
-cat > $meta_file << eof
+meta_file="$stored_document_path"/.meta
+cat > "$meta_file" << eof
 document_index $container_index
 creation_date $(date +'%d/%m/%Y %R')
 eof
@@ -89,31 +89,31 @@ eof
 # get the fragment length from the container options
 while read var value; do
     export "$var"="$value"
-done < "$container_path/.options"
+done < "$container_path"/.options
 
-source_encoding_script="$project_dir/source_encoding/source_encoding.py" 
-source_path="$stored_document_path/fragments.fasta"
+source_encoding_script="$project_dir"/source_encoding/source_encoding.py
+source_path="$stored_document_path"/fragments.fasta
 
-python3 $source_encoding_script "$document_path" "$source_path" "$frag_length" "$meta_file" #TODO
+python3 "$source_encoding_script" "$document_path" "$source_path" $frag_length "$meta_file"
 check_error_function "source encoding"
 
 
 #----Channel Encoding----#
 
-channel_encoding_script="$project_dir/channel_code/encode_from_file.jl" 
-channel_path="$stored_document_path/channel.fasta"
+channel_encoding_script="$project_dir"/channel_code/encode_from_file.jl 
+channel_path="$stored_document_path"/channel.fasta
 
-$channel_encoding_script "$source_path" "$channel_path" #TODO
+"$channel_encoding_script" "$source_path" "$channel_path"
 check_error_function "channel encoding"
 
 
 #----Homopolymere Deletion----#
 
-h_deletion_script="$project_dir/synthesis_simulation/homoplymere_deletion/homopolymere_deletion.py" 
-fragments_path="$stored_document_path/final_fragments.fasta"
+h_deletion_script="$project_dir"/synthesis_simulation/homoplymere_deletion/homopolymere_deletion.py
+fragments_path="$stored_document_path"/final_fragments.fasta
 
 echo "homopolymere deletion not implemented yet; skipping..."
-cp $channel_path $fragments_path
+cp "$channel_path" "$fragments_path"
 
 : 'python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
 check_error_function "homopolymere deletion"
@@ -122,12 +122,12 @@ check_error_function "homopolymere deletion"
 
 container_index=$((container_index+1))
 
-cat > $cdi_file << eof
+cat > "$cdi_file" << eof
 $container_index
 eof
 
 
 echo "Document $document_path successfully added to container $container_path !"
 end_time=$(date +"%s")
-echo "dna_add : $(($end_time - $time)) s" >> "$container_path/workflow_times.txt"
+echo "dna_add : $(($end_time - $time)) s" >> "$container_path"/workflow_times.txt
 exit 0

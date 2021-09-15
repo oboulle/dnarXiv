@@ -65,7 +65,7 @@ fi
 #----------------------------------------------#
 time=$(date +"%s")
 
-cdi_file="$container_path/.cdi"
+cdi_file="$container_path"/.cdi
 container_index=$(head -n 1 "$cdi_file")
 
 if (( $container_index < 0 ))
@@ -87,26 +87,26 @@ fi
 # get parameters from the container options
 while read var value; do
     export "$var"="$value"
-done < "$container_path/.options"
+done < "$container_path"/.options
 
 #----Primers Generation----#
 
 #copy all the fragments from all the documents into one file
-cat "$container_path"/*/final_fragments.fasta > "$container_path/container_fragments.fasta"
+cat "$container_path"/*/final_fragments.fasta > "$container_path"/container_fragments.fasta
 
-primers_generation_script="$project_dir/synthesis_simulation/primer_generation.py"
+primers_generation_script="$project_dir"/synthesis_simulation/primer_generation.py
 
-python3 $primers_generation_script "$container_path"
+python3 "$primers_generation_script" "$container_path"
 check_error_function "primer generation"
 
 #----Synthesis----#
 
-if [ "$simulation" = true ]
+if [ $simulation = true ]
 then
-	synthesis_script="$project_dir/synthesis_simulation/synthesis.py"
+	synthesis_script="$project_dir"/synthesis_simulation/synthesis.py
 	
-	for directory in $container_path/*/ ; do
-		python3 $synthesis_script -i "$directory/final_fragments.fasta" -o "$directory/synthesis.fasta" -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
+	for directory in "$container_path"/*/ ; do
+		python3 "$synthesis_script" -i "$directory"/final_fragments.fasta -o "$directory"/synthesis.fasta -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
 		check_error_function "synthesis simulation"
 	done
 else
@@ -116,31 +116,31 @@ fi
 
 #----Molecule design----#
 
-if [ "$simulation" = true ]
+if [ $simulation = true ]
 then
-	molecule_design_script="$project_dir/synthesis_simulation/molecule_design.py"
-	for directory in $container_path/*/ ; do
+	molecule_design_script="$project_dir"/synthesis_simulation/molecule_design.py
+	for directory in "$container_path"/*/ ; do
 		# get parameters from the .meta file of the document to store
 		while read var value; do
 		    export "$var"="$value"
-		done < "$directory/.meta"
+		done < "$directory"/.meta
 		n_mol=$(($n_frag * 20))
-		python3 $molecule_design_script -i "$directory/synthesis.fasta" -o "$directory/molecules.fasta" -s "$spacer" -p "$directory/primers.fasta" -n $n_mol
+		python3 "$molecule_design_script" -i "$directory"/synthesis.fasta -o "$directory"/molecules.fasta -s $spacer -p "$directory"/primers.fasta -n $n_mol
 		check_error_function "error in molecule design"
 	done
 	#concatenate all the molecules files into one to represent the physical container
-	cat "$container_path"/*/molecules.fasta > "$container_path/container_molecules.fasta"
+	cat "$container_path"/*/molecules.fasta > "$container_path"/container_molecules.fasta
 else
 	echo ""
 fi
 
 #----Update .cdi----#
 
-cat > $cdi_file << eof
+cat > "$cdi_file" << eof
 -1
 eof
 
 echo "Documents of $container_path successfully stored !"
 end_time=$(date +"%s")
-echo "dna_store : $(($end_time - $time)) s" >> "$container_path/workflow_times.txt"
+echo "dna_store : $(($end_time - $time)) s" >> "$container_path"/workflow_times.txt
 exit 0

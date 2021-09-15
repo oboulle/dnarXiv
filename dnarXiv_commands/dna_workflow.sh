@@ -18,18 +18,19 @@ else
 	project_dir="/home/oboulle/Documents"
 fi
 
-commands_dir="$project_dir/workflow_global/dnarXiv_commands"
-rm -rf test_workflow_old
-mv test_workflow test_workflow_old
-$commands_dir/dna_create.sh -sim -fl 100 test_workflow
+commands_dir="$project_dir"/workflow_global/dnarXiv_commands
+container_name="test du workflow"
+rm -rf "$container_name"_old
+mv "$container_name" "$container_name"_old
+"$commands_dir"/dna_create.sh -sim -fl 100 "$container_name"
 check_error_function "dna_create"
-$commands_dir/dna_add.sh $commands_dir/doc.txt #test_workflow
+"$commands_dir"/dna_add.sh $commands_dir/doc.txt "$container_name"
 check_error_function "dna_add"
-#$commands_dir/dna_add.sh $commands_dir/img_small.png test_workflow
-$commands_dir/dna_store.sh test_workflow 
+#"$commands_dir"/dna_add.sh $commands_dir/img_small.png test_workflow
+"$commands_dir"/dna_store.sh "$container_name"
 check_error_function "dna_store"
 #$commands_dir/dna_list.sh test_workflow
-$commands_dir/dna_read.sh test_workflow 0 test_workflow/resultat_du_workflow.txt
+"$commands_dir"/dna_read.sh "$container_name" 0 "$container_name"/resultat_du_workflow.txt
 check_error_function "dna_read"
 
 exit 0
