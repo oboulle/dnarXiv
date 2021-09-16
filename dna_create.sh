@@ -6,7 +6,7 @@ help_function() {
    echo ""
    echo "Usage: dna_create [-sim] [-fl int] [-sp string] Cname"
    echo -e "\t-sim : turn on simulator mode [default = false]"
-   echo -e "\t-fl : specify fragment length [default = 200]"
+   echo -e "\t-fl : specify fragment length [default = 100]"
    echo -e "\t-sp : specify spacer [default = AAAAAAAACCCCCCCC]"
    echo -e "\tCname : name of the container"
    echo ""
@@ -15,7 +15,7 @@ help_function() {
 
 #----- default parameters -----#
 simulation=false
-frag_length=200
+frag_length=100
 spacer="AAAAAAAACCCCCCCC"
 
 #-----------------------------------------------#
@@ -27,19 +27,21 @@ while true; do
     -sim ) simulation=true ; shift ;;
     -fl ) frag_length=$2 ; shift 2 ;;
     -sp ) spacer=$2 ; shift 2 ;;
-    -h | --help ) help_function ; shift ;;
+    -h | --help ) help_function ; exit 1;;
     -* ) echo "unknown parameter $1" ; exit 1;;
     * ) container_name="${1}" ; break ;;
   esac
 done
 
 int_regex='^[0-9]+$'
-if ! [[ $frag_length =~ $int_regex ]] ; then
+if ! [[ $frag_length =~ $int_regex ]]
+then
    echo "error: fragment length ($frag_length) is not a number" ; exit 1
 fi
 
 dna_regex='^[acgtACGT]+$'
-if ! [[ $spacer =~ $dna_regex ]] ; then
+if ! [[ $spacer =~ $dna_regex ]]
+then
    echo "error: spacer ($spacer) is not a dna sequence" ; exit 1
 fi
 

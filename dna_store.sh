@@ -38,6 +38,7 @@ while true; do
     -i_error ) i_error="$2" ; shift 2 ;;
     -d_error ) d_error="$2" ; shift 2 ;;
     -s_error ) s_error="$2" ; shift 2 ;;
+    -h | --help ) help_function ; exit 1;;
     -* ) echo "unknown parameter $1" ; exit 1;;
     * ) container_path="${1}" ; break ;;
   esac
@@ -94,7 +95,7 @@ done < "$container_path"/.options
 #----Primers Generation----#
 
 #copy all the fragments from all the documents into one file
-cat "$container_path"/*/final_fragments.fasta > "$container_path"/container_fragments.fasta
+cat "$container_path"/*/3_final_fragments.fasta > "$container_path"/container_fragments.fasta
 
 primers_generation_script="$project_dir"/synthesis_simulation/primer_generation.py
 
@@ -108,7 +109,7 @@ then
 	synthesis_script="$project_dir"/synthesis_simulation/synthesis.py
 	
 	for directory in "$container_path"/*/ ; do
-		python3 "$synthesis_script" -i "$directory"/final_fragments.fasta -o "$directory"/synthesis.fasta -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
+		python3 "$synthesis_script" -i "$directory"/3_final_fragments.fasta -o "$directory"/4_synthesis.fasta -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
 		check_error_function "synthesis simulation"
 	done
 else
@@ -127,11 +128,11 @@ then
 		    export "$var"="$value"
 		done < "$directory"/.meta
 		n_mol=$(($n_frag * 20))
-		python3 "$molecule_design_script" -i "$directory"/synthesis.fasta -o "$directory"/molecules.fasta -s $spacer -p "$directory"/primers.fasta -n $n_mol
+		python3 "$molecule_design_script" -i "$directory"/4_synthesis.fasta -o "$directory"/5_molecules.fasta -s $spacer -p "$directory"/primers.fasta -n $n_mol
 		check_error_function "error in molecule design"
 	done
 	#concatenate all the molecules files into one to represent the physical container
-	cat "$container_path"/*/molecules.fasta > "$container_path"/container_molecules.fasta
+	cat "$container_path"/*/5_molecules.fasta > "$container_path"/container_molecules.fasta
 else
 	echo ""
 fi

@@ -28,6 +28,7 @@ check_error_function () { #end the program if the previously called script has r
 
 while true; do
   case "$1" in
+    -h | --help ) help_function ; exit 1;;
     -* ) echo "unknown parameter $1" ; exit 1;;
     * ) document_path="${1}" ; container_path="${2}" ; break ;;
   esac
@@ -94,7 +95,7 @@ while read var value; do
 done < "$container_path"/.options
 
 source_encoding_script="$project_dir"/source_encoding/source_encoding.py
-source_path="$stored_document_path"/fragments.fasta
+source_path="$stored_document_path"/1_fragments.fasta
 
 python3 "$source_encoding_script" "$document_path" "$source_path" $frag_length "$meta_file"
 check_error_function "source encoding"
@@ -103,7 +104,7 @@ check_error_function "source encoding"
 #----Channel Encoding----#
 
 channel_encoding_script="$project_dir"/channel_code/encode_from_file.jl 
-channel_path="$stored_document_path"/channel.fasta
+channel_path="$stored_document_path"/2_channel.fasta
 
 "$channel_encoding_script" "$source_path" "$channel_path"
 check_error_function "channel encoding"
@@ -112,7 +113,7 @@ check_error_function "channel encoding"
 #----Homopolymere Deletion----#
 
 h_deletion_script="$project_dir"/synthesis_simulation/homoplymere_deletion/homopolymere_deletion.py
-fragments_path="$stored_document_path"/final_fragments.fasta
+fragments_path="$stored_document_path"/3_final_fragments.fasta
 
 echo "homopolymere deletion not implemented yet; skipping..."
 cp "$channel_path" "$fragments_path"

@@ -4,7 +4,8 @@
 
 help_function () {
    echo ""
-   echo "Usage: dna_read Cname DI Dname"
+   echo "Usage: dna_read [-n_seq int] Cname DI Dname"
+   echo -e "\t-n_seq : number of molecules to sequence [default = 10*n_frag]"
    echo -e "\tCname : path to the container"
    echo -e "\tDI : index of the document to read"
    echo -e "\tDname : path to save the document"
@@ -23,12 +24,14 @@ check_error_function () { #end the program if the previously called script has r
 #-----------------------------------------------#
 ######### ====== read parameters ====== #########
 #-----------------------------------------------#
+case "$1" in
+    -n_seq ) n_seq=$2 ; container_path="${3}"; document_index="${4}"; document_path="${5}";;
+    -h | --help ) help_function ; exit 1;;
+    -* ) echo "unknown parameter $1" ; exit 1;;
+    * ) container_path="${1}"; document_index="${2}"; document_path="${3}";;
+esac
 
-container_path="${1}"
-document_index="${2}"
-document_path="${3}"
-
-if [ "$#" != 3 ]
+if [ "$#" != 3 ] && [ "$#" != 5 ]
 then
 	echo "error invalid number of arguments"
 	help_function
@@ -45,6 +48,12 @@ if [ ! -d "$container_path"/$document_index ]
 then
     echo "error : document $document_index of $container_path not found" 
     exit 1
+fi
+
+int_regex='^[0-9]+$'
+if test "$n_seq" && ! [[ $n_seq =~ $int_regex ]]
+then
+   echo "error: sequencing number ($n_seq) is not a number" ; exit 1
 fi
 
 #---------------------------------------------#
@@ -86,11 +95,18 @@ done < "$container_path"/$document_index/.meta
 #----Molecule Selection----#
 start_time=$(date +"%s")
 
-nbr_seq=$(($n_frag * 10))
+if test -z "$n_seq"
+then
+	#default value of sequencing number
+	n_seq=$(($n_frag * 10))
+fi
+#save the n_seq value
+echo n_seq $n_seq >> "$container_path"/stats
+
 molecule_selection_script="$project_dir"/sequencing_simulation/select_sequences.py
-selected_mol_path="$container_path"/$document_index/select_mol.fasta
+selected_mol_path="$container_path"/$document_index/6_select_mol.fasta
 #select molecules from container molecules with the good primers
-python3 "$molecule_selection_script" "$container_path"/container_molecules.fasta "$selected_mol_path" $start_primer $stop_primer $nbr_seq
+python3 "$molecule_selection_script" "$container_path"/container_molecules.fasta "$selected_mol_path" $start_primer $stop_primer $n_seq
 check_error_function "molecule selection"
 seq_sel_time=$(date +"%s")
 
@@ -98,7 +114,7 @@ seq_sel_time=$(date +"%s")
 
 convert_fasta_script="$project_dir"/synthesis_simulation/dna_file_reader.py #script to convert fasta to fastq
 simu_seq_bc_script="$project_dir"/channel_code/ourSimulator/sequencing_basecalling_simulator.jl
-sequenced_mol_path="$container_path"/$document_index/sequenced_mol.fastq
+sequenced_mol_path="$container_path"/$document_index/7_sequenced_mol.fastq
 #python3 "$convert_fasta_script" "$selected_mol_path" "$sequenced_mol_path"
 "$simu_seq_bc_script" "$selected_mol_path" "$sequenced_mol_path"
 
@@ -107,7 +123,7 @@ seq_bc_time=$(date +"%s")
 
 #----Clustering----#
 
-clusters_frag_dir="$container_path"/$document_index/frag
+clusters_frag_dir="$container_path"/$document_index/8_clusters
 rm -rf "clusters_frag_dir"
 mkdir "$clusters_frag_dir"
 
@@ -119,7 +135,7 @@ clust_time=$(date +"%s")
 #----Consensus----#
 
 consensus_script="$project_dir"/sequencing_simulation/consensus.py
-consensus_path="$container_path"/$document_index/consensus.fasta
+consensus_path="$container_path"/$document_index/9_consensus.fasta
 python3 "$consensus_script" "$clusters_frag_dir" "$consensus_path" $spacer $(($frag_length *2)) #TODO length of final fragments
 check_error_function "consensus"
 consensus_time=$(date +"%s")
@@ -127,7 +143,7 @@ consensus_time=$(date +"%s")
 #----Channel Decoding----#
 
 channel_decoding_script="$project_dir"/channel_code/file_decoder.sh
-decoded_sequences_path="$container_path"/$document_index/decoded_sequences.fasta
+decoded_sequences_path="$container_path"/$document_index/10_decoded_sequences.fasta
 "$channel_decoding_script" "$consensus_path" $frag_length "$decoded_sequences_path" "$container_path"/$document_index/validity_check.txt
 check_error_function "channel decoding"
 channel_time=$(date +"%s")
@@ -135,7 +151,8 @@ channel_time=$(date +"%s")
 #----Source Decoding----#
 
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
-python3 "$source_decoding_script" "$decoded_sequences_path" "$document_path" $type $frag_length $n_frag "$metadata"
+reconstructed_source_path="$container_path"/$document_index/11_reconstructed_source.fasta
+python3 "$source_decoding_script" "$decoded_sequences_path" "$reconstructed_source_path" "$document_path" $type $frag_length $n_frag "$metadata"
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"

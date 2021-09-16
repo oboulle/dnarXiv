@@ -22,7 +22,7 @@ fi
 
 commands_dir="$project_dir"/workflow_commands
 container_name="test_workflow"
-document_name="img_small.png"
+document_name="doc.txt" #"img_small.png"
 
 rm -rf "$container_name"_old
 mv "$container_name" "$container_name"_old #save the previous workflow
@@ -42,4 +42,4 @@ check_error_function "dna_read"
 exit 0
 
 #command to copy the total workflow from the dnarxiv server
-# scp -r oboulle@dnarxiv.irisa.fr:~/Documents/workflow_global/dnarXiv_commands/test_workflow .
+# scp -r oboulle@dnarxiv.irisa.fr:~/Documents/workflow_commands/test_workflow .
