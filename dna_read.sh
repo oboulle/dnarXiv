@@ -97,10 +97,10 @@ seq_sel_time=$(date +"%s")
 #----Sequencing & Basecalling----#
 
 convert_fasta_script="$project_dir"/synthesis_simulation/dna_file_reader.py #script to convert fasta to fastq
-#simu_seq_bc_script="$project_dir"/channel_code/ourSimulator/sequencing_basecalling_simulator.jl
+simu_seq_bc_script="$project_dir"/channel_code/ourSimulator/sequencing_basecalling_simulator.jl
 sequenced_mol_path="$container_path"/$document_index/sequenced_mol.fastq
-python3 "$convert_fasta_script" "$selected_mol_path" "$sequenced_mol_path"
-#"$simu_seq_bc_script" "$selected_mol_path" "$sequenced_mol_path"
+#python3 "$convert_fasta_script" "$selected_mol_path" "$sequenced_mol_path"
+"$simu_seq_bc_script" "$selected_mol_path" "$sequenced_mol_path"
 
 check_error_function "sequencing/basecalling"
 seq_bc_time=$(date +"%s")
