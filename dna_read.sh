@@ -100,8 +100,6 @@ then
 	#default value of sequencing number
 	n_seq=$(($n_frag * 10))
 fi
-#save the n_seq value
-echo n_seq $n_seq >> "$container_path"/stats
 
 molecule_selection_script="$project_dir"/sequencing_simulation/select_sequences.py
 selected_mol_path="$container_path"/$document_index/6_select_mol.fasta
@@ -143,8 +141,8 @@ consensus_time=$(date +"%s")
 #----Channel Decoding----#
 
 channel_decoding_script="$project_dir"/channel_code/file_decoder.sh
-decoded_sequences_path="$container_path"/$document_index/10_decoded_sequences.fasta
-"$channel_decoding_script" "$consensus_path" $frag_length "$decoded_sequences_path" "$container_path"/$document_index/validity_check.txt
+decoded_fragments_path="$container_path"/$document_index/10_decoded_fragments.fasta
+"$channel_decoding_script" "$consensus_path" $frag_length "$decoded_fragments_path" "$container_path"/$document_index/validity_check.txt
 check_error_function "channel decoding"
 channel_time=$(date +"%s")
 
@@ -152,18 +150,26 @@ channel_time=$(date +"%s")
 
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
 reconstructed_source_path="$container_path"/$document_index/11_reconstructed_source.fasta
-python3 "$source_decoding_script" "$decoded_sequences_path" "$reconstructed_source_path" "$document_path" $type $frag_length $n_frag "$metadata"
+python3 "$source_decoding_script" "$decoded_fragments_path" "$reconstructed_source_path" "$document_path" $type $frag_length $n_frag "$metadata"
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
 echo ""
 end_time=$(date +"%s")
-echo "dna_read : $(($end_time - $start_time)) s" >> "$container_path"/workflow_times.txt
-echo "   > sequences_select       : $(($seq_sel_time - $start_time)) s" >> "$container_path"/workflow_times.txt
-echo "   > sequencing_basecalling : $(($seq_bc_time - $seq_sel_time)) s" >> "$container_path"/workflow_times.txt
-echo "   > clustering             : $(($clust_time - $seq_bc_time)) s" >> "$container_path"/workflow_times.txt
-echo "   > consensus              : $(($consensus_time - $clust_time)) s" >> "$container_path"/workflow_times.txt
-echo "   > channel_decoding       : $(($channel_time - $consensus_time)) s" >> "$container_path"/workflow_times.txt
-echo "   > source_decoding        : $(($end_time - $channel_time)) s" >> "$container_path"/workflow_times.txt
+times_file="$container_path"/workflow_times.txt
+echo "dna_read : $(($end_time - $start_time)) s" >> "$times_file"
+echo "   > sequences_select       : $(($seq_sel_time - $start_time)) s" >> "$times_file"
+echo "   > sequencing_basecalling : $(($seq_bc_time - $seq_sel_time)) s" >> "$times_file"
+echo "   > clustering             : $(($clust_time - $seq_bc_time)) s" >> "$times_file"
+echo "   > consensus              : $(($consensus_time - $clust_time)) s" >> "$times_file"
+echo "   > channel_decoding       : $(($channel_time - $consensus_time)) s" >> "$times_file"
+echo "   > source_decoding        : $(($end_time - $channel_time)) s" >> "$times_file"
+
+
+#----Result Analysis----#
+
+save_results_script="$project_dir"/workflow_commands/result_analysis/save_results.py
+results_file="$container_path"/results.txt
+python3 "$save_results_script" "$container_path"/$document_index/0_source.fasta "$reconstructed_source_path" $n_seq "$times_file" "$results_file"
 
 exit 0
