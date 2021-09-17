@@ -154,7 +154,7 @@ python3 "$source_decoding_script" "$decoded_fragments_path" "$reconstructed_sour
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
-echo ""
+
 end_time=$(date +"%s")
 times_file="$container_path"/workflow_times.txt
 echo "dna_read : $(($end_time - $start_time)) s" >> "$times_file"
@@ -164,12 +164,5 @@ echo "   > clustering             : $(($clust_time - $seq_bc_time)) s" >> "$time
 echo "   > consensus              : $(($consensus_time - $clust_time)) s" >> "$times_file"
 echo "   > channel_decoding       : $(($channel_time - $consensus_time)) s" >> "$times_file"
 echo "   > source_decoding        : $(($end_time - $channel_time)) s" >> "$times_file"
-
-
-#----Result Analysis----#
-
-save_results_script="$project_dir"/workflow_commands/result_analysis/save_results.py
-results_file="$container_path"/results.txt
-python3 "$save_results_script" "$container_path"/$document_index/0_source.fasta "$reconstructed_source_path" $n_seq "$times_file" "$results_file"
 
 exit 0

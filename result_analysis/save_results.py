@@ -21,6 +21,7 @@ def get_precision(source, result):
     return round(100*nbr_match/source_length, 2)
 
 def sum_times(times_file_path):
+    
     return 0
 
 # =================== main ======================= #
