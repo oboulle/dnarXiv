@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #DNA WORFLOW - run the complete cycle of archiving and extracting a document in a container
+# dna_workflow [-no_read] Cname Dname", or also dna_workflow [-no_read] for default container and document
 
 check_error_function () { #end the program if the previously called script has returned an error
 	if [ ! $? = 0 ]
@@ -22,14 +23,30 @@ else
 fi
 
 commands_dir="$project_dir"/workflow_commands
-container_name="test_workflow"
-document_name="doc.txt" #"img_50.png"
 
-save_results_function () {
-	save_results_script="$commands_dir"/result_analysis/save_results.py
-	results_file="$commands_dir"/results_workflow.txt
-	python3 "$save_results_script" "$container_name"/0 "$results_file"
-}
+#-----------------------------------------------#
+######### ====== read parameters ====== #########
+#-----------------------------------------------#
+
+case "$1" in
+    -no_read ) no_read=true ; container_name="${2}"; document_name="${3}";;
+    -* ) echo "unknown parameter $1" ; exit 1;;
+    * ) no_read=false ; container_name="${1}"; document_name="${2}";;
+esac
+
+if test -z "$container_name"
+then
+	container_name="test_workflow"
+fi
+
+if test -z "$document_name"
+then
+	document_name="doc.txt" #"img_50.png"
+fi
+
+#------------------------------------------------#
+######### ====== run the workflow ====== #########
+#------------------------------------------------#
 
 rm -rf "$container_name"_old
 mv "$container_name" "$container_name"_old #save the previous workflow
@@ -43,16 +60,13 @@ check_error_function "dna_add"
 "$commands_dir"/dna_store.sh "$container_name"
 check_error_function "dna_store"
 
-if test "$1" #number of molecules to read is defined
+if $no_read #skip the reading part
 then
-	"$commands_dir"/dna_read.sh -n_mol $1 "$container_name" 0 "$container_name"/result_"$document_name"
-else
-	"$commands_dir"/dna_read.sh "$container_name" 0 "$container_name"/result_"$document_name"
+	exit 0
 fi
 
+"$commands_dir"/dna_read.sh "$container_name" 0 "$container_name"/result_"$document_name"
 check_error_function "dna_read"
-
-save_results_function
 
 
 #command to copy the total workflow from the dnarxiv server
