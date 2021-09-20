@@ -4,8 +4,8 @@
 
 help_function () {
    echo ""
-   echo "Usage: dna_read [-n_seq int] Cname DI Dname"
-   echo -e "\t-n_seq : number of molecules to sequence [default = 10*n_frag]"
+   echo "Usage: dna_read [-n_mol int] Cname DI Dname"
+   echo -e "\t-n_mol : number of molecules to sequence [default = 10*n_frag]"
    echo -e "\tCname : path to the container"
    echo -e "\tDI : index of the document to read"
    echo -e "\tDname : path to save the document"
@@ -25,7 +25,7 @@ check_error_function () { #end the program if the previously called script has r
 ######### ====== read parameters ====== #########
 #-----------------------------------------------#
 case "$1" in
-    -n_seq ) n_seq=$2 ; container_path="${3}"; document_index="${4}"; document_path="${5}";;
+    -n_mol ) n_mol=$2 ; container_path="${3}"; document_index="${4}"; document_path="${5}";;
     -h | --help ) help_function ; exit 1;;
     -* ) echo "unknown parameter $1" ; exit 1;;
     * ) container_path="${1}"; document_index="${2}"; document_path="${3}";;
@@ -51,9 +51,9 @@ then
 fi
 
 int_regex='^[0-9]+$'
-if test "$n_seq" && ! [[ $n_seq =~ $int_regex ]]
+if test "$n_mol" && ! [[ $n_mol =~ $int_regex ]]
 then
-   echo "error: sequencing number ($n_seq) is not a number" ; exit 1
+   echo "error: sequencing number ($n_mol) is not a number" ; exit 1
 fi
 
 #---------------------------------------------#
@@ -96,16 +96,16 @@ done < "$stored_document_path"/.meta
 #----Molecule Selection----#
 start_time=$(date +"%s")
 
-if test -z "$n_seq"
+if test -z "$n_mol"
 then
-	#default value of sequencing number
-	n_seq=$(($n_frag * 10))
+	#default value of molecule sequencing number
+	n_mol=$(($n_frag * 10))
 fi
 
 molecule_selection_script="$project_dir"/sequencing_simulation/select_sequences.py
 selected_mol_path="$stored_document_path"/6_select_mol.fasta
 #select molecules from container molecules with the good primers
-python3 "$molecule_selection_script" "$container_path"/container_molecules.fasta "$selected_mol_path" $start_primer $stop_primer $n_seq
+python3 "$molecule_selection_script" "$container_path"/container_molecules.fasta "$selected_mol_path" $start_primer $stop_primer $n_mol
 check_error_function "molecule selection"
 seq_sel_time=$(date +"%s")
 
