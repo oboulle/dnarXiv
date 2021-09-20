@@ -86,9 +86,10 @@ done < "$container_path"/.options
 #simulation frag_length spacer 
 
 # get parameters from the .meta file of the document to read
+stored_document_path="$container_path"/$document_index
 while read var value; do
     export "$var"="$value"
-done < "$container_path"/$document_index/.meta
+done < "$stored_document_path"/.meta
 
 #type n_frag metadata start_primer stop_primer
 
@@ -102,7 +103,7 @@ then
 fi
 
 molecule_selection_script="$project_dir"/sequencing_simulation/select_sequences.py
-selected_mol_path="$container_path"/$document_index/6_select_mol.fasta
+selected_mol_path="$stored_document_path"/6_select_mol.fasta
 #select molecules from container molecules with the good primers
 python3 "$molecule_selection_script" "$container_path"/container_molecules.fasta "$selected_mol_path" $start_primer $stop_primer $n_seq
 check_error_function "molecule selection"
@@ -112,7 +113,7 @@ seq_sel_time=$(date +"%s")
 
 convert_fasta_script="$project_dir"/synthesis_simulation/dna_file_reader.py #script to convert fasta to fastq
 simu_seq_bc_script="$project_dir"/channel_code/ourSimulator/sequencing_basecalling_simulator.jl
-sequenced_mol_path="$container_path"/$document_index/7_sequenced_mol.fastq
+sequenced_mol_path="$stored_document_path"/7_sequenced_mol.fastq
 #python3 "$convert_fasta_script" "$selected_mol_path" "$sequenced_mol_path"
 "$simu_seq_bc_script" "$selected_mol_path" "$sequenced_mol_path"
 
@@ -121,7 +122,7 @@ seq_bc_time=$(date +"%s")
 
 #----Clustering----#
 
-clusters_frag_dir="$container_path"/$document_index/8_clusters
+clusters_frag_dir="$stored_document_path"/8_clusters
 rm -rf "clusters_frag_dir"
 mkdir "$clusters_frag_dir"
 
@@ -133,7 +134,7 @@ clust_time=$(date +"%s")
 #----Consensus----#
 
 consensus_script="$project_dir"/sequencing_simulation/consensus.py
-consensus_path="$container_path"/$document_index/9_consensus.fasta
+consensus_path="$stored_document_path"/9_consensus.fasta
 python3 "$consensus_script" "$clusters_frag_dir" "$consensus_path" $spacer $(($frag_length *2)) #TODO length of final fragments
 check_error_function "consensus"
 consensus_time=$(date +"%s")
@@ -141,7 +142,7 @@ consensus_time=$(date +"%s")
 #----Channel Decoding----#
 
 channel_decoding_script="$project_dir"/channel_code/file_decoder.sh
-decoded_fragments_path="$container_path"/$document_index/10_decoded_fragments.fasta
+decoded_fragments_path="$stored_document_path"/10_decoded_fragments.fasta
 "$channel_decoding_script" "$consensus_path" $frag_length "$decoded_fragments_path" "$container_path"/$document_index/validity_check.txt
 check_error_function "channel decoding"
 channel_time=$(date +"%s")
@@ -149,14 +150,14 @@ channel_time=$(date +"%s")
 #----Source Decoding----#
 
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
-reconstructed_source_path="$container_path"/$document_index/11_reconstructed_source.fasta
+reconstructed_source_path="$stored_document_path"/11_reconstructed_source.fasta
 python3 "$source_decoding_script" "$decoded_fragments_path" "$reconstructed_source_path" "$document_path" $type $frag_length $n_frag "$metadata"
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
 
 end_time=$(date +"%s")
-times_file="$container_path"/workflow_times.txt
+times_file="$stored_document_path"/workflow_times.txt
 echo "dna_read : $(($end_time - $start_time)) s" >> "$times_file"
 echo "   > sequences_select       : $(($seq_sel_time - $start_time)) s" >> "$times_file"
 echo "   > sequencing_basecalling : $(($seq_bc_time - $seq_sel_time)) s" >> "$times_file"
