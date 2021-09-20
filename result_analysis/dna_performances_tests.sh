@@ -6,7 +6,7 @@ same_script_count=5 #number of time the exact same script is executed
 container_name=test_perf_container
 document_name=doc.txt
 
-(exec ../dna_workflow.sh -no_read $container_name $document_name) #init a container 
+(exec ../dna_workflow.sh -no_read $document_name $container_name) #init a container 
 
 for n_mol in $n_mol_list; do
 	for i in $(seq $same_script_count); do

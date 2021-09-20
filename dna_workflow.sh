@@ -29,19 +29,19 @@ commands_dir="$project_dir"/workflow_commands
 #-----------------------------------------------#
 
 case "$1" in
-    -no_read ) no_read=true ; container_name="${2}"; document_name="${3}";;
+    -no_read ) no_read=true ; document_name="${2}"; container_name="${3}";;
     -* ) echo "unknown parameter $1" ; exit 1;;
-    * ) no_read=false ; container_name="${1}"; document_name="${2}";;
+    * ) no_read=false ; document_name="${1}"; container_name="${2}" ;;
 esac
-
-if test -z "$container_name"
-then
-	container_name="test_workflow"
-fi
 
 if test -z "$document_name"
 then
 	document_name="doc.txt" #"img_50.png"
+fi
+
+if test -z "$container_name"
+then
+	container_name="test_workflow"
 fi
 
 #------------------------------------------------#
