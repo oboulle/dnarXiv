@@ -131,6 +131,11 @@ eof
 
 
 echo "Document $document_path successfully added to container $container_path !"
+
+times_file="$stored_document_path"/workflow_times.txt
+
+echo workflow $(date +"%Hh%Mm%S") >> "$times_file"
+
 end_time=$(date +"%s")
-echo "dna_add : $(($end_time - $time)) s" >> "$container_path"/workflow_times.txt
+echo "dna_add : $(($end_time - $time)) s" >> "$times_file"
 exit 0
