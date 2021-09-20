@@ -84,5 +84,4 @@ eof
 
 echo "Container $container_name created successfully !"
 
-echo workflow $(date +"%Hh%Mm%S") >> "$container_path"/workflow_times.txt
 exit 0
