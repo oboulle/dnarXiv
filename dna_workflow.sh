@@ -43,12 +43,8 @@ check_error_function "dna_read"
 #----Result Analysis----#
 
 save_results_script="$commands_dir"/result_analysis/save_results.py
-source_path="$container_name"/0/0_source.fasta
-reconstructed_source_path="$container_name"/0/11_reconstructed_source.fasta
-n_seq=$(($(wc -l < "$container_name"/0/6_select_mol.fasta)/2))
-times_file="$container_path"/workflow_times.txt
-results_file="$container_name"/results.txt
-python3 "$save_results_script" "$source_path" "$reconstructed_source_path" $n_seq "$times_file" "$results_file"
+results_file="$commands_dir"/results_workflow.txt
+python3 "$save_results_script" "$container_name"/0 "$results_file"
 
 
 exit 0
