@@ -1,7 +1,8 @@
+
 import os
 import sys
 import inspect
-from theano.gpuarray.dnn import get_precision
+from datetime import datetime
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -20,36 +21,54 @@ def get_precision(source, result):
             nbr_match += 1
     return round(100*nbr_match/source_length, 2)
 
-def sum_times(times_file_path):
-    
-    return 0
+def get_reading_time(times_file_path):
+    times_file = open(times_file_path)
+    line = times_file.readline()
+    reading_time = "None"
+    while line != "":
+        if line.startswith("dna_read"):
+            reading_time = line.replace("dna_read : ", "").replace(" s\n", "")
+            break
+        line = times_file.readline()
+    times_file.close()
+    return reading_time
 
 # =================== main ======================= #
 if __name__ == '__main__':
-     
-    if len(sys.argv) != 6:
-        print("usage : result_analysis.py source_path result_path n_seq times_file_path output_path")
+    
+    if len(sys.argv) != 3:
+        print("usage : result_analysis.py stored_document_path output_path")
         sys.exit(1)
 
+    stored_document_path = sys.argv[1]
+    if not os.path.isdir(stored_document_path):
+        print("error :",stored_document_path,"is not a directory")
+        sys.exit(1)
+        
     print("result analysis...")
 
-    source_path = sys.argv[1]
-    result_path = sys.argv[2]
-    n_seq = int(sys.argv[3])
-    times_file_path = sys.argv[4]
-    output_path = sys.argv[5]
+    source_path = stored_document_path+"/0_source.fasta"
+    result_path = stored_document_path+"/11_reconstructed_source.fasta"
+    n_mol = int(sum(1 for line in open(stored_document_path+"/6_select_mol.fasta"))/2) #number of lines divided by 2
+    times_file_path = stored_document_path+"/workflow_times.txt"
+    output_path = sys.argv[2]
 
     _, source = dfr.read_single_sequence_fasta(source_path)
     _, result = dfr.read_single_sequence_fasta(result_path)
     
     precision = get_precision(source, result)
-    sum_times = sum_times(times_file_path)
+    sum_times = get_reading_time(times_file_path)
     
-    output = open(output_path, "a")
+    now = datetime.now()
+    current_date = now.strftime("%d/%m/%Y_%H:%M:%S")
+    
+    output = open(output_path, "a") #append a the end of the document
+    output.write("date "+current_date+"\n")
     output.write("source_length "+str(len(source))+"\n")
-    output.write("n_seq "+str(n_seq)+"\n")
+    output.write("n_mol "+str(n_mol)+"\n")
     output.write("precision "+str(precision)+"\n")
-    output.write("time "+str(sum_times)+"\n")
+    output.write("reading_time "+str(sum_times)+"\n")
+    output.write("___\n")
     output.close()
     
     print("\tcompleted !")
