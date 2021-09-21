@@ -19,12 +19,12 @@ def get_size_and_precision(stored_document_path):
     result_path = stored_document_path+"/11_reconstructed_source.fasta"
     
     if not os.path.isfile(source_path):
-        return "None", "None"
+        exit(0)
     
     _, source = dfr.read_single_sequence_fasta(source_path)
 
     if not os.path.isfile(result_path):
-        return len(source), "None"
+        return len(source), 0
       
     _, result = dfr.read_single_sequence_fasta(result_path)
     
@@ -77,7 +77,7 @@ def write_results_to_file(output_path):
 if __name__ == '__main__':
     
     if len(sys.argv) != 3:
-        print("usage : result_analysis.py stored_document_path output_path")
+        print("usage : save_results.py stored_document_path output_path")
         sys.exit(1)
 
     stored_document_path = sys.argv[1]
