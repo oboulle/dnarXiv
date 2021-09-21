@@ -7,7 +7,6 @@ check_error_function () { #end the program if the previously called script has r
 	if [ ! $? = 0 ]
 	then
 		echo "error in $1"
-		save_results_function
 		exit 1
 	fi
 }
