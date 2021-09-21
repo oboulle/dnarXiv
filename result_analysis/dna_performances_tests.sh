@@ -2,7 +2,7 @@
 
 
 n_mol_list=`seq 5 5 40` #'seq first step last'
-same_script_count=5 #number of time the script is executed with the same parameters
+same_script_count=3 #number of time the script is executed with the same parameters
 container_name=test_perf_container
 document_name=doc.txt
 

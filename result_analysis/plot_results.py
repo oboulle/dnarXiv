@@ -76,7 +76,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     results_path = sys.argv[1]
-    repeat_nbr = 5 #number of time the scripts have been repeated with the same parameters
+    repeat_nbr = 3 #number of time the scripts have been repeated with the same parameters
     source_length, n_mol, precision, reading_time = compute_results(results_path, repeat_nbr)
     
     plot_arrays(n_mol, reading_time, "n_mol", "reading_time (s)")
