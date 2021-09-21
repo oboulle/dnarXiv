@@ -54,7 +54,7 @@ mv "$container_name" "$container_name"_old #save the previous workflow
 "$commands_dir"/dna_create.sh -sim "$container_name"
 check_error_function "dna_create"
 
-"$commands_dir"/dna_add.sh "$commands_dir"/"$document_name" "$container_name"
+"$commands_dir"/dna_add.sh "$commands_dir"/documents_test/"$document_name" "$container_name"
 check_error_function "dna_add"
 
 "$commands_dir"/dna_store.sh "$container_name"
@@ -65,7 +65,7 @@ then
 	exit 0
 fi
 
-"$commands_dir"/dna_read.sh "$container_name" 0 "$container_name"/result_"$document_name"
+"$commands_dir"/dna_read.sh "$container_name" 0 "$container_name"/0/result_"$document_name"
 check_error_function "dna_read"
 
 
