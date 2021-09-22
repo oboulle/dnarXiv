@@ -39,7 +39,7 @@ def compute_results(results_path):
         if reading_time != "None":
             reading_time_array.append(int(reading_time))
         else:
-            reading_time_array.append(0)
+            reading_time_array.append(None)
 
     return source_length_array, n_mol_array, precision_array, reading_time_array
 
