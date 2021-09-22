@@ -107,7 +107,7 @@ selected_mol_path="$stored_document_path"/6_select_mol.fasta
 #select molecules from container molecules with the good primers
 python3 "$molecule_selection_script" "$container_path"/container_molecules.fasta "$selected_mol_path" $start_primer $stop_primer $n_mol
 check_error_function "molecule selection"
-seq_sel_time=$(date +"%s")
+mol_sel_time=$(date +"%s")
 
 #----Sequencing & Basecalling----#
 
@@ -126,7 +126,7 @@ clusters_frag_dir="$stored_document_path"/8_clusters
 rm -rf "clusters_frag_dir"
 mkdir "$clusters_frag_dir"
 
-clustering_script="$project_dir"/sequencing_simulation/clustering #script for the clustering
+clustering_script="$project_dir"/sequencing_simulation/clustering/clustering #script for the clustering
 "$clustering_script" "$sequenced_mol_path" "$clusters_frag_dir" $spacer $(($frag_length *2)) #TODO length of final fragments
 check_error_function "clustering"
 clust_time=$(date +"%s")
@@ -159,8 +159,8 @@ echo "Document $document_index of $container_path successfully saved to $documen
 end_time=$(date +"%s")
 times_file="$stored_document_path"/workflow_times.txt
 echo "dna_read : $(($end_time - $start_time)) s" >> "$times_file"
-echo "   > sequences_select       : $(($seq_sel_time - $start_time)) s" >> "$times_file"
-echo "   > sequencing_basecalling : $(($seq_bc_time - $seq_sel_time)) s" >> "$times_file"
+echo "   > molecules_select       : $(($mol_sel_time - $start_time)) s" >> "$times_file"
+echo "   > sequencing_basecalling : $(($seq_bc_time - $mol_sel_time)) s" >> "$times_file"
 echo "   > clustering             : $(($clust_time - $seq_bc_time)) s" >> "$times_file"
 echo "   > consensus              : $(($consensus_time - $clust_time)) s" >> "$times_file"
 echo "   > channel_decoding       : $(($channel_time - $consensus_time)) s" >> "$times_file"
