@@ -102,7 +102,7 @@ then
 	n_mol=$(($n_frag * 10))
 fi
 
-molecule_selection_script="$project_dir"/sequencing_simulation/select_sequences.py
+molecule_selection_script="$project_dir"/sequencing_simulation/select_molecules.py
 selected_mol_path="$stored_document_path"/6_select_mol.fasta
 #select molecules from container molecules with the good primers
 python3 "$molecule_selection_script" "$container_path"/container_molecules.fasta "$selected_mol_path" $start_primer $stop_primer $n_mol
@@ -112,7 +112,7 @@ seq_sel_time=$(date +"%s")
 #----Sequencing & Basecalling----#
 
 convert_fasta_script="$project_dir"/synthesis_simulation/dna_file_reader.py #script to convert fasta to fastq
-simu_seq_bc_script="$project_dir"/channel_code/ourSimulator/sequencing_basecalling_simulator.jl
+simu_seq_bc_script="$project_dir"/sequencing_simulation/sequencing_basecalling_simulator/sequencing_basecalling_simulator.jl
 sequenced_mol_path="$stored_document_path"/7_sequenced_mol.fastq
 #python3 "$convert_fasta_script" "$selected_mol_path" "$sequenced_mol_path"
 "$simu_seq_bc_script" "$selected_mol_path" "$sequenced_mol_path"
