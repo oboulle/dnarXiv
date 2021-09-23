@@ -105,10 +105,11 @@ check_error_function "source encoding"
 
 channel_encoding_script="$project_dir"/channel_code/encode_from_file.jl 
 channel_path="$stored_document_path"/2_channel.fasta
-
+: '
 "$channel_encoding_script" "$source_path" "$channel_path"
 check_error_function "channel encoding"
-
+'
+cp "$source_path" "$channel_path" #TODO CHANNEL ENCODING
 
 #----Homopolymere Deletion----#
 
