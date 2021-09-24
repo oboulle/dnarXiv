@@ -1,4 +1,3 @@
-
 import os
 import sys
 import matplotlib.pyplot as plt
@@ -44,27 +43,32 @@ def compute_results(results_path):
     return source_length_array, n_mol_array, precision_array, reading_time_array
 
 
-def plot_arrays(array_x, array_y, label_x, label_y):
+def plot_arrays(array_x, array_y, label_x, label_y, color_y):
 
-    plt.plot(array_x, array_y)
+    plt.plot(array_x, array_y, color=color_y)
     
     plt.xlabel(label_x)
     plt.ylabel(label_y)
 
     if label_y == "precision": plt.ylim(0,100)
-    plt.show()
+    if label_y == "reading_time (s)": plt.ylim(bottom=0) 
 
 # =================== main ======================= #
 if __name__ == '__main__':
     
-    if len(sys.argv) != 2:
-        print("usage : plot_results.py results_path")
+    if len(sys.argv) < 2 and len(sys.argv) > 4:
+        print("usage : plot_results.py results_path [results_path_2] [results_path_3]")
         sys.exit(1)
     
-    results_path = sys.argv[1]
-    source_length, n_mol, precision, reading_time = compute_results(results_path)
+    colors = ['blue', 'red', 'green']
     
-    plot_arrays(n_mol, reading_time, "n_mol", "reading_time (s)")
-    plot_arrays(n_mol, precision, "n_mol", "precision")
-    
-    print("\tcompleted !")
+    for i in range(len(sys.argv)-1):
+        results_path = sys.argv[i+1]
+        source_length, n_mol, precision, reading_time = compute_results(results_path)
+        plot_arrays(n_mol, precision, "n_mol", "precision", colors[i])
+    plt.show()
+    for i in range(len(sys.argv)-1):
+        results_path = sys.argv[i+1]
+        source_length, n_mol, precision, reading_time = compute_results(results_path)
+        plot_arrays(n_mol, reading_time, "n_mol", "reading_time (s)", colors[i])
+    plt.show()
