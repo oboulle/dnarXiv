@@ -50,7 +50,7 @@ fi
 rm -rf "$container_name"_old
 mv "$container_name" "$container_name"_old #save the previous workflow
 
-"$commands_dir"/dna_create.sh -sim "$container_name"
+"$commands_dir"/dna_create.sh -sim "$container_name" #TODO fl
 check_error_function "dna_create"
 
 "$commands_dir"/dna_add.sh "$commands_dir"/documents_test/"$document_name" "$container_name"
