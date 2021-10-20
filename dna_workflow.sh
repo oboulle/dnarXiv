@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #DNA WORFLOW - run the complete cycle of archiving and extracting a document in a container
-# dna_workflow [-no_read] Cname Dname", or also dna_workflow [-no_read] for default container and document
+# dna_workflow [-no_read] Dname Cname", or also dna_workflow [-no_read] for default container and document
 
 check_error_function () { #end the program if the previously called script has returned an error
 	if [ ! $? = 0 ]
@@ -28,14 +28,14 @@ commands_dir="$project_dir"/workflow_commands
 #-----------------------------------------------#
 
 case "$1" in
-    -no_read ) no_read=true ; document_name="${2}"; container_name="${3}";;
+    -no_read ) no_read=true ; document_path="${2}"; container_name="${3}";;
     -* ) echo "unknown parameter $1" ; exit 1;;
-    * ) no_read=false ; document_name="${1}"; container_name="${2}" ;;
+    * ) no_read=false ; document_path="${1}"; container_name="${2}" ;;
 esac
 
-if test -z "$document_name"
+if test -z "$document_path"
 then
-	document_name="doc.txt" #"img_50.png"
+	document_path="/documents_test/doc.txt" #"img_50.png"
 fi
 
 if test -z "$container_name"
@@ -50,10 +50,10 @@ fi
 rm -rf "$container_name"_old
 mv "$container_name" "$container_name"_old #save the previous workflow
 
-"$commands_dir"/dna_create.sh -sim "$container_name" #TODO fl
+"$commands_dir"/dna_create.sh -sim -fl 100 "$container_name" #TODO fl
 check_error_function "dna_create"
 
-"$commands_dir"/dna_add.sh "$commands_dir"/documents_test/"$document_name" "$container_name"
+"$commands_dir"/dna_add.sh "$document_path" "$container_name"
 check_error_function "dna_add"
 
 "$commands_dir"/dna_store.sh "$container_name"
@@ -64,6 +64,7 @@ then
 	exit 0
 fi
 
+document_name="$(basename $document_path)"
 "$commands_dir"/dna_read.sh "$container_name" 0 "$container_name"/0/result_"$document_name"
 check_error_function "dna_read"
 
