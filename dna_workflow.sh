@@ -47,8 +47,11 @@ fi
 ######### ====== run the workflow ====== #########
 #------------------------------------------------#
 
-rm -rf "$container_name"_old
-mv "$container_name" "$container_name"_old #save the previous workflow
+if [ -d "$container_name" ]
+then
+	rm -rf "$container_name"_old
+	mv "$container_name" "$container_name"_old #save the previous workflow container
+fi
 
 "$commands_dir"/dna_create.sh -sim -fl 100 "$container_name" #TODO fl
 check_error_function "dna_create"
