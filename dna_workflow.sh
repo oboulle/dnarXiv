@@ -53,7 +53,7 @@ then
 	mv "$container_name" "$container_name"_old #save the previous workflow container
 fi
 
-"$commands_dir"/dna_create.sh -sim -fl 200 "$container_name" #TODO fl
+"$commands_dir"/dna_create.sh -sim -fl 100 "$container_name" #TODO fl
 check_error_function "dna_create"
 
 "$commands_dir"/dna_add.sh "$document_path" "$container_name"
