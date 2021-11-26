@@ -123,7 +123,7 @@ seq_bc_time=$(date +"%s")
 #----Clustering----#
 
 clusters_frag_dir="$stored_document_path"/8_clusters
-rm -rf "clusters_frag_dir"
+rm -rf "$clusters_frag_dir"
 mkdir "$clusters_frag_dir"
 
 clustering_script="$project_dir"/sequencing_simulation/clustering/clustering #script for the clustering
@@ -135,7 +135,7 @@ clust_time=$(date +"%s")
 
 consensus_script="$project_dir"/sequencing_simulation/consensus.py
 consensus_path="$stored_document_path"/9_consensus.fasta
-python3 "$consensus_script" "$clusters_frag_dir" "$consensus_path" $spacer $frag_length #$(($frag_length *2)) #TODO length of final fragments
+python3 "$consensus_script" "$clusters_frag_dir" "$consensus_path" $frag_length #$(($frag_length *2)) #TODO length of final fragments
 check_error_function "consensus"
 consensus_time=$(date +"%s")
 
