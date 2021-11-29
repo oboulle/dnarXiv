@@ -86,13 +86,12 @@ document_index $container_index
 creation_date $(date +'%d/%m/%Y %R')
 eof
 
-
-#----Source Encoding----#
-
 # get the fragment length from the container options
 while read var value; do
     export "$var"="$value"
 done < "$container_path"/.options
+
+#----Source Encoding----#
 
 source_encoding_script="$project_dir"/source_encoding/source_encoding.py
 source_path="$stored_document_path"/1_fragments.fasta
@@ -106,9 +105,12 @@ check_error_function "source encoding"
 channel_encoding_script="$project_dir"/channel_code/encode_from_file.jl 
 channel_path="$stored_document_path"/2_channel.fasta
 
-# "$channel_encoding_script" "$source_path" "$channel_path"
-
-cp "$source_path" "$channel_path"
+if $channel_coding
+then
+	"$channel_encoding_script" "$source_path" "$channel_path"
+else
+	cp "$source_path" "$channel_path"
+fi
 check_error_function "channel encoding"
 
 #----Homopolymere Deletion----#

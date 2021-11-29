@@ -83,7 +83,7 @@ while read var value; do
     export "$var"="$value"
 done < "$container_path"/.options
 
-#simulation frag_length spacer 
+#simulation channel_coding frag_length spacer 
 
 # get parameters from the .meta file of the document to read
 stored_document_path="$container_path"/$document_index
@@ -122,12 +122,19 @@ seq_bc_time=$(date +"%s")
 
 #----Clustering----#
 
+if $channel_coding
+then
+	coded_frag_length=$(($frag_length *2)) #add redundancy from channel coding
+else
+	coded_frag_length=$frag_length
+fi
+
 clusters_frag_dir="$stored_document_path"/8_clusters
 rm -rf "$clusters_frag_dir"
 mkdir "$clusters_frag_dir"
-
 clustering_script="$project_dir"/sequencing_simulation/clustering/clustering #script for the clustering
-"$clustering_script" "$sequenced_mol_path" "$clusters_frag_dir" $spacer $frag_length #$(($frag_length *2)) #TODO length of final fragments
+
+"$clustering_script" "$sequenced_mol_path" "$clusters_frag_dir" $spacer $coded_frag_length
 check_error_function "clustering"
 clust_time=$(date +"%s")
 
@@ -135,7 +142,8 @@ clust_time=$(date +"%s")
 
 consensus_script="$project_dir"/sequencing_simulation/consensus.py
 consensus_path="$stored_document_path"/9_consensus.fasta
-python3 "$consensus_script" "$clusters_frag_dir" "$consensus_path" $frag_length #$(($frag_length *2)) #TODO length of final fragments
+
+python3 "$consensus_script" "$clusters_frag_dir" "$consensus_path" $coded_frag_length
 check_error_function "consensus"
 consensus_time=$(date +"%s")
 
@@ -144,10 +152,14 @@ consensus_time=$(date +"%s")
 channel_decoding_script="$project_dir"/channel_code/file_decoder.sh
 decoded_fragments_path="$stored_document_path"/10_decoded_fragments.fasta
 
-# "$channel_decoding_script" "$consensus_path" $frag_length "$decoded_fragments_path" "$container_path"/$document_index/validity_check.txt
+if $channel_coding
+then
+	"$channel_decoding_script" "$consensus_path" $frag_length "$decoded_fragments_path" "$container_path"/$document_index/validity_check.txt
+else
+	cp "$consensus_path" "$decoded_fragments_path"
+fi
 check_error_function "channel decoding"
 
-cp "$consensus_path" "$decoded_fragments_path" #TODO CHANNEL DECODING
 channel_time=$(date +"%s")
 
 #----Source Decoding----#
