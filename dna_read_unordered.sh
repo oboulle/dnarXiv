@@ -113,32 +113,50 @@ mol_sel_time=$(date +"%s")
 
 convert_fasta_script="$project_dir"/synthesis_simulation/dna_file_reader.py #script to convert fasta to fastq
 simu_seq_bc_script="$project_dir"/sequencing_simulation/sequencing_basecalling_simulator/sequencing_basecalling_simulator.jl
-sequenced_reads_path="$stored_document_path"/7_sequenced_reads.fastq
-#python3 "$convert_fasta_script" "$selected_mol_path" "$sequenced_reads_path"
-"$simu_seq_bc_script" "$selected_mol_path" "$sequenced_reads_path"
+sequenced_mol_path="$stored_document_path"/7_sequenced_mol.fastq
+#python3 "$convert_fasta_script" "$selected_mol_path" "$sequenced_mol_path"
+"$simu_seq_bc_script" "$selected_mol_path" "$sequenced_mol_path"
 
 check_error_function "sequencing/basecalling"
 seq_bc_time=$(date +"%s")
 
+#----Clustering----#
+
+if $channel_coding
+then
+	coded_frag_length=$(($frag_length *2)) #add redundancy from channel coding
+else
+	coded_frag_length=$frag_length
+fi
+
+clusters_frag_dir="$stored_document_path"/8_clusters
+rm -rf "$clusters_frag_dir"
+mkdir "$clusters_frag_dir"
+clustering_script="$project_dir"/sequencing_simulation/clustering/clustering #script for the clustering
+
+"$clustering_script" "$sequenced_mol_path" "$clusters_frag_dir" $spacer $coded_frag_length
+check_error_function "clustering"
+clust_time=$(date +"%s")
+
 #----Consensus----#
 
-consensus_script="$project_dir"/sequencing_simulation/multiple_alignments/kmer_consensus.py
-consensus_path="$stored_document_path"/8_consensus.fasta
+consensus_script="$project_dir"/sequencing_simulation/consensus.py
+consensus_path="$stored_document_path"/9_consensus.fasta
 
-python3 "$consensus_script" "$sequenced_reads_path" "$consensus_path"
+python3 "$consensus_script" "$clusters_frag_dir" "$consensus_path" $coded_frag_length
 check_error_function "consensus"
 consensus_time=$(date +"%s")
 
 #----Channel Decoding----#
 
 channel_decoding_script="$project_dir"/channel_code/file_decoder.sh
-decoded_sequence_path="$stored_document_path"/9_decoded_sequence.fasta
+decoded_fragments_path="$stored_document_path"/10_decoded_fragments.fasta
 
 if $channel_coding
 then
-	"$channel_decoding_script" "$consensus_path" $frag_length "$decoded_sequence_path" "$container_path"/$document_index/validity_check.txt
+	"$channel_decoding_script" "$consensus_path" $frag_length "$decoded_fragments_path" "$container_path"/$document_index/validity_check.txt
 else
-	cp "$consensus_path" "$decoded_sequence_path"
+	cp "$consensus_path" "$decoded_fragments_path"
 fi
 check_error_function "channel decoding"
 
@@ -147,8 +165,8 @@ channel_time=$(date +"%s")
 #----Source Decoding----#
 
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
-reconstructed_source_path="$stored_document_path"/10_reconstructed_source.fasta
-python3 "$source_decoding_script" "$decoded_sequence_path" "$reconstructed_source_path" "$document_path" $type $frag_length $n_frag "$metadata"
+reconstructed_source_path="$stored_document_path"/11_reconstructed_source.fasta
+python3 "$source_decoding_script" "$decoded_fragments_path" "$reconstructed_source_path" "$document_path" $type $frag_length $n_frag "$metadata"
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"

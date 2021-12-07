@@ -115,7 +115,7 @@ check_error_function "channel encoding"
 
 #----Homopolymere Deletion----#
 
-h_deletion_script="$project_dir"/synthesis_simulation/homoplymere_deletion/homopolymere_deletion.py
+#h_deletion_script="$project_dir"/synthesis_simulation/homoplymere_deletion/homopolymere_deletion.py
 fragments_path="$stored_document_path"/3_final_fragments.fasta
 
 echo "homopolymere deletion not implemented yet; skipping..."
