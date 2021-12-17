@@ -99,7 +99,7 @@ start_time=$(date +"%s")
 if test -z "$n_read"
 then
 	#default value of molecule sequencing number
-	n_read=$(($n_frag * 10))
+	n_read=$(($n_frag * 500))
 fi
 
 molecule_selection_script="$project_dir"/sequencing_simulation/select_molecules.py
@@ -124,8 +124,9 @@ seq_bc_time=$(date +"%s")
 
 consensus_script="$project_dir"/sequencing_simulation/multiple_alignments/kmer_consensus.py
 consensus_path="$stored_document_path"/8_consensus.fasta
+expected_length=$(($n_frag * $frag_length))
 
-python3 "$consensus_script" "$sequenced_reads_path" "$consensus_path"
+python3 "$consensus_script" -i "$sequenced_reads_path" -o "$consensus_path" -e "$expected_length"
 check_error_function "consensus"
 consensus_time=$(date +"%s")
 
@@ -148,7 +149,7 @@ channel_time=$(date +"%s")
 
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
 reconstructed_source_path="$stored_document_path"/10_reconstructed_source.fasta
-python3 "$source_decoding_script" "$decoded_sequence_path" "$reconstructed_source_path" "$document_path" $type $frag_length $n_frag "$metadata"
+python3 "$source_decoding_script" "$decoded_sequence_path" "$reconstructed_source_path" "$document_path" $type "$metadata"
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
@@ -158,8 +159,7 @@ times_file="$stored_document_path"/workflow_times.txt
 echo "dna_read : $(($end_time - $start_time)) s" >> "$times_file"
 echo "   > molecules_select       : $(($mol_sel_time - $start_time)) s" >> "$times_file"
 echo "   > sequencing_basecalling : $(($seq_bc_time - $mol_sel_time)) s" >> "$times_file"
-echo "   > clustering             : $(($clust_time - $seq_bc_time)) s" >> "$times_file"
-echo "   > consensus              : $(($consensus_time - $clust_time)) s" >> "$times_file"
+echo "   > consensus              : $(($consensus_time - $seq_bc_time)) s" >> "$times_file"
 echo "   > channel_decoding       : $(($channel_time - $consensus_time)) s" >> "$times_file"
 echo "   > source_decoding        : $(($end_time - $channel_time)) s" >> "$times_file"
 
