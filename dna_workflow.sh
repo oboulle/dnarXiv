@@ -35,7 +35,7 @@ esac
 
 if test -z "$document_path"
 then
-	document_path="/documents_test/img_50.png"
+	document_path="documents_test/img_50.png"
 fi
 
 if test -z "$container_name"
@@ -53,7 +53,7 @@ then
 	mv "$container_name" "$container_name"_old #save the previous workflow container
 fi
 
-"$commands_dir"/dna_create.sh -sim -fl 100 "$container_name" #TODO fl
+"$commands_dir"/dna_create.sh -sim -nocd -fl 60 "$container_name" #TODO fl
 check_error_function "dna_create"
 
 "$commands_dir"/dna_add.sh "$document_path" "$container_name"
@@ -68,7 +68,7 @@ then
 fi
 
 document_name="$(basename $document_path)"
-"$commands_dir"/dna_read_unordered.sh "$container_name" 0 "$container_name"/0/result_"$document_name"
+"$commands_dir"/dna_read.sh "$container_name" 0 "$container_name"/0/result_"$document_name"
 check_error_function "dna_read"
 
 

@@ -96,7 +96,7 @@ done < "$container_path"/.options
 source_encoding_script="$project_dir"/source_encoding/source_encoding.py
 source_path="$stored_document_path"/1_fragments.fasta
 
-python3 "$source_encoding_script" "$document_path" "$source_path" $frag_length "$meta_file"
+python3 "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length -m "$meta_file"
 check_error_function "source encoding"
 
 
