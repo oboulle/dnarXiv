@@ -35,7 +35,7 @@ esac
 
 if test -z "$document_path"
 then
-	document_path="documents_test/img_50.png"
+	document_path="documents_test/assembly.txt"
 fi
 
 if test -z "$container_name"
