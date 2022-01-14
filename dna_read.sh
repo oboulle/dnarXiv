@@ -149,7 +149,7 @@ channel_time=$(date +"%s")
 
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
 reconstructed_source_path="$stored_document_path"/10_reconstructed_source.fasta
-python3 "$source_decoding_script" -i "$decoded_sequence_path" -o "$reconstructed_source_path" -r "$document_path" -t $type -m "$metadata"
+python3 "$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $type -m "$metadata"
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
