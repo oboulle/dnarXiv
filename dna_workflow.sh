@@ -35,7 +35,7 @@ esac
 
 if test -z "$document_path"
 then
-	document_path="documents_test/assembly.txt"
+	document_path="documents_test/doc_4_frags.txt"
 fi
 
 if test -z "$container_name"
