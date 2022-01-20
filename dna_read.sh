@@ -99,7 +99,7 @@ start_time=$(date +"%s")
 if test -z "$n_read"
 then
 	#default value of molecule sequencing number
-	n_read=$(($n_frag * 500))
+	n_read=$(($n_frag * 50))
 fi
 
 molecule_selection_script="$project_dir"/sequencing_simulation/select_molecules.py
