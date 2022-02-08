@@ -122,7 +122,7 @@ seq_bc_time=$(date +"%s")
 
 #----Consensus----#
 
-consensus_script="$project_dir"/sequencing_simulation/multiple_alignments/kmer_consensus.py
+consensus_script="$project_dir"/sequencing_simulation/kmer_consensus/kmer_consensus.py
 consensus_path="$stored_document_path"/8_consensus.fasta
 expected_length=$(($n_frag * $frag_length))
 
