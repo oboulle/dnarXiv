@@ -113,7 +113,8 @@ then
 		check_error_function "synthesis simulation"
 	done
 else
-	echo "container is not in simulation mode"
+	echo "container is not in simulation mode""$directory"/4_synthesis.fasta
+	exit 0
 	#TODO call a real synthesis
 fi
 
