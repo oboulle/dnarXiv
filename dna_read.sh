@@ -91,7 +91,7 @@ while read var value; do
     export "$var"="$value"
 done < "$stored_document_path"/.meta
 
-#type n_frag metadata start_primer stop_primer
+#type n_frag start_sequence metadata start_primer stop_primer
 
 #----Molecule Selection----#
 start_time=$(date +"%s")
@@ -126,7 +126,7 @@ consensus_script="$project_dir"/sequencing_simulation/kmer_consensus/kmer_consen
 consensus_path="$stored_document_path"/8_consensus.fasta
 expected_length=$(($n_frag * $frag_length))
 
-python3 "$consensus_script" -i "$sequenced_reads_path" -o "$consensus_path" -e "$expected_length"
+python3 "$consensus_script" -i "$sequenced_reads_path" -o "$consensus_path" -s "$start_sequence" -e "$expected_length"
 check_error_function "consensus"
 consensus_time=$(date +"%s")
 
