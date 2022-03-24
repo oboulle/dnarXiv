@@ -4,9 +4,8 @@
 
 help_function() {
    echo ""
-   echo "Usage: dna_create [-sim] [-nocd] [-fl int] [-sp string] Cname"
+   echo "Usage: dna_create [-sim] [-fl int] [-sp string] Cname"
    echo -e "\t-sim : turn on simulator mode"
-   echo -e "\t-nocd : turn off channel encoding"
    echo -e "\t-fl : specify fragment length [default = 100]"
    echo -e "\t-sp : specify spacer [default = AAAAAAAACCCCCCCC]"
    echo -e "\tCname : name of the container"
@@ -16,7 +15,6 @@ help_function() {
 
 #----- default parameters -----#
 simulation=false
-channel_coding=true
 frag_length=100
 spacer="AAAAAAAACCCCCCCC"
 
@@ -27,7 +25,6 @@ spacer="AAAAAAAACCCCCCCC"
 while true; do
   case "$1" in
     -sim ) simulation=true ; shift ;;
-    -nocd ) channel_coding=false ; shift ;;
     -fl ) frag_length=$2 ; shift 2 ;;
     -sp ) spacer=$2 ; shift 2 ;;
     -h | --help ) help_function ; exit 1;;
@@ -55,7 +52,7 @@ then
 	exit 1
 fi
 
-echo "sim=$simulation channel_coding=$channel_coding frag_length=$frag_length spacer=$spacer container=$container_name"
+echo "sim=$simulation frag_length=$frag_length spacer=$spacer container=$container_name"
 
 #----------------------------------------------------------#
 ######### ====== create directory and files ====== #########
@@ -74,7 +71,6 @@ options_file="$container_path"/.options
 
 cat > "$options_file" << eof
 simulation $simulation
-channel_coding $channel_coding
 frag_length $frag_length
 spacer $spacer
 container_name $container_name

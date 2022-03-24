@@ -83,7 +83,7 @@ while read var value; do
     export "$var"="$value"
 done < "$container_path"/.options
 
-#simulation channel_coding frag_length spacer 
+#simulation frag_length spacer 
 
 # get parameters from the .meta file of the document to read
 stored_document_path="$container_path"/$document_index
@@ -91,7 +91,7 @@ while read var value; do
     export "$var"="$value"
 done < "$stored_document_path"/.meta
 
-#type n_frag start_sequence metadata start_primer stop_primer
+#channel_coding type n_frag start_sequence metadata start_primer stop_primer
 
 #----Molecule Selection----#
 start_time=$(date +"%s")

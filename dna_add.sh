@@ -4,14 +4,16 @@
 
 help_function() {
    echo ""
-   echo "Usage: dna_add Dname Cname"
+   echo "Usage: dna_add Dname Cname [-nocd]"
    echo -e "\tDname : path to the document"
    echo -e "\tCname : path to the container"
+   echo -e "\t-nocd : turn off channel encoding"
    echo ""
    exit 1 # Exit script after printing help
 }
 
-check_error_function () { #end the program if the previously called script has returned an error
+# end the program if the previously called script has returned an error
+check_error_function () { 
 	if [ ! $? = 0 ]
 	then
 		echo "error in $1"
@@ -21,6 +23,9 @@ check_error_function () { #end the program if the previously called script has r
 	fi
 }
 
+#----- default parameters -----#
+channel_coding=true
+
 #-----------------------------------------------#
 ######### ====== read parameters ====== #########
 #-----------------------------------------------#
@@ -28,6 +33,7 @@ check_error_function () { #end the program if the previously called script has r
 
 while true; do
   case "$1" in
+	-nocd ) channel_coding=false ; shift ;;
     -h | --help ) help_function ; exit 1;;
     -* ) echo "unknown parameter $1" ; exit 1;;
     * ) document_path="${1}" ; container_path="${2}" ; break ;;
@@ -84,6 +90,7 @@ meta_file="$stored_document_path"/.meta
 cat > "$meta_file" << eof
 document_index $container_index
 creation_date $(date +'%d/%m/%Y %R')
+channel_coding $channel_coding
 eof
 
 # get the fragment length from the container options
