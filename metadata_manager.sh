@@ -49,7 +49,7 @@ set_container_param() {
 	#$3 param_value
 	xmlstarlet edit -L\
   		--update "/container_metadata/$2" \
-  		--value "$3" $1
+  		--value "$3" "$1"
 }
 
 
@@ -57,9 +57,24 @@ add_document() {
 	#add a new document to the container
 	#$1 metadata_file path
 	#$2 document index
+	#add a document then add the attribute 'index' for all documents wo attribute (should only be the added one)
 	xmlstarlet edit -L -s "/container_metadata/documents" --type elem --name document \
-		--insert  "/container_metadata/documents/document[not(@id)]" --type attr --name id --value $2 \
-		$1
+		--insert  "/container_metadata/documents/document[not(@id)]" --type attr --name id --value "$2" \
+		"$1"
+	#----Update number of documents----#
+	number_doc=$(get_container_param "$1" "number_of_documents")
+	set_container_param "$1" "number_of_documents" $((number_doc+1))
+}
+
+
+del_document() {
+	#delete a document from the container
+	#$1 metadata_file path
+	#$2 document index
+	xmlstarlet edit -L --delete "/container_metadata/documents/document[@id=$2]" $1
+	#----Update number of documents----#
+	number_doc=$(get_container_param "$1" "number_of_documents")
+	set_container_param "$1" "number_of_documents" $((number_doc-1))
 }
 
 	
@@ -69,7 +84,7 @@ add_doc_param() {
 	#$2 document index
 	#$3 param name
 	#$4 param_value
-	xmlstarlet edit -L -s "/container_metadata/documents/document[@id=$2]" --type elem --name $3 --value $4 $1
+	xmlstarlet edit -L -s "/container_metadata/documents/document[@id=$2]" --type elem --name "$3" --value "$4" "$1"
 }
 
 
@@ -78,9 +93,7 @@ get_doc_param() {
 	#$1 metadata_file path
 	#$2 document index
 	#$3 param name
-	#param_value=$(xmllint --xpath "string(//container_metadata/documents/document[@id=$2]/$3)" "$1")
-	param_value=$(xmlstarlet sel -t -v //container_metadata/documents/document[@id=$2]/$3 "$1")
-	
+	param_value=$(xmlstarlet sel -t -v "/container_metadata/documents/document[@id=$2]/$3" "$1")
 	echo $param_value
 }
 
