@@ -61,6 +61,9 @@ add_document() {
 	xmlstarlet edit -L -s "/container_metadata/documents" --type elem --name document \
 		--insert  "/container_metadata/documents/document[not(@id)]" --type attr --name id --value "$2" \
 		"$1"
+	#add the creation date
+	add_doc_param $1 $2 "creation_date" "$(date)"
+	
 	#----Update number of documents----#
 	number_doc=$(get_container_param "$1" "number_of_documents")
 	set_container_param "$1" "number_of_documents" $((number_doc+1))
