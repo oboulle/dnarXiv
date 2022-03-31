@@ -30,6 +30,9 @@ check_error_function "dna_create"
 "$commands_dir"/dna_add.sh -nocd "$commands_dir"/documents_test/doc.txt "$container_name"
 check_error_function "dna_add"
 
+"$commands_dir"/dna_add.sh "$commands_dir"/documents_test/img_50.png "$container_name"
+check_error_function "dna_add"
+
 "$commands_dir"/dna_store.sh "$container_name"
 check_error_function "dna_store"
 
