@@ -68,10 +68,13 @@ fi
 #----------------------------------------------#
 time=$(date +"%s")
 
-cdi_file="$container_path"/.cdi
-container_index=$(head -n 1 "$cdi_file")
+source ./metadata_manager.sh #load the xml manager script
+meta_file="$container_path"/metadata.xml
 
-if (( $container_index < 0 ))
+
+is_editable=$(get_container_param $meta_file "editable")
+
+if ! $is_editable
 then
 	echo "the container is not editable"
 	exit 1
@@ -87,10 +90,6 @@ else
 	project_dir="/home/oboulle/Documents"
 fi
 
-# get parameters from the container options
-while read var value; do
-    export "$var"="$value"
-done < "$container_path"/.options
 
 #----Primers Generation----#
 
@@ -102,47 +101,50 @@ primers_generation_script="$project_dir"/synthesis_simulation/primer_generation.
 python3 "$primers_generation_script" "$container_path"
 check_error_function "primer generation"
 
+simulation=$(get_container_param $meta_file "simulation")
+
+
 #----Synthesis----#
 
-if [ $simulation = true ]
+if [ $simulation ]
 then
 	synthesis_script="$project_dir"/synthesis_simulation/synthesis.py
 	
 	for directory in "$container_path"/*/ ; do
-		python3 "$synthesis_script" -i "$directory"/3_final_fragments.fasta -o "$directory"/4_synthesis.fasta -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
+		python3 "$synthesis_script" -i "$directory"/3_final_fragments.fasta -o "$directory"/4_synthesis.fasta -n $n_synth
 		check_error_function "synthesis simulation"
 	done
 else
-	echo "container is not in simulation mode""$directory"/4_synthesis.fasta
+	echo "container is not in simulation mode"
 	exit 0
 	#TODO call a real synthesis
 fi
 
+
 #----Molecule design----#
 
-if [ $simulation = true ]
+if [ $simulation ]
 then
 	molecule_design_script="$project_dir"/synthesis_simulation/molecule_design.py
 	for directory in "$container_path"/*/ ; do
-		# get parameters from the .meta file of the document to store
-		while read var value; do
-		    export "$var"="$value"
-		done < "$directory"/.meta
+		doc_id=$(basename $directory)
+		n_frag=$(get_doc_param $meta_file $doc_id "fragment_number")
 		n_mol=$(($n_frag * 1000)) #TODO
-		python3 "$molecule_design_script" -i "$directory"/4_synthesis.fasta -o "$directory"/5_molecules.fasta -s $spacer -p "$directory"/primers.fasta -n $n_mol
+				
+		python3 "$molecule_design_script" -i "$directory"/4_synthesis.fasta -o "$directory"/5_molecules.fasta -p "$directory"/primers.fasta -n $n_mol --i_error $i_error --d_error $d_error --s_error $s_error
 		check_error_function "error in molecule design"
 	done
 	#concatenate all the molecules files into one to represent the physical container
 	cat "$container_path"/*/5_molecules.fasta > "$container_path"/container_molecules.fasta
 else
-	echo ""
+	echo "container is not in simulation mode"
+	exit 0
 fi
 
-#----Update .cdi----#
 
-cat > "$cdi_file" << eof
--1
-eof
+#----Update metadata----#
+
+set_container_param $meta_file "editable" false
 
 echo "Documents of $container_path successfully stored !"
 end_time=$(date +"%s")
