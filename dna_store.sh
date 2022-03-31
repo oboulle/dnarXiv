@@ -71,7 +71,6 @@ time=$(date +"%s")
 source ./metadata_manager.sh #load the xml manager script
 meta_file="$container_path"/metadata.xml
 
-
 is_editable=$(get_container_param $meta_file "editable")
 
 if ! $is_editable
@@ -111,7 +110,7 @@ then
 	synthesis_script="$project_dir"/synthesis_simulation/synthesis.py
 	
 	for directory in "$container_path"/*/ ; do
-		python3 "$synthesis_script" -i "$directory"/3_final_fragments.fasta -o "$directory"/4_synthesis.fasta -n $n_synth
+		python3 "$synthesis_script" -i "$directory"/3_final_fragments.fasta -o "$directory"/4_synthesis.fasta -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
 		check_error_function "synthesis simulation"
 	done
 else
@@ -127,11 +126,13 @@ if [ $simulation ]
 then
 	molecule_design_script="$project_dir"/synthesis_simulation/molecule_design.py
 	for directory in "$container_path"/*/ ; do
-		doc_id=$(basename $directory)
-		n_frag=$(get_doc_param $meta_file $doc_id "fragment_number")
+		document_index=$(basename $directory)
+		n_frag=$(get_doc_param $meta_file $document_index "fragment_number")
+		start_primer=$(get_doc_param $meta_file $document_index "start_primer")
+		stop_primer=$(get_doc_param $meta_file $document_index "stop_primer")
 		n_mol=$(($n_frag * 1000)) #TODO
 				
-		python3 "$molecule_design_script" -i "$directory"/4_synthesis.fasta -o "$directory"/5_molecules.fasta -p "$directory"/primers.fasta -n $n_mol --i_error $i_error --d_error $d_error --s_error $s_error
+		python3 "$molecule_design_script" -i "$directory"/4_synthesis.fasta -o "$directory"/5_molecules.fasta --start $start_primer --stop $stop_primer -n $n_mol
 		check_error_function "error in molecule design"
 	done
 	#concatenate all the molecules files into one to represent the physical container
