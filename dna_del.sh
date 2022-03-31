@@ -16,7 +16,7 @@ help_function() {
 #-----------------------------------------------#
 
 container_path="${1}"
-document_index="${2}"
+doc_index="${2}"
 
 if [ "$#" != 2 ]
 then
@@ -31,9 +31,9 @@ then
     exit 1
 fi
 
-if [ ! -d "$container_path"/$document_index ] 
+if [ ! -d "$container_path"/$doc_index ] 
 then
-    echo "error : $container_path does not contain a document of index $document_index" 
+    echo "error : $container_path does not contain a document of index $doc_index" 
     exit 1
 fi
 
@@ -41,16 +41,20 @@ fi
 ######### ====== delete document ====== #########
 #-----------------------------------------------#
 
-cdi_file="$container_path"/.cdi
-current_document_index=$(head -n 1 "$cdi_file")
+source ./metadata_manager.sh #load the xml manager script
+meta_file="$container_path"/metadata.xml
 
-if (( $current_document_index < 0 ))
+is_editable=$(get_container_param $meta_file "editable")
+
+if ! $is_editable
 then
-	echo "the container is not editable (the documents have been stored)"
+	echo "the container is not editable"
 	exit 1
 fi
 
-rm -rf "$container_path"/$document_index
-echo "Document $document_index successfully deleted from $container_path !"
+rm -rf "$container_path"/$doc_index
+del_document "$meta_file" $doc_index
+
+echo "Document $doc_index successfully deleted from $container_path !"
 
 exit 0
