@@ -14,7 +14,7 @@ help_function() {
 }
 
 #----- default parameters -----#
-simulation=false
+simulation=true
 frag_length=100
 spacer="AAAAAAAACCCCCCCC"
 
@@ -67,20 +67,11 @@ fi
 
 mkdir -p "$container_path"
 
-options_file="$container_path"/.options
+meta_file="$container_path"/metadata.xml
 
-cat > "$options_file" << eof
-simulation $simulation
-frag_length $frag_length
-spacer $spacer
-container_name $container_name
-eof
+source ./metadata_manager.sh #load the xml manager script
 
-cdi_file="$container_path"/.cdi
-
-cat > "$cdi_file" << eof
-0
-eof
+init_metadata_file "$meta_file" "$container_name" $simulation $frag_length "ordered" false "$spacer" "nanopore"
 
 echo "Container $container_name created successfully !"
 

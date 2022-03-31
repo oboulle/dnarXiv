@@ -62,21 +62,28 @@ fi
 #--------------------------------------------#
 ######### ====== add document ====== #########
 #--------------------------------------------#
-time=$(date +"%s")
-cdi_file="$container_path"/.cdi
-container_index=$(head -n 1 "$cdi_file")
 
-if (( $container_index < 0 ))
+time=$(date +"%s")
+
+source ./metadata_manager.sh #load the xml manager script
+meta_file="$container_path"/metadata.xml
+
+
+is_editable=$(get_container_param $meta_file "editable")
+
+if ! $is_editable
 then
 	echo "the container is not editable"
 	exit 1
 fi
 
-stored_document_path="$container_path"/$container_index
+doc_index=$(get_container_param "$meta_file" "number_of_documents")
+
+stored_document_path="$container_path"/$doc_index
  
 mkdir -p "$stored_document_path"
 
-if [ $HOME == "/Users/oboulle" ]
+if [ $HOME == "/Users/oboulle" ] #TODO exportable
 then
 	project_dir="/Users/oboulle/Documents"
 elif [ $HOME == "/udd/oboulle" ]
@@ -86,24 +93,17 @@ else
 	project_dir="/home/oboulle/Documents"
 fi
 
-meta_file="$stored_document_path"/.meta
-cat > "$meta_file" << eof
-document_index $container_index
-creation_date $(date +'%d/%m/%Y %R')
-channel_coding $channel_coding
-eof
+add_document "$meta_file" $doc_index
 
 # get the fragment length from the container options
-while read var value; do
-    export "$var"="$value"
-done < "$container_path"/.options
+frag_length=$(get_container_param $meta_file "frag_length")
 
 #----Source Encoding----#
 
 source_encoding_script="$project_dir"/source_encoding/source_encoding.py
 source_path="$stored_document_path"/1_fragments.fasta
 
-python3 "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length -m "$meta_file"
+python3 "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length --meta "$meta_file" --doc_index $doc_index
 check_error_function "source encoding"
 
 
@@ -118,7 +118,10 @@ then
 else
 	cp "$source_path" "$channel_path"
 fi
+
+add_doc_param "$meta_file" $doc_index "channel_coding" $channel_coding
 check_error_function "channel encoding"
+
 
 #----Homopolymere Deletion----#
 
@@ -131,13 +134,9 @@ cp "$channel_path" "$fragments_path"
 : 'python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
 check_error_function "homopolymere deletion"
 '
-#----Update .cdi----#
 
-container_index=$((container_index+1))
-
-cat > "$cdi_file" << eof
-$container_index
-eof
+#----Update number of documents----#
+set_container_param "$meta_file" "number_of_documents" $((doc_index+1))
 
 
 echo "Document $document_path successfully added to container $container_path !"
