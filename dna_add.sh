@@ -19,6 +19,7 @@ check_error_function () {
 		echo "error in $1"
 		echo "cancel dna_add"
 		rm -rf $stored_document_path
+		del_document "$meta_file" $doc_index
 		exit 1
 	fi
 }
@@ -77,7 +78,17 @@ then
 	exit 1
 fi
 
-doc_index=$(get_container_param "$meta_file" "number_of_documents")
+#get list of current documents in the container
+doc_list=$(find "$container_path"/* -maxdepth 0 -type d -printf "%f\n")
+
+#if none, new document of index 0
+if [ -z "$doc_list" ]; then
+	doc_index=0
+else
+#else index equals to max index +1
+	max_index=$(echo "${doc_list[*]}" | sort -nr | head -n1)
+	doc_index=$((max_index+1))
+fi
 
 stored_document_path="$container_path"/$doc_index
  
@@ -134,10 +145,6 @@ cp "$channel_path" "$fragments_path"
 : 'python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
 check_error_function "homopolymere deletion"
 '
-
-#----Update number of documents----#
-set_container_param "$meta_file" "number_of_documents" $((doc_index+1))
-
 
 echo "Document $document_path successfully added to container $container_path !"
 
