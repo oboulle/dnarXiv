@@ -33,27 +33,27 @@ fi
 ######### ====== list documents ====== #########
 #--------------------------------------------#
 
-if [[ $(find "$container_path" -maxdepth 1 -type d | wc -l) -eq 1 ]]
+source ./metadata_manager.sh #load the xml manager script
+meta_file="$container_path"/metadata.xml
+
+if [[ $(get_container_param $meta_file "number_of_documents") -eq 0 ]]
 then
 	echo "this container is empty"
 	exit 0
 fi
 
-for directory in "$container_path"/*/ ; do
-	#read the data in the .meta file of each stored document and asign it to variables
-    while read var value; do
-    	export "$var"="$value"
-	done < "$directory"/.meta
-	printf "$document_index :\n"
-	printf "\tcreation date $creation_date\n"
-	printf "\tname $doc_name\n"
-	printf "\ttype $type\n"
-	printf "\t$n_frag fragments\n"
-	if test "$start_primer"
-	then
-		printf "\tstart_primer $start_primer\n"
-		printf "\tstop_primer $stop_primer\n"
-	fi
+doc_params_list=(creation_date doc_name doc_type fragment_number channel_coding starting_sequence start_primer stop_primer)
+
+for dir_name in $(find "$container_path"/* -maxdepth 0 -type d -printf "%f\n") ; do
+	#read the metadata for each stored document and asign it to variables
+	printf "$dir_name :\n"
+	for doc_param in "${doc_params_list[@]}" ; do
+		param_value=$(get_doc_param $meta_file $dir_name $doc_param)
+		if test "$param_value"
+		then
+			printf "\t$doc_param $param_value\n"
+		fi
+	done
 done
 
 exit 0
