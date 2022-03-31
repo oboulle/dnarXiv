@@ -59,14 +59,17 @@ fi
 #---------------------------------------------#
 ######### ====== read document ====== #########
 #---------------------------------------------#
-cdi_file="$container_path"/.cdi
-container_index=$(head -n 1 "$cdi_file")
+source ./metadata_manager.sh #load the xml manager script
+meta_file="$container_path"/metadata.xml
 
-if (( $container_index > 0 ))
+is_editable=$(get_container_param $meta_file "editable")
+
+if $is_editable
 then
 	echo "the container is not readable"
 	exit 1
 fi
+
 
 if [ $HOME == "/Users/oboulle" ]
 then
@@ -78,23 +81,17 @@ else
 	project_dir="/home/oboulle/Documents"
 fi
 
-# get parameters from the container options
-while read var value; do
-    export "$var"="$value"
-done < "$container_path"/.options
-
-#simulation frag_length spacer 
-
-# get parameters from the .meta file of the document to read
 stored_document_path="$container_path"/$document_index
-while read var value; do
-    export "$var"="$value"
-done < "$stored_document_path"/.meta
 
-#channel_coding type n_frag start_sequence metadata start_primer stop_primer
 
 #----Molecule Selection----#
+
 start_time=$(date +"%s")
+
+n_frag=$(get_doc_param $meta_file $document_index "fragment_number")
+start_primer=$(get_doc_param $meta_file $document_index "start_primer")
+stop_primer=$(get_doc_param $meta_file $document_index "stop_primer")
+
 
 if test -z "$n_read"
 then
@@ -122,6 +119,9 @@ seq_bc_time=$(date +"%s")
 
 #----Consensus----#
 
+frag_length=$(get_container_param $meta_file "frag_length")
+start_sequence=$(get_doc_param $meta_file $document_index "start_sequence")
+
 consensus_script="$project_dir"/sequencing_simulation/kmer_consensus/kmer_consensus.py
 consensus_path="$stored_document_path"/8_consensus.fasta
 expected_length=$(($n_frag * $frag_length))
@@ -131,6 +131,8 @@ check_error_function "consensus"
 consensus_time=$(date +"%s")
 
 #----Channel Decoding----#
+
+channel_coding=$(get_doc_param $meta_file $document_index "channel_coding")
 
 channel_decoding_script="$project_dir"/channel_code/file_decoder.sh
 decoded_sequence_path="$stored_document_path"/9_decoded_sequence.fasta
@@ -147,9 +149,12 @@ channel_time=$(date +"%s")
 
 #----Source Decoding----#
 
+doc_type=$(get_doc_param $meta_file $document_index "doc_type")
+
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
 reconstructed_source_path="$stored_document_path"/10_reconstructed_source.fasta
-python3 "$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $type -m "$metadata"
+#TODO if type = png, appel decoding with metadata, else not
+python3 "$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $doc_type -m "$metadata"
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
