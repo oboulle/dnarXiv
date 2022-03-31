@@ -42,7 +42,7 @@ then
 	exit 0
 fi
 
-doc_params_list=(creation_date doc_name doc_type color height width fragment_number channel_coding starting_sequence start_primer stop_primer)
+doc_params_list=(creation_date doc_name doc_type color height width fragment_number channel_coding start_sequence start_primer stop_primer)
 
 for dir_name in $(find "$container_path"/* -maxdepth 0 -type d -printf "%f\n") ; do
 	#read the metadata for each stored document and asign it to variables
