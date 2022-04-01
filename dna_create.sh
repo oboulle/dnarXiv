@@ -67,9 +67,10 @@ fi
 
 mkdir -p "$container_path"
 
-meta_file="$container_path"/metadata.xml
+project_dir="$(dirname $0)/.." #parent of the directory containing this script
 
-source ./metadata_manager.sh #load the xml manager script
+source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
+meta_file="$container_path"/metadata.xml
 
 init_metadata_file "$meta_file" "$container_name" $simulation $frag_length "ordered" false "$spacer" "nanopore"
 

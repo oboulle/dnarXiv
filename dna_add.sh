@@ -66,7 +66,9 @@ fi
 
 time=$(date +"%s")
 
-source ./metadata_manager.sh #load the xml manager script
+project_dir="$(dirname $0)/.." #parent of the directory containing this script
+
+source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 meta_file="$container_path"/metadata.xml
 
 
@@ -93,16 +95,6 @@ fi
 stored_document_path="$container_path"/$doc_index
  
 mkdir -p "$stored_document_path"
-
-if [ $HOME == "/Users/oboulle" ] #TODO exportable
-then
-	project_dir="/Users/oboulle/Documents"
-elif [ $HOME == "/udd/oboulle" ]
-then
-	project_dir="/udd/oboulle/Documents"
-else
-	project_dir="/home/oboulle/Documents"
-fi
 
 add_document "$meta_file" $doc_index
 

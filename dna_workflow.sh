@@ -11,15 +11,7 @@ check_error_function () { #end the program if the previously called script has r
 	fi
 }
 
-if [ $HOME == "/Users/oboulle" ]
-then
-	project_dir="/Users/oboulle/Documents"
-elif [ $HOME == "/udd/oboulle" ]
-then
-	project_dir="/udd/oboulle/Documents"
-else
-	project_dir="/home/oboulle/Documents"
-fi
+project_dir="$(dirname $0)/.." #parent of the directory containing this script
 
 commands_dir="$project_dir"/workflow_commands
 

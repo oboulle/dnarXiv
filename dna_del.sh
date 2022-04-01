@@ -41,7 +41,9 @@ fi
 ######### ====== delete document ====== #########
 #-----------------------------------------------#
 
-source ./metadata_manager.sh #load the xml manager script
+project_dir="$(dirname $0)/.." #parent of the directory containing this script
+
+source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 meta_file="$container_path"/metadata.xml
 
 is_editable=$(get_container_param $meta_file "editable")

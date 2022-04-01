@@ -59,7 +59,10 @@ fi
 #---------------------------------------------#
 ######### ====== read document ====== #########
 #---------------------------------------------#
-source ./metadata_manager.sh #load the xml manager script
+
+project_dir="$(dirname $0)/.." #parent of the directory containing this script
+
+source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 meta_file="$container_path"/metadata.xml
 
 is_editable=$(get_container_param $meta_file "editable")
@@ -68,17 +71,6 @@ if $is_editable
 then
 	echo "the container is not readable"
 	exit 1
-fi
-
-
-if [ $HOME == "/Users/oboulle" ]
-then
-	project_dir="/Users/oboulle/Documents"
-elif [ $HOME == "/udd/oboulle" ]
-then
-	project_dir="/udd/oboulle/Documents"
-else
-	project_dir="/home/oboulle/Documents"
 fi
 
 stored_document_path="$container_path"/$document_index

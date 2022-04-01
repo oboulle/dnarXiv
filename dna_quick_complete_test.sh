@@ -1,14 +1,7 @@
 #!/bin/bash
 
-if [ $HOME == "/Users/oboulle" ]
-then
-	project_dir="/Users/oboulle/Documents"
-elif [ $HOME == "/udd/oboulle" ]
-then
-	project_dir="/udd/oboulle/Documents"
-else
-	project_dir="/home/oboulle/Documents"
-fi
+project_dir="$(dirname $0)/.." #parent of the directory containing this script
+
 
 check_error_function () { 
 	if [ ! $? = 0 ]
@@ -30,7 +23,7 @@ check_error_function "dna_create"
 "$commands_dir"/dna_add.sh -nocd "$commands_dir"/documents_test/doc.txt "$container_name"
 check_error_function "dna_add"
 
-"$commands_dir"/dna_add.sh "$commands_dir"/documents_test/img_50.png "$container_name"
+"$commands_dir"/dna_add.sh -nocd "$commands_dir"/documents_test/img_50.png "$container_name"
 check_error_function "dna_add"
 
 "$commands_dir"/dna_store.sh "$container_name"
@@ -39,8 +32,10 @@ check_error_function "dna_store"
 "$commands_dir"/dna_list.sh "$container_name"
 check_error_function "dna_list"
 
-"$commands_dir"/dna_read.sh "$container_name" 0 resultat_du_workflow.txt
+"$commands_dir"/dna_read.sh "$container_name" 0 $container_name/resultat_0.txt
 check_error_function "dna_read"
 
+#"$commands_dir"/dna_read.sh "$container_name" 1 $container_name/resultat_1.png
+check_error_function "dna_read"
 
 exit 0
