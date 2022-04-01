@@ -121,9 +121,17 @@ seq_bc_time=$(date +"%s")
 
 frag_length=$(get_container_param $meta_file "frag_length")
 start_sequence=$(get_doc_param $meta_file $document_index "start_sequence")
+channel_coding=$(get_doc_param $meta_file $document_index "channel_coding")
+
 consensus_script="$project_dir"/sequencing_simulation/kmer_consensus/kmer_consensus.py
 consensus_path="$stored_document_path"/8_consensus.fasta
-expected_length=$(($n_frag * $frag_length))
+
+if $channel_coding
+then
+	expected_length=$(($n_frag * $frag_length * 2)) # for a redundancy of 100%
+else
+	expected_length=$(($n_frag * $frag_length))
+fi
 
 python3 "$consensus_script" -i "$sequenced_reads_path" -o "$consensus_path" -s "$start_sequence" -e "$expected_length"
 check_error_function "consensus"
@@ -131,14 +139,28 @@ consensus_time=$(date +"%s")
 
 #----Channel Decoding----#
 
-channel_coding=$(get_doc_param $meta_file $document_index "channel_coding")
-
 channel_decoding_script="$project_dir"/channel_code/file_decoder.sh
 decoded_sequence_path="$stored_document_path"/9_decoded_sequence.fasta
 
 if $channel_coding
 then
-	"$channel_decoding_script" "$consensus_path" $frag_length "$decoded_sequence_path" "$container_path"/$document_index/validity_check.txt
+	# the consensus results in one unique sequence
+	# it is fragmented back with the original encoded fragments length to be used in the channel decoding
+	fragmented_consensus_path="$stored_document_path"/8_fragmented_consensus_path.fasta
+	consensus_sequence=$(head -n 2 $consensus_path | tail -1)
+	frag_list=$(echo $consensus_sequence | fold -c$(($frag_length * 2)))
+	for fragment in $frag_list
+	do
+		printf ">fragment\n$fragment\n" >> "$fragmented_consensus_path"
+	done
+	decoded_fragments_path="$stored_document_path"/9_decoded_fragments.fasta
+	
+	"$channel_decoding_script" "$fragmented_consensus_path" $frag_length "$decoded_fragments_path" "$container_path"/$document_index/validity_check.txt
+	
+	#the decoded fragments are reassembled in an unique sequence
+	#select even lines and delete all \n 
+	printf ">decoded_consensus\n" > "$decoded_sequence_path"
+	sed -n '0~2p' $decoded_fragments_path | tr --delete '\n' >> "$decoded_sequence_path"
 else
 	cp "$consensus_path" "$decoded_sequence_path"
 fi
