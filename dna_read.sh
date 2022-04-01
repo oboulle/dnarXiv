@@ -121,7 +121,6 @@ seq_bc_time=$(date +"%s")
 
 frag_length=$(get_container_param $meta_file "frag_length")
 start_sequence=$(get_doc_param $meta_file $document_index "start_sequence")
-
 consensus_script="$project_dir"/sequencing_simulation/kmer_consensus/kmer_consensus.py
 consensus_path="$stored_document_path"/8_consensus.fasta
 expected_length=$(($n_frag * $frag_length))
@@ -154,7 +153,7 @@ doc_type=$(get_doc_param $meta_file $document_index "doc_type")
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
 reconstructed_source_path="$stored_document_path"/10_reconstructed_source.fasta
 #TODO if type = png, appel decoding with metadata, else not
-python3 "$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $doc_type -m "$metadata"
+python3 "$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $doc_type -m "$meta_file" --doc_index $document_index
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
