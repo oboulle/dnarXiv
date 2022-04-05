@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u #exit and display error message if a variable is empty 
 
 #DNA LIST - display the informations of every documents in the container
 
@@ -29,9 +30,9 @@ then
     exit 1
 fi
 
-#--------------------------------------------#
+#----------------------------------------------#
 ######### ====== list documents ====== #########
-#--------------------------------------------#
+#----------------------------------------------#
 
 project_dir="$(dirname $0)/.." #parent of the directory containing this script
 

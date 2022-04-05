@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u #exit and display error message if a variable is empty 
 
 #DNA DEL - remove a document from the container
 

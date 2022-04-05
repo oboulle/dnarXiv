@@ -1,6 +1,9 @@
 #!/bin/bash
+set -u #exit and display error message if a variable is empty 
 
 #DNA STORE - synthetise the documents of the container into molecules
+
+#set -x #display each command used
 
 help_function() {
    echo ""

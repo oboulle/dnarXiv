@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u #exit and display error message if a variable is empty 
 
 #DNA WORFLOW - run the complete cycle of archiving and extracting a document in a container
 # dna_workflow [-no_read] Dname Cname", or also dna_workflow [-no_read] for default container and document

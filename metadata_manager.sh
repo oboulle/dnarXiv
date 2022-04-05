@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u #exit and display error message if a variable is empty 
 
 #script for xml metadata management in the containers
 

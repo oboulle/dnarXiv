@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u #exit and display error message if a variable is empty 
 
 project_dir="$(dirname $0)/.." #parent of the directory containing this script
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u #exit and display error message if a variable is empty 
 
 #DNA READ - extract a document from a container
 
@@ -20,6 +21,9 @@ check_error_function () { #end the program if the previously called script has r
 		exit 1
 	fi
 }
+
+#----- default parameters -----#
+n_read=0 #calculated later depending of the fragment number is not defined
 
 #-----------------------------------------------#
 ######### ====== read parameters ====== #########
@@ -85,7 +89,7 @@ start_primer=$(get_doc_param $meta_file $document_index "start_primer")
 stop_primer=$(get_doc_param $meta_file $document_index "stop_primer")
 
 
-if test -z "$n_read"
+if [ "$n_read" -eq "0" ] #if n_read has not been defined
 then
 	#default value of molecule sequencing number
 	n_read=$(($n_frag * 50))
