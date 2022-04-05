@@ -8,8 +8,7 @@ check_error_function () {
 	if [ ! $? = 0 ]
 	then
 		echo "error in $1"
-		echo "cancel dna_add"
-		rm -rf $stored_document_path
+		echo "cancel dna_quick_complete_test"
 		exit 1
 	fi
 }
