@@ -13,7 +13,11 @@ help_function() {
    exit 1 # Exit script after printing help
 }
 
-# end the program if the previously called script has returned an error
+call_function() {
+	echo ""
+}
+
+#end the program if the previously called script has returned an error
 check_error_function () { 
 	if [ ! $? = 0 ]
 	then
@@ -102,12 +106,13 @@ add_document "$meta_file" $doc_index
 # get the fragment length from the container options
 frag_length=$(get_container_param $meta_file "frag_length")
 
+
 #----Source Encoding----#
 
 source_encoding_script="$project_dir"/source_encoding/source_encoding.py
 source_path="$stored_document_path"/1_fragments.fasta
 
-python3 "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length --meta "$meta_file" --doc_index $doc_index
+"$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length --meta "$meta_file" --doc_index $doc_index
 check_error_function "source encoding"
 
 
@@ -116,6 +121,8 @@ check_error_function "source encoding"
 channel_encoding_script="$project_dir"/channel_code/encode_from_file.jl 
 channel_path="$stored_document_path"/2_channel.fasta
 
+add_doc_param "$meta_file" $doc_index "channel_coding" $channel_coding
+
 if $channel_coding
 then
 	"$channel_encoding_script" "$source_path" "$channel_path"
@@ -123,7 +130,6 @@ else
 	cp "$source_path" "$channel_path"
 fi
 
-add_doc_param "$meta_file" $doc_index "channel_coding" $channel_coding
 check_error_function "channel encoding"
 
 
@@ -135,7 +141,7 @@ fragments_path="$stored_document_path"/3_final_fragments.fasta
 echo "homopolymere deletion not implemented yet; skipping..."
 cp "$channel_path" "$fragments_path"
 
-: 'python3 $h_deletion_script "$channel_path" "$fragments_path" #TODO
+: '$h_deletion_script "$channel_path" "$fragments_path" #TODO
 check_error_function "homopolymere deletion"
 '
 

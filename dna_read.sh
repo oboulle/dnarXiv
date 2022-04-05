@@ -98,7 +98,7 @@ fi
 molecule_selection_script="$project_dir"/sequencing_simulation/select_molecules.py
 selected_mol_path="$stored_document_path"/6_select_mol.fasta
 #select molecules from container molecules with the good primers
-python3 "$molecule_selection_script" -i "$container_path"/container_molecules.fasta -o "$selected_mol_path" --start $start_primer --stop $stop_primer -n $n_read
+"$molecule_selection_script" -i "$container_path"/container_molecules.fasta -o "$selected_mol_path" --start $start_primer --stop $stop_primer -n $n_read
 check_error_function "molecule selection"
 mol_sel_time=$(date +"%s")
 
@@ -107,7 +107,7 @@ mol_sel_time=$(date +"%s")
 convert_fasta_script="$project_dir"/synthesis_simulation/dna_file_reader.py #script to convert fasta to fastq
 simu_seq_bc_script="$project_dir"/sequencing_simulation/sequencing_basecalling_simulator/sequencing_basecalling_simulator.jl
 sequenced_reads_path="$stored_document_path"/7_sequenced_reads.fastq
-#python3 "$convert_fasta_script" "$selected_mol_path" "$sequenced_reads_path"
+#"$convert_fasta_script" "$selected_mol_path" "$sequenced_reads_path"
 "$simu_seq_bc_script" "$selected_mol_path" "$sequenced_reads_path"
 
 check_error_function "sequencing/basecalling"
@@ -129,7 +129,7 @@ else
 	expected_length=$(($n_frag * $frag_length))
 fi
 
-python3 "$consensus_script" -i "$sequenced_reads_path" -o "$consensus_path" -s "$start_sequence" -e "$expected_length"
+"$consensus_script" -i "$sequenced_reads_path" -o "$consensus_path" -s "$start_sequence" -e "$expected_length"
 check_error_function "consensus"
 consensus_time=$(date +"%s")
 
@@ -172,7 +172,7 @@ doc_type=$(get_doc_param $meta_file $document_index "doc_type")
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
 reconstructed_source_path="$stored_document_path"/10_reconstructed_source.fasta
 #TODO if type = png, appel decoding with metadata, else not
-python3 "$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $doc_type -m "$meta_file" --doc_index $document_index
+"$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $doc_type -m "$meta_file" --doc_index $document_index
 check_error_function "source decoding"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
