@@ -138,7 +138,8 @@ if $channel_coding
 then
 	# the consensus results in one unique sequence
 	# it is fragmented back with the original encoded fragments length to be used in the channel decoding
-	fragmented_consensus_path="$stored_document_path"/8_fragmented_consensus_path.fasta
+	fragmented_consensus_path="$stored_document_path"/8_fragmented_consensus.fasta
+	echo > fragmented_consensus_path #empty the file
 	consensus_sequence=$(head -n 2 $consensus_path | tail -1)
 	frag_list=$(echo $consensus_sequence | fold -c$(($frag_length * 2)))
 	for fragment in $frag_list
