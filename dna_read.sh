@@ -14,13 +14,21 @@ help_function () {
    exit 1 # Exit script after printing help
 }
 
-check_error_function () { #end the program if the previously called script has returned an error
-	if [ ! $? = 0 ]
+call_function() {
+	#call the cript passed in parameters, save it in logs
+	#end the program if the called script has returned an error
+	
+	function_command=$@
+	echo "$function_command"
+	$function_command #execute the command
+	if [ ! $? = 0 ] #test if command failed
 	then
-		echo "error in $1"
+		echo "error in $(basename $1)"
+		echo "canceling dna_read"
 		exit 1
 	fi
 }
+
 
 #----- default parameters -----#
 n_read=0 #calculated later depending of the fragment number is not defined
@@ -98,8 +106,7 @@ fi
 molecule_selection_script="$project_dir"/sequencing_simulation/select_molecules.py
 selected_mol_path="$stored_document_path"/6_select_mol.fasta
 #select molecules from container molecules with the good primers
-"$molecule_selection_script" -i "$container_path"/container_molecules.fasta -o "$selected_mol_path" --start $start_primer --stop $stop_primer -n $n_read
-check_error_function "molecule selection"
+call_function "$molecule_selection_script" -i "$container_path"/container_molecules.fasta -o "$selected_mol_path" --start $start_primer --stop $stop_primer -n $n_read
 mol_sel_time=$(date +"%s")
 
 #----Sequencing & Basecalling----#
@@ -107,10 +114,9 @@ mol_sel_time=$(date +"%s")
 convert_fasta_script="$project_dir"/synthesis_simulation/dna_file_reader.py #script to convert fasta to fastq
 simu_seq_bc_script="$project_dir"/sequencing_simulation/sequencing_basecalling_simulator/sequencing_basecalling_simulator.jl
 sequenced_reads_path="$stored_document_path"/7_sequenced_reads.fastq
-#"$convert_fasta_script" "$selected_mol_path" "$sequenced_reads_path"
-"$simu_seq_bc_script" "$selected_mol_path" "$sequenced_reads_path"
+#call_function "$convert_fasta_script" "$selected_mol_path" "$sequenced_reads_path"
+call_function "$simu_seq_bc_script" "$selected_mol_path" "$sequenced_reads_path"
 
-check_error_function "sequencing/basecalling"
 seq_bc_time=$(date +"%s")
 
 #----Consensus----#
@@ -129,8 +135,7 @@ else
 	expected_length=$(($n_frag * $frag_length))
 fi
 
-"$consensus_script" -i "$sequenced_reads_path" -o "$consensus_path" -s "$start_sequence" -e "$expected_length"
-check_error_function "consensus"
+call_function "$consensus_script" -i "$sequenced_reads_path" -o "$consensus_path" -s "$start_sequence" -e "$expected_length"
 consensus_time=$(date +"%s")
 
 #----Channel Decoding----#
@@ -152,16 +157,15 @@ then
 	done
 	decoded_fragments_path="$stored_document_path"/9_decoded_fragments.fasta
 	
-	"$channel_decoding_script" "$fragmented_consensus_path" $frag_length "$decoded_fragments_path" "$container_path"/$document_index/validity_check.txt
+	call_function "$channel_decoding_script" "$fragmented_consensus_path" $frag_length "$decoded_fragments_path" "$container_path"/$document_index/validity_check.txt
 	
 	#the decoded fragments are reassembled in an unique sequence
 	#select even lines and delete all \n 
 	printf ">decoded_consensus\n" > "$decoded_sequence_path"
 	sed -n '0~2p' $decoded_fragments_path | tr --delete '\n' >> "$decoded_sequence_path"
 else
-	cp "$consensus_path" "$decoded_sequence_path"
+	call_function cp "$consensus_path" "$decoded_sequence_path"
 fi
-check_error_function "channel decoding"
 
 channel_time=$(date +"%s")
 
@@ -172,8 +176,7 @@ doc_type=$(get_doc_param $meta_file $document_index "doc_type")
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
 reconstructed_source_path="$stored_document_path"/10_reconstructed_source.fasta
 #TODO if type = png, appel decoding with metadata, else not
-"$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $doc_type -m "$meta_file" --doc_index $document_index
-check_error_function "source decoding"
+call_function "$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $doc_type -m "$meta_file" --doc_index $document_index
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
 

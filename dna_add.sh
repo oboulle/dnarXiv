@@ -14,15 +14,16 @@ help_function() {
 }
 
 call_function() {
-	echo ""
-}
-
-#end the program if the previously called script has returned an error
-check_error_function () { 
-	if [ ! $? = 0 ]
+	#call the cript passed in parameters, save it in logs
+	#end the program if the called script has returned an error
+	
+	function_command=$@
+	echo "$function_command"
+	$function_command #execute the command
+	if [ ! $? = 0 ] #test if command failed
 	then
-		echo "error in $1"
-		echo "cancel dna_add"
+		echo "error in $(basename $1)"
+		echo "canceling dna_add"
 		rm -rf $stored_document_path
 		del_document "$meta_file" $doc_index
 		exit 1
@@ -35,7 +36,6 @@ channel_coding=true
 #-----------------------------------------------#
 ######### ====== read parameters ====== #########
 #-----------------------------------------------#
-
 
 while true; do
   case "$1" in
@@ -112,8 +112,7 @@ frag_length=$(get_container_param $meta_file "frag_length")
 source_encoding_script="$project_dir"/source_encoding/source_encoding.py
 source_path="$stored_document_path"/1_fragments.fasta
 
-"$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length --meta "$meta_file" --doc_index $doc_index
-check_error_function "source encoding"
+call_function "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length --meta "$meta_file" --doc_index $doc_index
 
 
 #----Channel Encoding----#
@@ -125,12 +124,10 @@ add_doc_param "$meta_file" $doc_index "channel_coding" $channel_coding
 
 if $channel_coding
 then
-	"$channel_encoding_script" "$source_path" "$channel_path"
+	call_function "$channel_encoding_script" "$source_path" "$channel_path"
 else
-	cp "$source_path" "$channel_path"
+	call_function cp "$source_path" "$channel_path"
 fi
-
-check_error_function "channel encoding"
 
 
 #----Homopolymere Deletion----#
@@ -139,10 +136,9 @@ check_error_function "channel encoding"
 fragments_path="$stored_document_path"/3_final_fragments.fasta
 
 echo "homopolymere deletion not implemented yet; skipping..."
-cp "$channel_path" "$fragments_path"
+call_function cp "$channel_path" "$fragments_path"
 
-: '$h_deletion_script "$channel_path" "$fragments_path" #TODO
-check_error_function "homopolymere deletion"
+: 'call_function $h_deletion_script "$channel_path" "$fragments_path" #TODO
 '
 
 echo "Document $document_path successfully added to container $container_path !"

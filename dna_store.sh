@@ -17,13 +17,21 @@ help_function() {
    exit 1 # Exit script after printing help
 }
 
-check_error_function () { #end the program if the previously called script has returned an error
-	if [ ! $? = 0 ]
+call_function() {
+	#call the cript passed in parameters, save it in logs
+	#end the program if the called script has returned an error
+	
+	function_command=$@
+	echo "$function_command"
+	$function_command #execute the command
+	if [ ! $? = 0 ] #test if command failed
 	then
-		echo "error in $1"
+		echo "error in $(basename $1)"
+		echo "canceling dna_store"
 		exit 1
 	fi
 }
+
 
 #----- default parameters -----#
 n_synth=100
@@ -92,8 +100,7 @@ cat "$container_path"/*/3_final_fragments.fasta > "$container_path"/container_fr
 
 primers_generation_script="$project_dir"/synthesis_simulation/primer_generation.py
 
-"$primers_generation_script" "$container_path"
-check_error_function "primer generation"
+call_function "$primers_generation_script" "$container_path"
 
 simulation=$(get_container_param $meta_file "simulation")
 
@@ -105,8 +112,7 @@ then
 	synthesis_script="$project_dir"/synthesis_simulation/synthesis.py
 	
 	for directory in "$container_path"/*/ ; do
-		"$synthesis_script" -i "$directory"/3_final_fragments.fasta -o "$directory"/4_synthesis.fasta -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
-		check_error_function "synthesis simulation"
+		call_function "$synthesis_script" -i "$directory"/3_final_fragments.fasta -o "$directory"/4_synthesis.fasta -n $n_synth --i_error $i_error --d_error $d_error --s_error $s_error
 	done
 else
 	echo "container is not in simulation mode"
@@ -127,8 +133,7 @@ then
 		stop_primer=$(get_doc_param $meta_file $document_index "stop_primer")
 		n_mol=$(($n_frag * 1000)) #TODO
 				
-		"$molecule_design_script" -i "$directory"/4_synthesis.fasta -o "$directory"/5_molecules.fasta --start $start_primer --stop $stop_primer -n $n_mol
-		check_error_function "error in molecule design"
+		call_function "$molecule_design_script" -i "$directory"/4_synthesis.fasta -o "$directory"/5_molecules.fasta --start $start_primer --stop $stop_primer -n $n_mol
 	done
 	#concatenate all the molecules files into one to represent the physical container
 	cat "$container_path"/*/5_molecules.fasta > "$container_path"/container_molecules.fasta

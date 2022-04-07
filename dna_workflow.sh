@@ -4,10 +4,17 @@ set -u #exit and display error message if a variable is empty
 #DNA WORFLOW - run the complete cycle of archiving and extracting a document in a container
 # dna_workflow [-no_read] Dname Cname", or also dna_workflow [-no_read] for default container and document
 
-check_error_function () { #end the program if the previously called script has returned an error
-	if [ ! $? = 0 ]
+call_function() {
+	#call the cript passed in parameters, save it in logs
+	#end the program if the called script has returned an error
+	
+	function_command=$@
+	echo "$function_command"
+	$function_command #execute the command
+	if [ ! $? = 0 ] #test if command failed
 	then
-		echo "error in $1"
+		echo "error in $(basename $1)"
+		echo "canceling dna_workflow"
 		exit 1
 	fi
 }
@@ -21,9 +28,9 @@ commands_dir="$project_dir"/workflow_commands
 #-----------------------------------------------#
 
 case "$1" in
-    -no_read ) no_read=true ; document_path="${2}"; container_name="${3}";;
+    -no_read ) no_read=true ; document_path="${2}"; container_path="${3}";;
     -* ) echo "unknown parameter $1" ; exit 1;;
-    * ) no_read=false ; document_path="${1}"; container_name="${2}" ;;
+    * ) no_read=false ; document_path="${1}"; container_path="${2}" ;;
 esac
 
 if test -z "$document_path"
@@ -31,29 +38,26 @@ then
 	document_path="documents_test/doc.txt" #img_200.png"
 fi
 
-if test -z "$container_name"
+if test -z "$container_path"
 then
-	container_name="test_workflow"
+	container_path="test_workflow"
 fi
 
 #------------------------------------------------#
 ######### ====== run the workflow ====== #########
 #------------------------------------------------#
 
-if [ -d "$container_name" ]
+if [ -d "$container_path" ]
 then
-	rm -rf "$container_name"_old
-	mv "$container_name" "$container_name"_old #save the previous workflow container
+	rm -rf "$container_path"_old
+	mv "$container_path" "$container_path"_old #save the previous workflow container
 fi
 
-"$commands_dir"/dna_create.sh -sim -nocd -fl 60 "$container_name" #TODO fl
-check_error_function "dna_create"
+call_function "$commands_dir"/dna_create.sh -sim -nocd -fl 60 "$container_path" #TODO fl
 
-"$commands_dir"/dna_add.sh "$document_path" "$container_name"
-check_error_function "dna_add"
+call_function "$commands_dir"/dna_add.sh "$document_path" "$container_path"
 
-"$commands_dir"/dna_store.sh "$container_name"
-check_error_function "dna_store"
+call_function "$commands_dir"/dna_store.sh "$container_path"
 
 if $no_read #skip the reading part
 then
@@ -61,8 +65,7 @@ then
 fi
 
 document_name="$(basename $document_path)"
-"$commands_dir"/dna_read.sh "$container_name" 0 "$container_name"/0/result_"$document_name"
-check_error_function "dna_read"
+call_function "$commands_dir"/dna_read.sh "$container_path" 0 "$container_path"/0/result_"$document_name"
 
 
 #command to copy the total workflow from the dnarxiv server
