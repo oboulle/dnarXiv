@@ -3,6 +3,10 @@ set -u #exit and display error message if a variable is empty
 
 #DNA ADD - add a document to the container
 
+project_dir="$(dirname $0)/.." #parent of the directory containing this script
+source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
+source "$project_dir"/workflow_commands/log_manager.sh #load the log manager script
+
 help_function() {
    echo ""
    echo "Usage: dna_add Dname Cname [-nocd]"
@@ -18,7 +22,7 @@ call_function() {
 	#end the program if the called script has returned an error
 	
 	function_command=$@
-	echo "$function_command"
+	log_script_call "$container_path"/log_file.log "$function_command"
 	$function_command #execute the command
 	if [ ! $? = 0 ] #test if command failed
 	then
@@ -71,9 +75,6 @@ fi
 
 time=$(date +"%s")
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
-
-source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 meta_file="$container_path"/metadata.xml
 
 

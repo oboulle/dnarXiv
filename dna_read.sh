@@ -3,6 +3,10 @@ set -u #exit and display error message if a variable is empty
 
 #DNA READ - extract a document from a container
 
+project_dir="$(dirname $0)/.." #parent of the directory containing this script
+source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
+source "$project_dir"/workflow_commands/log_manager.sh #load the log manager script
+
 help_function () {
    echo ""
    echo "Usage: dna_read [-n_read int] Cname DI Dname"
@@ -19,7 +23,7 @@ call_function() {
 	#end the program if the called script has returned an error
 	
 	function_command=$@
-	echo "$function_command"
+	log_script_call "$container_path"/log_file.log "$function_command"
 	$function_command #execute the command
 	if [ ! $? = 0 ] #test if command failed
 	then
@@ -36,12 +40,6 @@ n_read=0 #calculated later depending of the fragment number is not defined
 #-----------------------------------------------#
 ######### ====== read parameters ====== #########
 #-----------------------------------------------#
-case "$1" in
-    -n_read ) n_read=$2 ; container_path="${3}"; document_index="${4}"; document_path="${5}";;
-    -h | --help ) help_function ; exit 1;;
-    -* ) echo "unknown parameter $1" ; exit 1;;
-    * ) container_path="${1}"; document_index="${2}"; document_path="${3}";;
-esac
 
 if [ "$#" != 3 ] && [ "$#" != 5 ]
 then
@@ -49,6 +47,13 @@ then
 	help_function
 	exit 1
 fi
+
+case "$1" in
+    -n_read ) n_read=$2 ; container_path="${3}"; document_index="${4}"; document_path="${5}";;
+    -h | --help ) help_function ; exit 1;;
+    -* ) echo "unknown parameter $1" ; exit 1;;
+    * ) container_path="${1}"; document_index="${2}"; document_path="${3}";;
+esac
 
 if [ ! -d "$container_path" ] 
 then
@@ -72,9 +77,6 @@ fi
 ######### ====== read document ====== #########
 #---------------------------------------------#
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
-
-source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 meta_file="$container_path"/metadata.xml
 
 is_editable=$(get_container_param $meta_file "editable")
@@ -88,7 +90,7 @@ fi
 stored_document_path="$container_path"/$document_index
 
 
-#----Molecule Selection----#
+#----Molecule Selection----# 
 
 start_time=$(date +"%s")
 
@@ -171,12 +173,12 @@ channel_time=$(date +"%s")
 
 #----Source Decoding----#
 
-doc_type=$(get_doc_param $meta_file $document_index "doc_type")
+assembly_type=$(get_container_param $meta_file "assembly_type")
+encoding_data=$(get_all_doc_param $meta_file $document_index)
 
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
 reconstructed_source_path="$stored_document_path"/10_reconstructed_source.fasta
-#TODO if type = png, appel decoding with metadata, else not
-call_function "$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t $doc_type -m "$meta_file" --doc_index $document_index
+call_function "$source_decoding_script" -i "$decoded_sequence_path" -r "$reconstructed_source_path" -o "$document_path" -t "$assembly_type" --data "$encoding_data"
 
 echo "Document $document_index of $container_path successfully saved to $document_path !"
 

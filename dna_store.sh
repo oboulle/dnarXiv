@@ -3,7 +3,9 @@ set -u #exit and display error message if a variable is empty
 
 #DNA STORE - synthetise the documents of the container into molecules
 
-#set -x #display each command used
+project_dir="$(dirname $0)/.." #parent of the directory containing this script
+source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
+source "$project_dir"/workflow_commands/log_manager.sh #load the log manager script
 
 help_function() {
    echo ""
@@ -22,7 +24,7 @@ call_function() {
 	#end the program if the called script has returned an error
 	
 	function_command=$@
-	echo "$function_command"
+	log_script_call "$container_path"/log_file.log "$function_command"
 	$function_command #execute the command
 	if [ ! $? = 0 ] #test if command failed
 	then
@@ -79,9 +81,6 @@ fi
 #----------------------------------------------#
 time=$(date +"%s")
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
-
-source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 meta_file="$container_path"/metadata.xml
 
 is_editable=$(get_container_param $meta_file "editable")
