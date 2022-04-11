@@ -3,7 +3,7 @@ set -u #exit and display error message if a variable is empty
 
 #DNA ADD - add a document to the container
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
+project_dir="$(dirname ${BASH_SOURCE})/.." #parent of the directory containing this script
 source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 source "$project_dir"/workflow_commands/log_manager.sh #load the log manager script
 
@@ -110,10 +110,12 @@ frag_length=$(get_container_param $meta_file "frag_length")
 
 #----Source Encoding----#
 
+assembly_type=$(get_container_param $meta_file "assembly_type")
+
 source_encoding_script="$project_dir"/source_encoding/source_encoding.py
 source_path="$stored_document_path"/1_fragments.fasta
 
-call_function "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length --meta "$meta_file" --doc_index $doc_index
+call_function "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length --meta "$meta_file" -t "$assembly_type" --doc_index $doc_index
 
 
 #----Channel Encoding----#
