@@ -97,12 +97,12 @@ cat "$container_path"/*/3_final_fragments.fasta > "$container_path"/container_fr
 
 primers_generation_script="$project_dir"/synthesis_simulation/primer_generation.py
 
-call_function "$primers_generation_script" "$container_path"
-
-simulation=$(get_container_param $container_path "simulation")
+call_function "$primers_generation_script" -c "$container_path"
 
 
 #----Synthesis----#
+
+simulation=$(get_container_param $container_path "simulation")
 
 if [ $simulation ]
 then
