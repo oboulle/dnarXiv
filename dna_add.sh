@@ -141,7 +141,7 @@ call_function cp "$channel_path" "$fragments_path"
 : 'call_function $h_deletion_script "$channel_path" "$fragments_path" #TODO
 '
 
-echo "Document $document_path successfully added to container $container_path !"
+echo "Document $(basename $document_path) successfully added to container $container_path !"
 
 times_file="$stored_document_path"/workflow_times.txt
 
