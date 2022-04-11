@@ -4,7 +4,7 @@ set -u #exit and display error message if a variable is empty
 #DNA WORFLOW - run the complete cycle of archiving and extracting a document in a container
 # dna_workflow [-no_read] Dname Cname", or also dna_workflow [-no_read] for default container and document
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
+project_dir="$(dirname ${BASH_SOURCE})/.." #parent of the directory containing this script
 commands_dir="$project_dir"/workflow_commands
 source "$project_dir"/workflow_commands/log_manager.sh #load the log manager script
 
@@ -13,7 +13,7 @@ call_function() {
 	#end the program if the called script has returned an error
 	
 	function_command=$@
-	log_script_call "$container_path"/log_file.log "$function_command"
+	log_script_call "$container_path" "$function_command"
 	$function_command #execute the command
 	if [ ! $? = 0 ] #test if command failed
 	then

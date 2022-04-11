@@ -3,7 +3,7 @@ set -u #exit and display error message if a variable is empty
 
 #DNA CREATE - initialise an empty container
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
+project_dir="$(dirname ${BASH_SOURCE})/.." #parent of the directory containing this script
 source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 
 help_function() {
@@ -71,9 +71,7 @@ fi
 
 mkdir -p "$container_path"
 
-meta_file="$container_path"/metadata.xml
-
-init_metadata_file "$meta_file" "$container_name" $simulation $frag_length "ordered" false "$spacer" "nanopore"
+init_metadata_file "$container_path" "$container_name" $simulation $frag_length "ordered" false "$spacer" "nanopore"
 
 echo "Container $container_name created successfully !"
 

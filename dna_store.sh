@@ -3,7 +3,7 @@ set -u #exit and display error message if a variable is empty
 
 #DNA STORE - synthetise the documents of the container into molecules
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
+project_dir="$(dirname ${BASH_SOURCE})/.." #parent of the directory containing this script
 source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 source "$project_dir"/workflow_commands/log_manager.sh #load the log manager script
 
@@ -24,7 +24,7 @@ call_function() {
 	#end the program if the called script has returned an error
 	
 	function_command=$@
-	log_script_call "$container_path"/log_file.log "$function_command"
+	log_script_call "$container_path" "$function_command"
 	$function_command #execute the command
 	if [ ! $? = 0 ] #test if command failed
 	then
@@ -81,9 +81,7 @@ fi
 #----------------------------------------------#
 time=$(date +"%s")
 
-meta_file="$container_path"/metadata.xml
-
-is_editable=$(get_container_param $meta_file "editable")
+is_editable=$(get_container_param $container_path "editable")
 
 if ! $is_editable
 then
@@ -101,7 +99,7 @@ primers_generation_script="$project_dir"/synthesis_simulation/primer_generation.
 
 call_function "$primers_generation_script" "$container_path"
 
-simulation=$(get_container_param $meta_file "simulation")
+simulation=$(get_container_param $container_path "simulation")
 
 
 #----Synthesis----#
@@ -127,9 +125,9 @@ then
 	molecule_design_script="$project_dir"/synthesis_simulation/molecule_design.py
 	for directory in "$container_path"/*/ ; do
 		document_index=$(basename $directory)
-		n_frag=$(get_doc_param $meta_file $document_index "fragment_number")
-		start_primer=$(get_doc_param $meta_file $document_index "start_primer")
-		stop_primer=$(get_doc_param $meta_file $document_index "stop_primer")
+		n_frag=$(get_doc_param $container_path $document_index "fragment_number")
+		start_primer=$(get_doc_param $container_path $document_index "start_primer")
+		stop_primer=$(get_doc_param $container_path $document_index "stop_primer")
 		n_mol=$(($n_frag * 1000)) #TODO
 				
 		call_function "$molecule_design_script" -i "$directory"/4_synthesis.fasta -o "$directory"/5_molecules.fasta --start $start_primer --stop $stop_primer -n $n_mol
@@ -144,7 +142,7 @@ fi
 
 #----Update metadata----#
 
-set_container_param $meta_file "editable" false
+set_container_param $container_path "editable" false
 
 echo "Documents of $container_path successfully stored !"
 end_time=$(date +"%s")

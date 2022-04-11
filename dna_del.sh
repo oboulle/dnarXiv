@@ -3,6 +3,9 @@ set -u #exit and display error message if a variable is empty
 
 #DNA DEL - remove a document from the container
 
+project_dir="$(dirname ${BASH_SOURCE})/.." #parent of the directory containing this script
+source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
+
 help_function() {
    echo ""
    echo "Usage: dna_del Cname DI"
@@ -42,12 +45,7 @@ fi
 ######### ====== delete document ====== #########
 #-----------------------------------------------#
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
-
-source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
-meta_file="$container_path"/metadata.xml
-
-is_editable=$(get_container_param $meta_file "editable")
+is_editable=$(get_container_param $container_path "editable")
 
 if ! $is_editable
 then
@@ -56,7 +54,7 @@ then
 fi
 
 rm -rf "$container_path"/$doc_index
-del_document "$meta_file" $doc_index
+del_document "$container_path" $doc_index
 
 echo "Document $doc_index successfully deleted from $container_path !"
 

@@ -22,14 +22,14 @@ call_function() {
 	#end the program if the called script has returned an error
 	
 	function_command=$@
-	log_script_call "$container_path"/log_file.log "$function_command"
+	log_script_call "$container_path" "$function_command"
 	$function_command #execute the command
 	if [ ! $? = 0 ] #test if command failed
 	then
 		echo "error in $(basename $1)"
 		echo "canceling dna_add"
 		rm -rf $stored_document_path
-		del_document "$meta_file" $doc_index
+		del_document "$container_path" $doc_index
 		exit 1
 	fi
 }
@@ -75,10 +75,7 @@ fi
 
 time=$(date +"%s")
 
-meta_file="$container_path"/metadata.xml
-
-
-is_editable=$(get_container_param $meta_file "editable")
+is_editable=$(get_container_param $container_path "editable")
 
 if ! $is_editable
 then
@@ -102,20 +99,20 @@ stored_document_path="$container_path"/$doc_index
  
 mkdir -p "$stored_document_path"
 
-add_document "$meta_file" $doc_index
+add_document "$container_path" $doc_index
 
 # get the fragment length from the container options
-frag_length=$(get_container_param $meta_file "frag_length")
+frag_length=$(get_container_param $container_path "frag_length")
 
 
 #----Source Encoding----#
 
-assembly_type=$(get_container_param $meta_file "assembly_type")
+assembly_type=$(get_container_param $container_path "assembly_type")
 
 source_encoding_script="$project_dir"/source_encoding/source_encoding.py
 source_path="$stored_document_path"/1_fragments.fasta
 
-call_function "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length --meta "$meta_file" -t "$assembly_type" --doc_index $doc_index
+call_function "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length -c "$container_path" -t "$assembly_type" --doc_index $doc_index
 
 
 #----Channel Encoding----#
@@ -123,7 +120,7 @@ call_function "$source_encoding_script" -i "$document_path" -o "$source_path" -l
 channel_encoding_script="$project_dir"/channel_code/encode_from_file.jl 
 channel_path="$stored_document_path"/2_channel.fasta
 
-add_doc_param "$meta_file" $doc_index "channel_coding" $channel_coding
+add_doc_param "$container_path" $doc_index "channel_coding" $channel_coding
 
 if $channel_coding
 then

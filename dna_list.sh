@@ -3,6 +3,9 @@ set -u #exit and display error message if a variable is empty
 
 #DNA LIST - display the informations of every documents in the container
 
+project_dir="$(dirname ${BASH_SOURCE})/.." #parent of the directory containing this script
+source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
+
 #-----------------------------------------------#
 ######### ====== read parameters ====== #########
 #-----------------------------------------------#
@@ -34,12 +37,7 @@ fi
 ######### ====== list documents ====== #########
 #----------------------------------------------#
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
-
-source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
-meta_file="$container_path"/metadata.xml
-
-if [[ $(get_container_param $meta_file "number_of_documents") -eq 0 ]]
+if [[ $(get_container_param $container_path "number_of_documents") -eq 0 ]]
 then
 	echo "this container is empty"
 	exit 0
@@ -51,7 +49,7 @@ for dir_name in $(find "$container_path"/* -maxdepth 0 -type d -printf "%f\n") ;
 	#read the metadata for each stored document and asign it to variables
 	printf "$dir_name :\n"
 	for doc_param in "${doc_params_list[@]}" ; do
-		param_value=$(get_doc_param $meta_file $dir_name $doc_param)
+		param_value=$(get_doc_param $container_path $dir_name $doc_param)
 		if test "$param_value"
 		then
 			printf "\t$doc_param $param_value\n"

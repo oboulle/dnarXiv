@@ -3,7 +3,7 @@ set -u #exit and display error message if a variable is empty
 
 #DNA READ - extract a document from a container
 
-project_dir="$(dirname $0)/.." #parent of the directory containing this script
+project_dir="$(dirname ${BASH_SOURCE})/.." #parent of the directory containing this script
 source "$project_dir"/workflow_commands/metadata_manager.sh #load the xml manager script
 source "$project_dir"/workflow_commands/log_manager.sh #load the log manager script
 
@@ -23,7 +23,7 @@ call_function() {
 	#end the program if the called script has returned an error
 	
 	function_command=$@
-	log_script_call "$container_path"/log_file.log "$function_command"
+	log_script_call "$container_path" "$function_command"
 	$function_command #execute the command
 	if [ ! $? = 0 ] #test if command failed
 	then
@@ -77,9 +77,7 @@ fi
 ######### ====== read document ====== #########
 #---------------------------------------------#
 
-meta_file="$container_path"/metadata.xml
-
-is_editable=$(get_container_param $meta_file "editable")
+is_editable=$(get_container_param $container_path "editable")
 
 if $is_editable
 then
@@ -94,9 +92,9 @@ stored_document_path="$container_path"/$document_index
 
 start_time=$(date +"%s")
 
-n_frag=$(get_doc_param $meta_file $document_index "fragment_number")
-start_primer=$(get_doc_param $meta_file $document_index "start_primer")
-stop_primer=$(get_doc_param $meta_file $document_index "stop_primer")
+n_frag=$(get_doc_param $container_path $document_index "fragment_number")
+start_primer=$(get_doc_param $container_path $document_index "start_primer")
+stop_primer=$(get_doc_param $container_path $document_index "stop_primer")
 
 
 if [ "$n_read" -eq "0" ] #if n_read has not been defined
@@ -123,9 +121,9 @@ seq_bc_time=$(date +"%s")
 
 #----Consensus----#
 
-frag_length=$(get_container_param $meta_file "frag_length")
-start_sequence=$(get_doc_param $meta_file $document_index "start_sequence")
-channel_coding=$(get_doc_param $meta_file $document_index "channel_coding")
+frag_length=$(get_container_param $container_path "frag_length")
+start_sequence=$(get_doc_param $container_path $document_index "start_sequence")
+channel_coding=$(get_doc_param $container_path $document_index "channel_coding")
 
 consensus_script="$project_dir"/sequencing_simulation/kmer_consensus/kmer_consensus.py
 consensus_path="$stored_document_path"/8_consensus.fasta
@@ -173,8 +171,8 @@ channel_time=$(date +"%s")
 
 #----Source Decoding----#
 
-assembly_type=$(get_container_param $meta_file "assembly_type")
-encoding_data=$(get_all_doc_param $meta_file $document_index)
+assembly_type=$(get_container_param $container_path "assembly_type")
+encoding_data=$(get_all_doc_param $container_path $document_index)
 
 source_decoding_script="$project_dir"/source_encoding/source_decoding.py
 reconstructed_source_path="$stored_document_path"/10_reconstructed_source.fasta
