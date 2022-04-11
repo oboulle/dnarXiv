@@ -128,7 +128,12 @@ get_doc_param() {
 	#save operation in logs
 	log_metadata_call "$1" get_doc_param "$2" "$3"
 	
-	xmlstarlet sel -t -v "/container_metadata/documents/document[@id=$2]/$3" "$1"/$meta_file_name
+	param_value=$(xmlstarlet sel -t -v "/container_metadata/documents/document[@id=$2]/$3" "$1"/$meta_file_name)
+	if [ "$param_value" != "" ]; then 
+		echo "$param_value" 
+	else
+		echo "$3"
+	fi
 }
 
 
