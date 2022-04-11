@@ -112,7 +112,7 @@ assembly_type=$(get_container_param $container_path "assembly_type")
 source_encoding_script="$project_dir"/source_encoding/source_encoding.py
 source_path="$stored_document_path"/1_fragments.fasta
 
-call_function "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length -c "$container_path" -t "$assembly_type" --doc_index $doc_index
+call_function "$source_encoding_script" -i "$document_path" -o "$source_path" -l $frag_length -t "$assembly_type" -c "$container_path" --doc_index $doc_index
 
 
 #----Channel Encoding----#
