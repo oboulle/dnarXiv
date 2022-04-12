@@ -1,0 +1,3 @@
+[submodule "workflow_commands"]
+	path = workflow_commands
+	url = git@gitlab.inria.fr:dnarxiv/workflow_commands.git
