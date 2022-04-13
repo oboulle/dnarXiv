@@ -1,6 +1,6 @@
 # dnarXiv
 
-git clone git@github.com:oboulle/dnarXiv.git
+git clone https://github.com/oboulle/dnarXiv.git
 
 cd dnarXiv
 
