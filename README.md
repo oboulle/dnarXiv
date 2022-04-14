@@ -10,8 +10,10 @@ install xmlstarlet : http://xmlstar.sourceforge.net/download.php
 
 ## Get the workflow
 
+```
 git clone https://github.com/oboulle/dnarXiv
 
 cd dnarXiv
 
 run install.sh
+```
