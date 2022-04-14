@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/oboulle/dnarXiv/blob/master/logo_dnarXiv.jpeg" width="1000"/>
+<img src="https://github.com/oboulle/dnarXiv/blob/master/logo_dnarXiv.jpeg" width="400"/>
 </p>
 
 # Install
