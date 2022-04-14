@@ -1,4 +1,6 @@
-# dnarXiv
+<p align="center">
+<img src="https://github.com/oboulle/dnarXiv/logo_dnarXiv.jpeg" width="1000"/>
+</p>
 
 # Install
 ## Prerequisites
