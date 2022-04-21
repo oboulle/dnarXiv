@@ -4,7 +4,7 @@
 
 # Overview
 
-The dnarXiv project aims to explore various strategies based on this general framework, both on biotechnology and computer science aspects. Three main lines of research are currently being pursued:
+The [dnarXiv](https://project.inria.fr/dnarxiv/) project aims to explore various strategies based on this general framework, both on biotechnology and computer science aspects. Three main lines of research are currently being pursued:
 
 1. Biotechnology: DNA synthesis and sequencing. This research axis aims to investigate how enzymatic synthesis and nanopore sequencing technologies can be efficiently exploited for DNA storage. It also aims to identify constraints that need to be considered for efficient coding and security methods.
 
