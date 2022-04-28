@@ -19,6 +19,8 @@ Starting date of the project: October 1, 2020
 A more detailled description of the dnarXiv proposal is available 
 [here](https://project.inria.fr/dnarxiv/files/2020/10/presentation_dnarXiv.pdf).
 
+contact : olivier.boulle@inria.fr
+
 # Install
 ## Prerequisites
 
