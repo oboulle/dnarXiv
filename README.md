@@ -24,10 +24,11 @@ contact : olivier.boulle@inria.fr
 # Install
 ## Prerequisites
 
-install xmlstarlet : http://xmlstar.sourceforge.net/download.php
-(XMLStarlet is a set of command line utilities (toolkit) to query, transform, validate, and edit XML documents and files using a simple set of shell commands)
+python3 : https://www.python.org/downloads/
 
-install julia : https://julialang.org/downloads/
+julia : https://julialang.org/downloads/
+
+xmlstarlet : http://xmlstar.sourceforge.net/download.php
 
 ## Download and install the packages
 
