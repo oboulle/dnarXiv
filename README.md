@@ -19,11 +19,16 @@ Starting date of the project: October 1, 2020
 A more detailled description of the dnarXiv proposal is available 
 [here](https://project.inria.fr/dnarxiv/files/2020/10/presentation_dnarXiv.pdf).
 
+contact : olivier.boulle@inria.fr
+
 # Install
 ## Prerequisites
 
-install xmlstarlet : http://xmlstar.sourceforge.net/download.php
-(XMLStarlet is a set of command line utilities (toolkit) to query, transform, validate, and edit XML documents and files using a simple set of shell commands)
+python3 : https://www.python.org/downloads/
+
+julia : https://julialang.org/downloads/
+
+xmlstarlet : http://xmlstar.sourceforge.net/download.php
 
 ## Download and install the packages
 
