@@ -4,11 +4,11 @@
 [submodule "source_encoding"]
 	path = source_encoding
 	url = https://gitlab.inria.fr/dnarxiv/source_encoding.git
-[submodule "synthesis_simulation"]
-	path = synthesis_simulation
+[submodule "synthesis_modules"]
+	path = synthesis_modules
 	url = https://gitlab.inria.fr/dnarxiv/synthesis_modules.git
-[submodule "sequencing_simulation"]
-	path = sequencing_simulation
+[submodule "sequencing_modules"]
+	path = sequencing_modules
 	url = https://gitlab.inria.fr/dnarxiv/sequencing_modules.git
 [submodule "channel_code"]
 	path = channel_code
