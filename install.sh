@@ -9,5 +9,13 @@ git submodule update
 
 cd synthesis_modules/primer_generator/src
 make
+cd -
+
+cd sequencing_modules/
+git clone --recursive https://github.com/GATB/dsk.git
+cd dsk
+sh INSTALL
+mkdir -p tmp
+cd --
 
 echo "installation completed"
