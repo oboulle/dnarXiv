@@ -1,0 +1,15 @@
+PRIMER GENERATOR
+===================
+
+1 - extract the primer_generator.tar file. You will get the primer_generator directory
+        tar xvf primer_generator.tar
+
+2 - go to the primer_generator/src directory
+        cd primer_generator/scr
+
+3 - run the makefile (under linux) to generate the programs: primer_gen, primer_chk and primer_viz
+        make
+
+4 - run the different program according to the documentation
+	binaries are in the primer_generator/bin directory
+
